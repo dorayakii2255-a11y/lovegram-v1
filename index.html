@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ラブグラム | 恋愛深層心理タイプ診断</title>
+<meta name="description" content="12の質問で、あなたの恋愛の深層心理を16タイプに診断。本当のあなたの愛し方が分かります。">
+<meta property="og:title" content="ラブグラム | 恋愛深層心理タイプ診断">
+<meta property="og:description" content="12の質問で、あなたの恋愛の深層心理を16タイプに診断。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lovegram.jp/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#fffaf9;      /* 背景:ほんのり桜がかった白 */
+  --card:#ffffff;       /* カード面 */
+  --ink:#4a3a44;        /* 本文:柔らかい墨色 */
+  --sakura:#f06292;     /* 主アクセント:濃い桜色 */
+  --sakura-soft:#ffe4ec;/* 淡い桜:面に使う */
+  --gold:#c9a05a;       /* 補助アクセント:上品な金 */
+  --muted:#9b8a93;      /* 補助文 */
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Zen Kaku Gothic New',sans-serif;
+  background:
+    radial-gradient(70vw 50vw at 100% 0%, #fff0f4 0%, transparent 55%),
+    radial-gradient(60vw 45vw at 0% 100%, #fdf3ea 0%, transparent 55%),
+    var(--paper);
+  color:var(--ink);
+  min-height:100svh;
+  line-height:1.9;
+  letter-spacing:.02em;
+}
+.wrap{max-width:520px;margin:0 auto;padding:24px 20px 64px}
+.screen{display:none}
+.screen.active{display:block;animation:rise .5s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.screen.active{animation:none}}
+
+/* ---- 表紙 ---- */
+.brand{
+  font-family:'Shippori Mincho',serif;
+  font-size:13px;letter-spacing:.42em;color:var(--gold);
+  text-align:center;margin:26px 0 6px;
+}
+h1{
+  font-family:'Shippori Mincho',serif;
+  font-weight:600;font-size:clamp(28px,8vw,38px);
+  text-align:center;line-height:1.55;color:#3d2e37;
+}
+h1 .accent{color:var(--sakura)}
+.lede{color:var(--muted);font-size:14px;text-align:center;margin:18px 0 30px}
+
+/* 診断書カード */
+.card{
+  position:relative;
+  background:var(--card);
+  border:1px solid #f3d9e2;
+  border-top:4px solid var(--sakura);
+  border-radius:14px;
+  padding:26px 22px;
+  box-shadow:0 14px 34px rgba(240,98,146,.12);
+}
+.card .seal{
+  position:absolute;top:-16px;right:16px;
+  background:var(--sakura);color:#fff;
+  font-family:'Shippori Mincho',serif;font-size:10px;letter-spacing:.18em;
+  border-radius:999px;padding:7px 14px;
+  box-shadow:0 6px 14px rgba(240,98,146,.35);
+}
+
+.btn{
+  display:block;width:100%;
+  font-family:'Zen Kaku Gothic New',sans-serif;
+  font-weight:700;font-size:16px;letter-spacing:.08em;
+  color:#fff;
+  background:linear-gradient(135deg,var(--sakura),#ff8fb3);
+  border:none;border-radius:999px;
+  padding:16px;margin-top:26px;cursor:pointer;
+  transition:transform .15s ease,box-shadow .15s ease;
+  box-shadow:0 10px 24px rgba(240,98,146,.3);
+}
+.btn:hover{transform:translateY(-1px)}
+.btn:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.btn.ghost{
+  background:#fff;color:var(--sakura);
+  border:1.5px solid var(--sakura);box-shadow:none;
+}
+.note{font-size:11px;color:var(--muted);text-align:center;margin-top:14px}
+
+/* ---- 質問 ---- */
+.progress{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.progress .bar{flex:1;height:6px;background:var(--sakura-soft);border-radius:3px;overflow:hidden}
+.progress .fill{height:100%;width:0;background:linear-gradient(90deg,#ff8fb3,var(--sakura));transition:width .4s ease}
+.progress .count{font-size:12px;color:var(--muted);letter-spacing:.1em;min-width:52px;text-align:right}
+.qnum{
+  font-family:'Shippori Mincho',serif;color:var(--sakura);
+  font-size:12px;letter-spacing:.3em;margin-bottom:8px;
+}
+.qtext{
+  font-family:'Shippori Mincho',serif;font-weight:600;
+  font-size:19px;line-height:1.8;margin-bottom:24px;min-height:4.2em;color:#3d2e37;
+}
+.choice{
+  display:block;width:100%;text-align:left;
+  font-family:inherit;font-size:15px;line-height:1.7;color:var(--ink);
+  background:#fff;
+  border:1.5px solid #f3d9e2;
+  border-radius:12px;padding:16px 18px;margin-bottom:14px;cursor:pointer;
+  transition:background .15s ease,border-color .15s ease,transform .12s ease;
+  box-shadow:0 3px 10px rgba(240,98,146,.06);
+}
+.choice:hover{background:var(--sakura-soft);border-color:var(--sakura)}
+.choice:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.choice:active{transform:scale(.985)}
+
+/* ---- 結果 ---- */
+.deliver{
+  font-family:'Shippori Mincho',serif;text-align:center;
+  color:var(--muted);font-size:13px;letter-spacing:.28em;margin-bottom:16px;
+}
+.type-name{
+  font-family:'Shippori Mincho',serif;font-weight:700;
+  font-size:clamp(26px,7.5vw,34px);text-align:center;color:var(--sakura);
+  margin:10px 0 4px;line-height:1.5;
+}
+.catch{
+  text-align:center;font-size:13px;color:var(--gold);
+  letter-spacing:.06em;margin-bottom:22px;
+}
+.result-sec{margin-top:22px}
+.result-sec h3{
+  font-family:'Shippori Mincho',serif;font-size:14px;font-weight:600;
+  color:var(--sakura);letter-spacing:.18em;margin-bottom:8px;
+  padding-bottom:6px;border-bottom:1px dashed #f3c6d6;
+}
+.result-sec p{font-size:14px;color:var(--ink)}
+.result-sec p b{color:var(--sakura);font-weight:700}
+
+.axes{margin-top:8px}
+.axis{margin-bottom:14px}
+.axis .labels{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:4px}
+.axis .labels .lead{color:var(--sakura);font-weight:700}
+.axis .track{height:8px;background:var(--sakura-soft);border-radius:4px;overflow:hidden}
+.axis .val{height:100%;background:linear-gradient(90deg,#ffb3c9,var(--sakura));border-radius:4px;width:0;transition:width .8s ease}
+.axis .pct{font-size:11px;color:var(--gold);text-align:right;margin-top:2px;font-variant-numeric:tabular-nums}
+
+.match{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
+.match span{
+  font-size:12px;padding:7px 12px;border-radius:999px;
+  border:1px solid #f3c6d6;color:var(--ink);background:#fff;
+}
+.match span.good{border-color:var(--sakura);background:var(--sakura-soft)}
+.match span.care{border-color:var(--gold);background:#faf3e6}
+footer{margin-top:40px;text-align:center;font-size:11px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 表紙 -->
+  <section class="screen active" id="scr-top">
+    <p class="brand">LOVEGRAM</p>
+    <h1>本当のあなたの<br><span class="accent">愛し方</span>、知っていますか?</h1>
+    <p class="lede">12の質問に直感で答えるだけ。<br>あなたの恋愛の深層心理を、16タイプで診断します。</p>
+    <div class="card">
+      <span class="seal">恋の診断書</span>
+      <p style="font-family:'Shippori Mincho',serif;font-size:14px;letter-spacing:.08em;color:var(--muted)">自分では気づいていない恋愛のクセ、<br>本当は求めているもの。<br>診断結果が、そっと教えてくれます。</p>
+    </div>
+    <button class="btn" id="start">診断をはじめる(無料・約2分)</button>
+    <p class="note">結果はその場で表示されます。登録は不要です。</p>
+  </section>
+
+  <!-- 質問 -->
+  <section class="screen" id="scr-q">
+    <div class="progress">
+      <div class="bar"><div class="fill" id="fill"></div></div>
+      <div class="count" id="count">1 / 12</div>
+    </div>
+    <p class="qnum" id="qnum">Q1</p>
+    <p class="qtext" id="qtext"></p>
+    <button class="choice" id="optA"></button>
+    <button class="choice" id="optB"></button>
+  </section>
+
+  <!-- 結果 -->
+  <section class="screen" id="scr-r">
+    <p class="deliver">— あなたの恋の診断書 —</p>
+    <div class="card">
+      <span class="seal">診断結果</span>
+      <p class="type-name" id="rName"></p>
+      <p class="catch" id="rCatch"></p>
+
+      <div class="result-sec">
+        <h3>あなたの恋愛スタイル</h3>
+        <p id="rStyle"></p>
+      </div>
+      <div class="result-sec">
+        <h3>でも、本当のあなたは</h3>
+        <p id="rTruth"></p>
+      </div>
+      <div class="result-sec">
+        <h3>あなたが本当に求めているもの</h3>
+        <p id="rNeed"></p>
+      </div>
+
+      <div class="result-sec">
+        <h3>こころの4軸</h3>
+        <div class="axes" id="axes"></div>
+      </div>
+
+      <div class="result-sec">
+        <h3>相性のヒント</h3>
+        <div class="match">
+          <span class="good" id="rGood"></span>
+          <span class="care" id="rCare"></span>
+        </div>
+      </div>
+    </div>
+    <button class="btn" id="share">結果をシェアする</button>
+    <button class="btn ghost" id="retry">もう一度診断する</button>
+    <p class="note">この診断はエンタメ目的です。心理学的な検査ではありません。</p>
+  </section>
+
+  <footer>© LOVEGRAM — lovegram.jp</footer>
+</div>
+
+<script>
+/* ================= データ ================= */
+/* 軸: d=距離感(A密着/B自由) e=愛情表現(A言葉/B行動) c=衝突時(A対話/B熟考) v=恋愛観(A直感/B設計) */
+const QUESTIONS=[
+ {ax:"d",q:"休日、恋人の予定が急に空いたと連絡が来た。あなたの本音は?",a:"やった、会いたい!すぐ予定を組みたい",b:"嬉しいけど、今日は自分の予定も大事にしたい"},
+ {ax:"d",q:"恋人と毎日連絡を取り合うことについて、近いのは?",a:"毎日つながっている感覚が安心する",b:"用事がなければ、なくても平気"},
+ {ax:"d",q:"「ひとりの時間が欲しい」と恋人に言われたら?",a:"少し寂しい。距離を感じてしまう",b:"わかる。自分にも必要な時間だから",},
+ {ax:"e",q:"「好き」という気持ち、どう伝えることが多い?",a:"言葉にしてはっきり伝える",b:"言葉より、行動や態度でさりげなく示す"},
+ {ax:"e",q:"恋人からもらって一番うれしいのは?",a:"気持ちのこもった言葉やメッセージ",b:"さりげない気づかいや行動"},
+ {ax:"e",q:"記念日、あなたがしそうなのは?",a:"手紙やメッセージで想いを伝える",b:"サプライズや計画で気持ちを形にする"},
+ {ax:"c",q:"恋人とすれ違いが起きたとき、あなたは?",a:"モヤモヤしたまま放置できない。すぐ話したい",b:"一度距離を置いて、頭を整理してから話したい"},
+ {ax:"c",q:"ケンカの最中、相手が黙り込んだら?",a:"「ちゃんと話そう」と向き合いたくなる",b:"お互い冷静になる時間だと受け止める"},
+ {ax:"c",q:"言いにくい不満があるとき、あなたは?",a:"多少気まずくても早めに伝える",b:"タイミングを見計らって、慎重に切り出す"},
+ {ax:"v",q:"恋に落ちる瞬間は、どちらが近い?",a:"理屈じゃない。気づいたら好きになっている",b:"一緒にいる未来が想像できたとき"},
+ {ax:"v",q:"付き合う前に考えるのは?",a:"今この人といて楽しいかどうか",b:"価値観や将来が合うかどうか"},
+ {ax:"v",q:"恋愛で大切にしたいのは?",a:"心が動く瞬間のときめき",b:"積み重ねていける安心感"}
+];
+
+const AXES=[
+ {key:"d",left:"密着",right:"自由"},
+ {key:"e",left:"言葉",right:"行動"},
+ {key:"c",left:"対話",right:"熟考"},
+ {key:"v",left:"直感",right:"設計"}
+];
+
+/* タイプキー: 各軸でA多数=0/B多数=1 の4桁 (d,e,c,v) */
+const TYPES={
+"0000":{name:"情熱の太陽タイプ",catch:"愛したい気持ちが、いつも言葉からあふれてしまう人",
+ style:"好きになったら一直線。「好き」「会いたい」を素直に言葉にでき、ケンカをしても自分から向き合いにいける強さがあります。一緒にいる人は太陽に照らされるような温かさを感じています。",
+ truth:"実は<b>「与えた分だけ返ってこないと不安になる」</b>一面を隠しています。返信が遅いだけで「何かしたかな」と考えてしまう。明るさの裏で、誰よりも「愛されている証拠」を欲しがっているのはあなた自身かもしれません。",
+ need:"言葉です。行動よりプレゼントより、「好きだよ」と言葉で確認させてくれる人。それだけで不安の9割は溶けていきます。",
+ good:"誠実な建築家タイプ",care:"自由な冒険者タイプ"},
+"0001":{name:"一途な庭師タイプ",catch:"ひとつの愛を、時間をかけて育てていく人",
+ style:"想いを言葉で伝えながら、関係をコツコツ育てるタイプ。衝突からも逃げず、「ふたりの将来」を見据えて話し合える成熟した恋愛観の持ち主です。",
+ truth:"ただ、<b>「計画通りに進まない恋」に人一倍動揺する</b>一面も。相手の気まぐれや予定変更に、口では「いいよ」と言いながら心がざわついていませんか。",
+ need:"安心して水をやり続けられる畑。つまり、あなたの誠実さを「重い」ではなく「ありがたい」と受け取ってくれる人です。",
+ good:"頼れる大黒柱タイプ",care:"気まぐれな芸術家タイプ"},
+"0010":{name:"甘えん坊の詩人タイプ",catch:"言葉で愛を紡ぎながら、心の中で何度も読み返す人",
+ style:"甘えることも、想いを言葉にすることも得意。ただ衝突のときはすぐにぶつからず、一度自分の心の中で言葉を選び直す繊細さがあります。",
+ truth:"その繊細さゆえに、<b>「本当に言いたかったこと」を飲み込んでしまう</b>ことも。伝えた言葉の何倍もの想いが、送信されなかった下書きのように心に残っていませんか。",
+ need:"急かさずに待ってくれる人。あなたの言葉が熟すまで隣で待てる人の前でだけ、あなたの愛情は本領を発揮します。",
+ good:"静かな守護者タイプ",care:"直感型の狩人タイプ"},
+"0011":{name:"誠実な建築家タイプ",catch:"愛を、崩れない設計図から積み上げる人",
+ style:"想いは言葉できちんと伝え、将来のことも現実的に考える。感情に流されず、じっくり考えてから話し合いに臨む、信頼の厚いタイプです。",
+ truth:"一方で、<b>「正しさ」で恋愛を進めようとして息苦しくなる</b>ことも。ちゃんとしなきゃ、と思うほど、素直な「会いたい」が言えなくなっていませんか。",
+ need:"設計図にない寄り道を「それも楽しい」と言ってくれる人。あなたの真面目さを緩めてくれる存在が、恋を長続きさせます。",
+ good:"情熱の太陽タイプ",care:"クールな観察者タイプ"},
+"0100":{name:"尽くす騎士タイプ",catch:"言葉より先に、体が動いてしまう人",
+ style:"好きな人のためなら労を惜しまない行動派。困っていればすぐ駆けつけ、すれ違いがあれば正面から向き合う、まっすぐな愛し方をします。",
+ truth:"ただ、<b>尽くすことで「嫌われない保険」をかけている</b>節も。何かをしてあげていないと、自分の価値を信じられなくなる瞬間がありませんか。",
+ need:"何もしなくても隣にいてくれる時間。「してくれるから好き」ではなく「いるだけでいい」と言ってくれる人が、あなたの鎧を外してくれます。",
+ good:"甘えん坊の詩人タイプ",care:"マイペースな戦略家タイプ"},
+"0101":{name:"頼れる大黒柱タイプ",catch:"愛を、日々の積み重ねで証明していく人",
+ style:"派手な言葉はなくても、行動と継続で愛を示すタイプ。問題があれば話し合いを避けず、ふたりの生活を現実的に支えようとします。",
+ truth:"けれど、<b>「支える側」でいることに安心して、弱音を見せられない</b>ところが。本当は誰かに寄りかかりたい夜があること、気づかれないようにしていませんか。",
+ need:"あなたが崩れても受け止めると言ってくれる人。支え合いは片方通行では続きません。あなたにも甘える権利があります。",
+ good:"一途な庭師タイプ",care:"自由な冒険者タイプ"},
+"0110":{name:"静かな守護者タイプ",catch:"気づかれないところで、いちばん深く愛している人",
+ style:"多くを語らず、そばで見守りながら行動で支えるタイプ。衝突しても感情的にならず、時間をかけて関係を修復しようとする落ち着きがあります。",
+ truth:"その静けさの奥で、<b>「気づいてほしい」という叫びを押し殺している</b>ことも。言わなくても伝わるはず、と期待しては静かに傷ついていませんか。",
+ need:"あなたの沈黙を読んでくれる人。「今日なんかあった?」と気づいてくれるひと言が、あなたにとって何よりの愛の言葉です。",
+ good:"情熱の太陽タイプ",care:"理想家の航海士タイプ"},
+"0111":{name:"職人気質の匠タイプ",catch:"不器用でも、確かな愛を黙々と形にする人",
+ style:"愛情表現は控えめでも、決めた相手への忠誠心は誰にも負けません。感情より事実で考え、長期的な視点でふたりの関係を組み立てていきます。",
+ truth:"ただ、<b>愛情表現を「照れくさい」で済ませて後回しにしがち</b>。伝わっているだろう、はあなたが思うより伝わっていないかもしれません。",
+ need:"あなたのペースを尊重しつつ、時々ちゃんと「好き?」と聞いてくれる人。答える機会さえあれば、あなたの愛は言葉にもなれます。",
+ good:"誠実な建築家タイプ",care:"直感型の狩人タイプ"},
+"1000":{name:"自由な冒険者タイプ",catch:"恋も人生も、風の吹くほうへ進みたい人",
+ style:"束縛を好まず、恋人とも対等で風通しのいい関係を築くタイプ。気持ちは言葉でオープンに伝え、揉めごともその場で解決したい快活さがあります。",
+ truth:"でも、<b>自由を守ろうとするあまり「深入りする前に引く」癖</b>が。本気になりかけると、わざと軽い自分を演じてしまうことはありませんか。",
+ need:"翼を切らずに隣を飛んでくれる人。「行ってらっしゃい」と「おかえり」を両方言える人となら、あなたは深く愛することを恐れなくなります。",
+ good:"マイペースな戦略家タイプ",care:"情熱の太陽タイプ"},
+"1001":{name:"理想家の航海士タイプ",catch:"自分の航路を持ったまま、ふたりの目的地を探す人",
+ style:"自立した関係を好みつつ、将来のビジョンはしっかり話し合いたいタイプ。対話を重ねて、お互いの理想をすり合わせていく知的な恋愛をします。",
+ truth:"ただ、<b>理想が高いぶん「現実の相手」に減点方式になりがち</b>。地図と違う景色に出会ったとき、それを誤りと見るか発見と見るかで、恋の寿命が変わります。",
+ need:"議論ではなく対話ができる人。勝ち負けのない話し合いの心地よさを知ったとき、あなたの恋は理想を超えていきます。",
+ good:"独立した外交官タイプ",care:"静かな守護者タイプ"},
+"1010":{name:"気まぐれな芸術家タイプ",catch:"心が動いた瞬間だけを、正直に生きる人",
+ style:"感性のままに恋をするタイプ。気持ちは言葉や表現で豊かに伝えますが、揉めたときはひとりの世界にこもって気持ちを整理します。",
+ truth:"その気まぐれは、実は<b>「本心を見せて幻滅されるのが怖い」</b>という防衛かもしれません。ミステリアスな自分を演出して、安全な距離を保っていませんか。",
+ need:"あなたの波を「そういうところが好き」と面白がってくれる人。直そうとせず眺めていてくれる相手の前で、あなたはいちばん自由に愛せます。",
+ good:"クールな観察者タイプ",care:"一途な庭師タイプ"},
+"1011":{name:"独立した外交官タイプ",catch:"ほどよい距離で、いちばん深い信頼を結ぶ人",
+ style:"自分の世界を保ちながら、言葉での意思疎通と将来設計を大切にするタイプ。感情的にならず、時間をかけて信頼を積み上げる大人の恋をします。",
+ truth:"ただ、<b>スマートさが「本音の見えない人」に映る</b>ことも。傷つく前に一歩引く癖が、相手には壁に見えているかもしれません。",
+ need:"交渉ではなく、無防備な雑談ができる相手。とりとめのない話で笑い合える夜が、あなたの心の鍵を開けます。",
+ good:"理想家の航海士タイプ",care:"尽くす騎士タイプ"},
+"1100":{name:"直感型の狩人タイプ",catch:"欲しいと思った瞬間、もう動き出している人",
+ style:"ピンと来たら迷わず行動するタイプ。言葉を並べるより会いに行く、渡す、連れ出す。衝突もその場で片づけて、次の瞬間には笑っていたい主義です。",
+ truth:"ただ、<b>手に入ると安心して熱が下がる</b>傾向に自分でも気づいているはず。追いかける恋しか知らないままだと、続く愛の味を知らずに終わるかもしれません。",
+ need:"攻略しきれない人、ではなく「攻略が要らない関係」。素の自分で退屈な日曜を一緒に過ごせたとき、本当の恋が始まります。",
+ good:"甘えん坊の詩人タイプ",care:"職人気質の匠タイプ"},
+"1101":{name:"マイペースな戦略家タイプ",catch:"自分のペースを守りながら、着実に愛を進める人",
+ style:"恋愛に振り回されず、自分の生活と両立させながら関係を進めるタイプ。感情論より建設的な話し合いを好み、行動で誠意を示します。",
+ truth:"ただ、<b>コスパやタイパで恋を測ってしまう瞬間</b>が。効率で選んだ関係は効率で壊れます。無駄な時間こそが愛を育てることを、頭では分かっているはずです。",
+ need:"予定にない時間を楽しませてくれる人。「なんとなく一緒にいた3時間」を幸せと感じられたら、あなたの恋は本物です。",
+ good:"自由な冒険者タイプ",care:"尽くす騎士タイプ"},
+"1110":{name:"クールな観察者タイプ",catch:"一歩引いた場所から、誰よりも相手を見ている人",
+ style:"多くを語らず、相手をよく観察して静かに寄り添うタイプ。感情の起伏が少なく、直感で「この人だ」と決めたら態度で示していきます。",
+ truth:"その観察眼は、<b>傷つかないための「安全確認」でもある</b>のでは。見極めているうちにタイミングを逃した恋、ひとつやふたつ心当たりがありませんか。",
+ need:"分析を止めて飛び込みたくなる人。理屈で説明できない「なんか好き」を信じたとき、あなたの恋は動き出します。",
+ good:"気まぐれな芸術家タイプ",care:"誠実な建築家タイプ"},
+"1111":{name:"孤高の研究者タイプ",catch:"自分の世界を極めながら、運命の理解者を待つ人",
+ style:"ひとりの時間を愛し、恋愛も慎重に、長期的な視点で考えるタイプ。軽々しく心を開かないぶん、一度信じた相手への信頼は揺るぎません。",
+ truth:"ただ、<b>「理解されないだろう」と最初から諦めて扉を閉めている</b>ことも。孤独が好きなのではなく、傷つかない場所が好きなだけかもしれません。",
+ need:"あなたの世界に土足で入らず、それでも根気強くノックし続けてくれる人。扉を開ける勇気は、実はもうあなたの中にあります。",
+ good:"独立した外交官タイプ",care:"情熱の太陽タイプ"}
+};
+
+/* ================= ロジック ================= */
+let idx=0;
+const score={d:0,e:0,c:0,v:0}; // A回答の数(各軸3問)
+const $=id=>document.getElementById(id);
+const show=id=>{document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));$(id).classList.add("active");window.scrollTo({top:0});};
+
+function renderQ(){
+  const q=QUESTIONS[idx];
+  $("qnum").textContent="Q"+(idx+1);
+  $("qtext").textContent=q.q;
+  $("optA").textContent=q.a;
+  $("optB").textContent=q.b;
+  $("count").textContent=(idx+1)+" / "+QUESTIONS.length;
+  $("fill").style.width=((idx)/QUESTIONS.length*100)+"%";
+}
+function answer(isA){
+  const q=QUESTIONS[idx];
+  if(isA)score[q.ax]++;
+  idx++;
+  if(idx<QUESTIONS.length){renderQ();}
+  else{showResult();}
+}
+function pct(aCount){ /* A側の強さ% 0..3 -> 12/38/62/88 */
+  return [12,38,62,88][aCount];
+}
+function showResult(){
+  const key=AXES.map(a=>score[a.key]>=2?"0":"1").join("");
+  const t=TYPES[key];
+  $("rName").textContent=t.name;
+  $("rCatch").textContent="「"+t.catch+"」";
+  $("rStyle").innerHTML=t.style;
+  $("rTruth").innerHTML=t.truth;
+  $("rNeed").innerHTML=t.need;
+  $("rGood").textContent="💕 相性◎ "+t.good;
+  $("rCare").textContent="⚡ 刺激的 "+t.care;
+
+  const ax=$("axes");ax.innerHTML="";
+  AXES.forEach(a=>{
+    const p=pct(score[a.key]);
+    const leadLeft=p>=50;
+    const el=document.createElement("div");
+    el.className="axis";
+    el.innerHTML=
+      '<div class="labels"><span class="'+(leadLeft?"lead":"")+'">'+a.left+'</span><span class="'+(!leadLeft?"lead":"")+'">'+a.right+'</span></div>'+
+      '<div class="track"><div class="val"></div></div>'+
+      '<div class="pct">'+(leadLeft?a.left+" "+p:a.right+" "+(100-p))+'%</div>';
+    ax.appendChild(el);
+    requestAnimationFrame(()=>{el.querySelector(".val").style.width=(leadLeft?p:100-p)+"%";
+      el.querySelector(".val").style.marginLeft=leadLeft?"0":"auto";});
+  });
+
+  show("scr-r");
+  history.replaceState(null,"","#result");
+  window._resultText="私のラブグラム診断結果は「"+t.name+"」でした🌸\nあなたの恋愛深層心理は? #ラブグラム\nhttps://lovegram.jp/";
+}
+async function shareResult(){
+  const text=window._resultText||"ラブグラム|恋愛深層心理タイプ診断 https://lovegram.jp/";
+  if(navigator.share){
+    try{await navigator.share({text});return;}catch(e){/* cancelled */}
+  }
+  try{await navigator.clipboard.writeText(text);alert("結果をコピーしました。SNSに貼り付けてシェアできます!");}
+  catch(e){alert(text);}
+}
+function reset(){
+  idx=0;Object.keys(score).forEach(k=>score[k]=0);
+  renderQ();show("scr-q");
+}
+$("start").addEventListener("click",()=>{renderQ();show("scr-q");});
+$("optA").addEventListener("click",()=>answer(true));
+$("optB").addEventListener("click",()=>answer(false));
+$("share").addEventListener("click",shareResult);
+$("retry").addEventListener("click",reset);
+</script>
+</body>
+</html>
