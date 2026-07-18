@@ -169,6 +169,22 @@ h1 .accent{color:var(--sakura)}
 .match span.good{border-color:var(--sakura);background:var(--sakura-soft)}
 .match span.care{border-color:var(--gold);background:#faf3e6}
 .chara-face{text-align:center;margin-top:6px}
+.compat{margin-top:22px}
+.pair{display:flex;justify-content:center;align-items:center;gap:4px;margin-top:8px}
+.pair svg{width:92px;height:92px}
+.pair .heart{font-size:22px}
+.pair-names{text-align:center;font-size:12px;color:var(--muted);margin-top:2px}
+.score{font-family:'Shippori Mincho',serif;font-weight:700;font-size:42px;text-align:center;color:var(--sakura);line-height:1.3}
+.verdict{text-align:center;font-size:13px;color:var(--gold);margin-bottom:6px}
+.points{list-style:none;padding:0}
+.points li{font-size:13.5px;padding:8px 0 8px 26px;position:relative;border-bottom:1px dashed #f8e3ea}
+.points li::before{content:attr(data-i);position:absolute;left:0;top:8px}
+.invite-banner{
+  background:var(--sakura-soft);border:1.5px solid var(--sakura);
+  border-radius:12px;padding:14px 16px;margin-bottom:18px;
+  font-size:13.5px;text-align:center;line-height:1.8;
+}
+.invite-banner b{color:var(--sakura)}
 .chara-face svg{width:140px;height:140px}
 .minis{display:flex;justify-content:center;gap:6px;margin:22px 0 4px}
 .minis svg{width:64px;height:64px}
@@ -182,6 +198,7 @@ footer{margin-top:40px;text-align:center;font-size:11px;color:var(--muted)}
   <!-- 表紙 -->
   <section class="screen active" id="scr-top">
     <p class="brand">LOVEGRAM</p>
+    <div class="invite-banner" id="inviteBanner" hidden></div>
     <h1>本当のあなたの<br><span class="accent">愛し方</span>、知っていますか?</h1>
     <p class="lede">12の質問に直感で答えるだけ。<br>あなたの恋愛の深層心理を、16タイプで診断します。</p>
     <div class="minis" id="minis" aria-hidden="true"></div>
@@ -247,6 +264,21 @@ footer{margin-top:40px;text-align:center;font-size:11px;color:var(--muted)}
         </div>
       </div>
     </div>
+
+    <!-- 相性診断の結果(招待リンク経由のときのみ表示) -->
+    <div class="card compat" id="compatCard" hidden>
+      <span class="seal">ふたりの相性</span>
+      <div class="pair"><span id="cMe"></span><span class="heart">💗</span><span id="cYou"></span></div>
+      <p class="pair-names" id="cNames"></p>
+      <p class="score" id="cScore"></p>
+      <p class="verdict" id="cVerdict"></p>
+      <div class="result-sec">
+        <h3>ふたりのポイント</h3>
+        <ul class="points" id="cPoints"></ul>
+      </div>
+    </div>
+
+    <button class="btn" id="invite">💌 気になる人と相性診断する</button>
     <button class="btn" id="share">結果をシェアする</button>
     <button class="btn ghost" id="retry">もう一度診断する</button>
     <p class="note">この診断はエンタメ目的です。心理学的な検査ではありません。</p>
@@ -432,6 +464,70 @@ const CHARS={
  '<path d="M92 22 c-2-3 -7-2 -6 2 c1 3 6 5 6 5 s5-2 6-5 c1-4 -4-5 -6-2z" fill="#f06292"/>')
 };
 
+/* ================= 相性診断 ================= */
+/* 軸ごとの相性ルール:[同じとき加点, 違うとき加点, 同じときの解説, 違うときの解説] */
+const COMPAT_RULES={
+ d:[28,8,"恋人との距離感の好みがぴったり。一緒にいたい度合いが同じなので、束縛感やさみしさのすれ違いが起きにくいふたりです。",
+      "「もっと一緒にいたい」派と「自分の時間も欲しい」派の組み合わせ。悪いことではありませんが、会う頻度や連絡のペースは早めにすり合わせておくと安心です。"],
+ e:[12,18,"愛情表現のスタイルが同じなので、お互いの「好き」がまっすぐ伝わりやすいふたりです。",
+      "言葉で伝える人と行動で示す人の組み合わせ。実は補い合える名コンビで、相手の表現方法を「愛情の形」として受け取れれば最強です。"],
+ c:[24,10,"すれ違いへの向き合い方が同じ。ケンカになっても同じペースで仲直りに向かえるのは大きな強みです。",
+      "すぐ話したい人と、一度冷静になりたい人の組み合わせ。「時間を置くのは逃げじゃない」とお互いに知っておくだけで、ケンカの8割は防げます。"],
+ v:[26,10,"恋愛観の軸が同じなので、関係の進むスピード感に無理がありません。自然体でいられるふたりです。",
+      "ときめき重視と安心感重視の組み合わせ。相手の大切にしているものを尊重できれば、恋の楽しさと安定の両方を手に入れられます。"]
+};
+function compatScore(k1,k2){
+  let s=0;const pts=[];
+  AXES.forEach((a,i)=>{
+    const same=k1[i]===k2[i];
+    const r=COMPAT_RULES[a.key];
+    s+=same?r[0]:r[1];
+    pts.push(same?r[2]:r[3]);
+  });
+  /* ペア固有のゆらぎ(±4)を決定的に加える */
+  let h=0;const pair=k1<k2?k1+k2:k2+k1;
+  for(const ch of pair)h=(h*31+ch.charCodeAt(0))%997;
+  s+=(h%9)-4;
+  return {score:Math.max(38,Math.min(100,s)),points:pts};
+}
+function verdictText(s){
+  if(s>=90)return "運命レベル。お互いの「そのまま」が心地いい組み合わせです";
+  if(s>=75)return "とても良い相性。安心とときめきのバランスが取れたふたりです";
+  if(s>=60)return "良い相性。違いはあるけれど、それが魅力になる組み合わせです";
+  if(s>=48)return "伸びしろたっぷり。お互いを知るほど深まっていく関係です";
+  return "正反対の刺激的なふたり。だからこそ惹かれ合う、目が離せない組み合わせです";
+}
+function getPartnerKey(){
+  const p=new URLSearchParams(location.search).get("p");
+  return (p&&/^[01]{4}$/.test(p)&&TYPES[p])?p:null;
+}
+const partnerKey=getPartnerKey();
+if(partnerKey){
+  const b=$("inviteBanner");
+  b.innerHTML="💌 <b>"+TYPES[partnerKey].name+"</b>さんから相性診断の招待が届いています!<br>あなたも診断すると、ふたりの相性がわかります。";
+  b.hidden=false;
+}
+function showCompat(myKey){
+  if(!partnerKey){$("compatCard").hidden=true;return;}
+  const {score,points}=compatScore(myKey,partnerKey);
+  $("cMe").innerHTML=CHARS[myKey];
+  $("cYou").innerHTML=CHARS[partnerKey];
+  $("cNames").textContent=TYPES[myKey].name+" × "+TYPES[partnerKey].name;
+  $("cScore").textContent="相性 "+score+"%";
+  $("cVerdict").textContent=verdictText(score);
+  const ul=$("cPoints");ul.innerHTML="";
+  points.forEach((p,i)=>{const li=document.createElement("li");li.dataset.i=["🏠","💐","🌂","🧭"][i];li.textContent=p;ul.appendChild(li);});
+  $("compatCard").hidden=false;
+}
+async function inviteShare(){
+  const myKey=window._myKey;
+  const url="https://lovegram.jp/?p="+myKey;
+  const text="私の恋愛タイプは「"+TYPES[myKey].name+"」でした🌸\nこのリンクから診断すると、私との相性がわかるよ💗\n"+url;
+  if(navigator.share){try{await navigator.share({text});return;}catch(e){}}
+  try{await navigator.clipboard.writeText(text);alert("招待メッセージをコピーしました。LINEやDMに貼り付けて送ってね!");}
+  catch(e){alert(text);}
+}
+
 /* ================= ロジック ================= */
 let idx=0;
 const score={d:0,e:0,c:0,v:0}; // A回答の数(各軸3問)
@@ -471,6 +567,7 @@ function pct(aCount){ /* A側の強さ% 0..3 -> 12/38/62/88 */
 function showResult(){
   const key=AXES.map(a=>score[a.key]>=2?"0":"1").join("");
   const t=TYPES[key];
+  window._myKey=key;
   $("rChara").innerHTML=CHARS[key]||"";
   $("rName").textContent=t.name;
   $("rCatch").textContent="「"+t.catch+"」";
@@ -495,6 +592,7 @@ function showResult(){
       el.querySelector(".val").style.marginLeft=leadLeft?"0":"auto";});
   });
 
+  showCompat(key);
   show("scr-r");
   history.replaceState(null,"","#result");
   window._resultText="私のラブグラム診断結果は「"+t.name+"」でした🌸\nあなたの恋愛深層心理は? #ラブグラム\nhttps://lovegram.jp/";
@@ -518,6 +616,7 @@ $("back").addEventListener("click",goBack);
 $("optA").addEventListener("click",()=>answer(true));
 $("optB").addEventListener("click",()=>answer(false));
 $("share").addEventListener("click",shareResult);
+$("invite").addEventListener("click",inviteShare);
 $("retry").addEventListener("click",reset);
 </script>
 </body>
