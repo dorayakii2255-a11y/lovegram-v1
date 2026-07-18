@@ -168,6 +168,11 @@ h1 .accent{color:var(--sakura)}
 }
 .match span.good{border-color:var(--sakura);background:var(--sakura-soft)}
 .match span.care{border-color:var(--gold);background:#faf3e6}
+.chara-face{text-align:center;margin-top:6px}
+.chara-face svg{width:140px;height:140px}
+.minis{display:flex;justify-content:center;gap:6px;margin:22px 0 4px}
+.minis svg{width:64px;height:64px}
+.minis-cap{font-size:12px;color:var(--muted);text-align:center;margin-bottom:2px}
 footer{margin-top:40px;text-align:center;font-size:11px;color:var(--muted)}
 </style>
 </head>
@@ -179,12 +184,18 @@ footer{margin-top:40px;text-align:center;font-size:11px;color:var(--muted)}
     <p class="brand">LOVEGRAM</p>
     <h1>本当のあなたの<br><span class="accent">愛し方</span>、知っていますか?</h1>
     <p class="lede">12の質問に直感で答えるだけ。<br>あなたの恋愛の深層心理を、16タイプで診断します。</p>
+    <div class="minis" id="minis" aria-hidden="true"></div>
+    <p class="minis-cap">16タイプのキャラクターから、あなたはどの子?</p>
     <div class="card">
       <span class="seal">恋の診断書</span>
       <p style="font-family:'Shippori Mincho',serif;font-size:14px;letter-spacing:.08em;color:var(--muted)">自分では気づいていない恋愛のクセ、<br>本当は求めているもの。<br>診断結果が、そっと教えてくれます。</p>
     </div>
     <button class="btn" id="start">診断をはじめる(無料・約2分)</button>
     <p class="note">結果はその場で表示されます。登録は不要です。</p>
+    <div class="result-sec" style="margin-top:34px">
+      <h3 style="font-family:'Shippori Mincho',serif;font-size:14px;font-weight:600;color:var(--sakura);letter-spacing:.18em;margin-bottom:8px;padding-bottom:6px;border-bottom:1px dashed #f3c6d6">恋愛タイプ診断「ラブグラム」とは</h3>
+      <p style="font-size:13px;color:var(--ink)">ラブグラムは、恋人との距離感・愛情表現・すれ違いへの向き合い方・恋愛観という4つの軸から、あなたの恋愛の深層心理を16タイプに分類する無料の恋愛タイプ診断です。12の質問に直感で答えるだけで、自分では気づいていない恋愛のクセや、本当に求めているものが見えてきます。結果は<a href="/type-list.html" style="color:var(--sakura)">16タイプの一覧</a>から読むこともできます。</p>
+    </div>
   </section>
 
   <!-- 質問 -->
@@ -206,6 +217,7 @@ footer{margin-top:40px;text-align:center;font-size:11px;color:var(--muted)}
     <p class="deliver">— あなたの恋の診断書 —</p>
     <div class="card">
       <span class="seal">診断結果</span>
+      <div class="chara-face" id="rChara"></div>
       <p class="type-name" id="rName"></p>
       <p class="catch" id="rCatch"></p>
 
@@ -240,7 +252,7 @@ footer{margin-top:40px;text-align:center;font-size:11px;color:var(--muted)}
     <p class="note">この診断はエンタメ目的です。心理学的な検査ではありません。</p>
   </section>
 
-  <footer><a href="/privacy.html" style="color:inherit">プライバシーポリシー</a><br>© LOVEGRAM — lovegram.jp</footer>
+  <footer><a href="/type-list.html" style="color:inherit">16タイプ一覧</a> ・ <a href="/privacy.html" style="color:inherit">プライバシーポリシー</a><br>© LOVEGRAM — lovegram.jp</footer>
 </div>
 
 <script>
@@ -352,6 +364,74 @@ const TYPES={
  good:"独立した外交官タイプ",care:"情熱の太陽タイプ"}
 };
 
+/* ================= キャラクター ================= */
+const FACE={
+ happy:'<path d="M47 53 q4 -6 8 0" stroke="#4a3a44" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M65 53 q4 -6 8 0" stroke="#4a3a44" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M53 65 q7 7 14 0" stroke="#4a3a44" stroke-width="2.6" fill="none" stroke-linecap="round"/>',
+ dot:'<circle cx="49" cy="53" r="2.6" fill="#4a3a44"/><circle cx="71" cy="53" r="2.6" fill="#4a3a44"/><path d="M56 65 q4 4 8 0" stroke="#4a3a44" stroke-width="2.4" fill="none" stroke-linecap="round"/>',
+ wink:'<path d="M46 53 q4 -5 8 1" stroke="#4a3a44" stroke-width="2.6" fill="none" stroke-linecap="round"/><line x1="66" y1="53" x2="74" y2="53" stroke="#4a3a44" stroke-width="2.6" stroke-linecap="round"/><path d="M54 65 q6 6 12 0" stroke="#4a3a44" stroke-width="2.6" fill="none" stroke-linecap="round"/>',
+ calm:'<path d="M46 54 q4 4 8 0" stroke="#4a3a44" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M66 54 q4 4 8 0" stroke="#4a3a44" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M56 65 q4 3 8 0" stroke="#4a3a44" stroke-width="2.4" fill="none" stroke-linecap="round"/>',
+ cool:'<line x1="45" y1="53" x2="53" y2="53" stroke="#4a3a44" stroke-width="2.6" stroke-linecap="round"/><line x1="67" y1="53" x2="75" y2="53" stroke="#4a3a44" stroke-width="2.6" stroke-linecap="round"/><path d="M55 65 q7 4 11 -1" stroke="#4a3a44" stroke-width="2.4" fill="none" stroke-linecap="round"/>'
+};
+function chara(body,motif,face,extra){
+ return '<svg viewBox="0 0 120 120" role="img">'+ (motif||'')
+ +'<path d="M32 108 Q32 76 60 76 Q88 76 88 108 Z" fill="'+body+'"/>'
+ +'<circle cx="60" cy="56" r="26" fill="#ffe9dd"/>'
+ +'<circle cx="45" cy="63" r="4.5" fill="#ffb7c5"/><circle cx="75" cy="63" r="4.5" fill="#ffb7c5"/>'
+ +face+(extra||'')+'</svg>';
+}
+const CHARS={
+"0000":chara("#f06292",
+ '<circle cx="60" cy="32" r="18" fill="#f6b73c"/><g stroke="#f6b73c" stroke-width="5" stroke-linecap="round"><line x1="60" y1="6" x2="60" y2="12"/><line x1="40" y1="12" x2="44" y2="17"/><line x1="80" y1="12" x2="76" y2="17"/><line x1="32" y1="30" x2="39" y2="31"/><line x1="88" y1="30" x2="81" y2="31"/></g><circle cx="60" cy="32" r="12" fill="#ffd166"/>',
+ FACE.happy,'<path d="M92 84 c-3-5 -11-3 -10 3 c1 5 10 9 10 9 s9-4 10-9 c1-6 -7-8 -10-3z" fill="#f06292"/>'),
+"0001":chara("#7cb87c",
+ '<path d="M60 34 q-2 -12 8 -16" stroke="#5a9c5a" stroke-width="3.5" fill="none" stroke-linecap="round"/><ellipse cx="72" cy="15" rx="7" ry="4.5" fill="#8fd18f" transform="rotate(-25 72 15)"/><ellipse cx="55" cy="24" rx="6" ry="4" fill="#8fd18f" transform="rotate(20 55 24)"/>',
+ FACE.dot,'<g><rect x="88" y="86" width="14" height="10" rx="2" fill="#5a9c5a"/><path d="M88 89 l-7 -4" stroke="#5a9c5a" stroke-width="3" stroke-linecap="round"/></g>'),
+"0010":chara("#b39ddb",
+ '<ellipse cx="57" cy="27" rx="20" ry="8" fill="#9575cd"/><circle cx="57" cy="18" r="3.5" fill="#7e57c2"/>',
+ FACE.calm,'<path d="M90 78 q6 -14 14 -16 q-3 10 -10 18z" fill="#ffd166"/><line x1="90" y1="82" x2="94" y2="78" stroke="#c9a05a" stroke-width="2.5" stroke-linecap="round"/>'),
+"0011":chara("#5b8dd9",
+ '<path d="M38 34 Q60 14 82 34 L82 38 L38 38 Z" fill="#4a7bc8"/><rect x="36" y="36" width="48" height="6" rx="3" fill="#5b8dd9"/><rect x="57" y="18" width="6" height="18" fill="#7fa8e0"/>',
+ FACE.dot,''),
+"0100":chara("#e2725b",
+ '<path d="M40 36 Q60 14 80 36 Z" fill="#c9c9d1"/><path d="M60 8 q10 4 8 16 l-6 8" stroke="#f06292" stroke-width="5" fill="none" stroke-linecap="round"/>',
+ FACE.happy,'<g><path d="M14 78 q0 -8 9 -8 q9 0 9 8 q0 10 -9 14 q-9 -4 -9 -14z" fill="#c9a05a"/><path d="M23 72 v16 M15 79 h16" stroke="#fff" stroke-width="2"/></g>'),
+"0101":chara("#a1785c",
+ '<path d="M32 36 L60 14 L88 36 Z" fill="#8a6248"/><rect x="72" y="18" width="7" height="12" fill="#8a6248"/>',
+ FACE.dot,''),
+"0110":chara("#6a9b7e",
+ '<path d="M32 56 Q32 20 60 20 Q88 20 88 56 L80 56 Q80 30 60 30 Q40 30 40 56 Z" fill="#55836a"/>',
+ FACE.calm,'<g><rect x="90" y="80" width="12" height="15" rx="3" fill="#ffd166" stroke="#c9a05a" stroke-width="2"/><line x1="96" y1="76" x2="96" y2="80" stroke="#c9a05a" stroke-width="2.5"/></g>'),
+"0111":chara("#4a6fa5",
+ '',
+ FACE.cool+'<path d="M35 45 H85" stroke="#f06292" stroke-width="6" stroke-linecap="round"/><path d="M85 45 l8 -5 M85 45 l9 2" stroke="#f06292" stroke-width="4" stroke-linecap="round"/>',''),
+"1000":chara("#4fb0a5",
+ '<path d="M34 32 Q60 10 86 32 L86 36 L34 36 Z" fill="#3d918a"/><rect x="28" y="34" width="64" height="7" rx="3.5" fill="#357d77"/><rect x="34" y="27" width="52" height="5" fill="#ffd166"/>',
+ FACE.wink,'<path d="M94 24 l16 -7 l-7 16 l-4 -6 z" fill="#f06292"/>'),
+"1001":chara("#3f6fb5",
+ '<ellipse cx="60" cy="28" rx="24" ry="10" fill="#fff"/><rect x="36" y="28" width="48" height="7" rx="3.5" fill="#2f5a99"/><circle cx="60" cy="26" r="4" fill="#f06292"/>',
+ FACE.happy,''),
+"1010":chara("#9b6fc3",
+ '<ellipse cx="52" cy="24" rx="19" ry="8" fill="#7e4fb0" transform="rotate(-10 52 24)"/><circle cx="45" cy="15" r="3.5" fill="#6a3f96"/>',
+ '<circle cx="49" cy="53" r="2.6" fill="#4a3a44"/><circle cx="71" cy="53" r="2.6" fill="#4a3a44"/><path d="M53 65 q3.5 3.5 7 0 q3.5 3.5 7 0" stroke="#4a3a44" stroke-width="2.4" fill="none" stroke-linecap="round"/>',
+ '<g><ellipse cx="97" cy="86" rx="12" ry="9" fill="#f5e6d3" stroke="#c9a05a" stroke-width="2"/><circle cx="93" cy="83" r="2.2" fill="#f06292"/><circle cx="100" cy="83" r="2.2" fill="#5b8dd9"/><circle cx="97" cy="90" r="2.2" fill="#7cb87c"/></g>'),
+"1011":chara("#7d8ba1",
+ '',
+ FACE.calm,'<path d="M52 80 l8 5 l8 -5 l-3 8 l-5 -3 l-5 3 z" fill="#f06292"/>'),
+"1100":chara("#ef8b4e",
+ '<path d="M36 30 H84" stroke="#d97636" stroke-width="6" stroke-linecap="round"/><path d="M78 12 q6 8 0 16" stroke="#f06292" stroke-width="4" fill="none" stroke-linecap="round"/>',
+ FACE.wink,'<g><line x1="10" y1="94" x2="34" y2="82" stroke="#c9a05a" stroke-width="3" stroke-linecap="round"/><path d="M34 82 l-8 0 l5 6 z" fill="#f06292"/><path d="M10 94 l-2 5 l6 -2 z" fill="#8a6248"/></g>'),
+"1101":chara("#6f9e8f",
+ '<path d="M52 34 q-2 -18 12 -20 q10 -1 10 8 q0 5 -6 5 l-2 7 z" fill="#557f72"/><circle cx="68" cy="19" r="1.8" fill="#fff"/>',
+ FACE.cool,''),
+"1110":chara("#6fa7c7",
+ '',
+ FACE.cool,'<g><circle cx="94" cy="82" r="9" fill="none" stroke="#4a3a44" stroke-width="2.6"/><line x1="100" y1="89" x2="107" y2="96" stroke="#4a3a44" stroke-width="3.5" stroke-linecap="round"/></g>'),
+"1111":chara("#7e6bb5",
+ '<rect x="38" y="24" width="44" height="9" rx="2" fill="#8e7cc3"/><rect x="42" y="16" width="36" height="8" rx="2" fill="#c9a05a"/><rect x="42" y="16" width="36" height="3" rx="1.5" fill="#e0bd77"/>',
+ '<g stroke="#4a3a44" stroke-width="2.4" fill="none"><circle cx="49" cy="53" r="8"/><circle cx="71" cy="53" r="8"/><line x1="57" y1="53" x2="63" y2="53"/></g><circle cx="49" cy="53" r="2.4" fill="#4a3a44"/><circle cx="71" cy="53" r="2.4" fill="#4a3a44"/><path d="M56 66 q4 3 8 0" stroke="#4a3a44" stroke-width="2.4" fill="none" stroke-linecap="round"/>',
+ '<path d="M92 22 c-2-3 -7-2 -6 2 c1 3 6 5 6 5 s5-2 6-5 c1-4 -4-5 -6-2z" fill="#f06292"/>')
+};
+
 /* ================= ロジック ================= */
 let idx=0;
 const score={d:0,e:0,c:0,v:0}; // A回答の数(各軸3問)
@@ -391,6 +471,7 @@ function pct(aCount){ /* A側の強さ% 0..3 -> 12/38/62/88 */
 function showResult(){
   const key=AXES.map(a=>score[a.key]>=2?"0":"1").join("");
   const t=TYPES[key];
+  $("rChara").innerHTML=CHARS[key]||"";
   $("rName").textContent=t.name;
   $("rCatch").textContent="「"+t.catch+"」";
   $("rStyle").innerHTML=t.style;
@@ -432,6 +513,7 @@ function reset(){
   renderQ();show("scr-q");
 }
 $("start").addEventListener("click",()=>{renderQ();show("scr-q");});
+$("minis").innerHTML=["0000","1000","0010","1111"].map(k=>CHARS[k]).join("");
 $("back").addEventListener("click",goBack);
 $("optA").addEventListener("click",()=>answer(true));
 $("optB").addEventListener("click",()=>answer(false));
