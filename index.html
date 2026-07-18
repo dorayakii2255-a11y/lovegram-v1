@@ -329,6 +329,12 @@ const AXES=[
 ];
 
 /* タイプキー: 各軸でA多数=0/B多数=1 の4桁 (d,e,c,v) */
+const NICK={
+"0000":"タイヨ","0001":"ニワ","0010":"ウタ","0011":"ケンジ",
+"0100":"ナイト","0101":"ダイコク","0110":"マモル","0111":"タクミ",
+"1000":"カケル","1001":"コウカイ","1010":"パレット","1011":"ユウガ",
+"1100":"カル","1101":"サク","1110":"レンズ","1111":"フクロウ"
+};
 const TYPES={
 "0000":{name:"情熱の太陽タイプ",catch:"愛したい気持ちが、いつも言葉からあふれてしまう人",
  style:"好きになったら一直線。「好き」「会いたい」を素直に言葉にでき、ケンカをしても自分から向き合いにいける強さがあります。一緒にいる人は太陽に照らされるような温かさを感じています。",
@@ -523,7 +529,7 @@ function showCompat(myKey){
   const {score,points}=compatScore(myKey,partnerKey);
   $("cMe").innerHTML=CHARS[myKey];
   $("cYou").innerHTML=CHARS[partnerKey];
-  $("cNames").textContent=TYPES[myKey].name+" × "+TYPES[partnerKey].name;
+  $("cNames").textContent=TYPES[myKey].name+"("+NICK[myKey]+") × "+TYPES[partnerKey].name+"("+NICK[partnerKey]+")";
   $("cScore").textContent="相性 "+score+"%";
   $("cVerdict").textContent=verdictText(score);
   const ul=$("cPoints");ul.innerHTML="";
@@ -536,7 +542,7 @@ function showCompat(myKey){
 async function inviteShare(){
   const myKey=window._myKey;
   const url="https://lovegram.jp/?p="+myKey;
-  const text="私の恋愛タイプは「"+TYPES[myKey].name+"」でした🌸\nこのリンクから診断すると、私との相性がわかるよ💗\n"+url;
+  const text="私の恋愛タイプは「"+TYPES[myKey].name+"("+NICK[myKey]+")」でした🌸\nこのリンクから診断すると、私との相性がわかるよ💗\n"+url;
   if(navigator.share){try{await navigator.share({text});return;}catch(e){}}
   try{await navigator.clipboard.writeText(text);alert("招待メッセージをコピーしました。LINEやDMに貼り付けて送ってね!");}
   catch(e){alert(text);}
@@ -579,7 +585,7 @@ async function buildShareImage(typeName,catchLine,svgMarkup){
     ctx.drawImage(img,W/2-150,cy0+40,300,300);
   }catch(e){/* キャラ描画失敗時はスキップ */}
   /* タイプ名 */
-  ctx.fillStyle="#f06292";ctx.font="700 56px serif";
+  ctx.fillStyle="#f06292";ctx.font="700 44px serif";
   ctx.fillText(typeName,W/2,cy0+400);
   /* キャッチコピー */
   ctx.fillStyle="#c9a05a";ctx.font="400 28px 'Zen Kaku Gothic New',sans-serif";
@@ -601,7 +607,7 @@ async function shareImageResult(key){
   const btn=$("shareImg");const orig=btn.textContent;
   btn.textContent="画像を作成中…";btn.disabled=true;
   try{
-    const cv=await buildShareImage(t.name,t.catch,CHARS[key]);
+    const cv=await buildShareImage(t.name+"("+NICK[key]+")",t.catch,CHARS[key]);
     const blob=await new Promise(res=>cv.toBlob(res,"image/png"));
     const file=new File([blob],"lovegram-result.png",{type:"image/png"});
     if(navigator.canShare&&navigator.canShare({files:[file]})){
@@ -657,7 +663,7 @@ function showResult(){
   const t=TYPES[key];
   window._myKey=key;
   $("rChara").innerHTML=CHARS[key]||"";
-  $("rName").textContent=t.name;
+  $("rName").textContent=t.name+"(愛称:"+NICK[key]+")";
   $("rCatch").textContent="「"+t.catch+"」";
   $("rStyle").innerHTML=t.style;
   $("rTruth").innerHTML=t.truth;
@@ -683,7 +689,7 @@ function showResult(){
   showCompat(key);
   show("scr-r");
   history.replaceState(null,"","#result");
-  window._resultText="私のラブグラム診断結果は「"+t.name+"」でした🌸\nあなたの恋愛深層心理は? #ラブグラム\nhttps://lovegram.jp/";
+  window._resultText="私のラブグラム診断結果は「"+t.name+"("+NICK[key]+")」でした🌸\nあなたの恋愛深層心理は? #ラブグラム\nhttps://lovegram.jp/";
 }
 async function shareResult(){
   const text=window._resultText||"ラブグラム|恋愛深層心理タイプ診断 https://lovegram.jp/";
@@ -704,7 +710,7 @@ if(partnerKey){
   $("normalHero").hidden=true;
   $("inviteHero").hidden=false;
   $("inviterChara").innerHTML=CHARS[partnerKey];
-  $("inviterName").textContent=TYPES[partnerKey].name+"さん";
+  $("inviterName").textContent=TYPES[partnerKey].name+"("+NICK[partnerKey]+")さん";
   $("start").textContent="相性診断をはじめる(無料・約2分)";
   document.title="相性診断のご招待|ラブグラム";
 }
