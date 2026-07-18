@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>脈ありチェッカー|片思い中のあなたへ|ラブグラム</title>
+<meta name="description" content="片思い中のあなたへ。12の質問で、気になる相手の脈ありレベルを診断します。無料・約2分・登録不要。">
+<meta property="og:title" content="脈ありチェッカー|ラブグラム">
+<meta property="og:description" content="12の質問で、気になる相手の脈ありレベルを診断します。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lovegram.jp/miari.html">
+<meta property="og:image" content="https://lovegram.jp/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8374174874157238" crossorigin="anonymous"></script>
+<script defer src="/_vercel/insights/script.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#fffaf9;--card:#ffffff;--ink:#4a3a44;
+  --sakura:#f06292;--sakura-soft:#ffe4ec;--gold:#c9a05a;--muted:#9b8a93;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Zen Kaku Gothic New',sans-serif;background:
+ radial-gradient(70vw 50vw at 100% 0%, #fff0f4 0%, transparent 55%),
+ radial-gradient(60vw 45vw at 0% 100%, #fdf3ea 0%, transparent 55%),var(--paper);
+ color:var(--ink);min-height:100svh;line-height:1.9;letter-spacing:.02em}
+.wrap{max-width:520px;margin:0 auto;padding:24px 20px 64px}
+.screen{display:none}
+.screen.active{display:block;animation:rise .5s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.screen.active{animation:none}}
+.brand{font-family:'Shippori Mincho',serif;font-size:13px;letter-spacing:.42em;color:var(--gold);text-align:center;margin:26px 0 6px}
+.brand a{color:inherit;text-decoration:none}
+h1{font-family:'Shippori Mincho',serif;font-weight:600;font-size:clamp(26px,7.5vw,34px);text-align:center;line-height:1.55;color:#3d2e37}
+h1 .accent{color:var(--sakura)}
+.lede{color:var(--muted);font-size:14px;text-align:center;margin:16px 0 26px}
+.card{position:relative;background:var(--card);border:1px solid #f3d9e2;border-top:4px solid var(--sakura);border-radius:14px;padding:26px 22px;box-shadow:0 14px 34px rgba(240,98,146,.10)}
+.card .seal{position:absolute;top:-16px;right:16px;background:var(--sakura);color:#fff;font-family:'Shippori Mincho',serif;font-size:10px;letter-spacing:.18em;border-radius:999px;padding:7px 14px;box-shadow:0 6px 14px rgba(240,98,146,.35)}
+.btn{display:block;width:100%;font-family:'Zen Kaku Gothic New',sans-serif;font-weight:700;font-size:16px;letter-spacing:.08em;color:#fff;background:linear-gradient(135deg,var(--sakura),#ff8fb3);border:none;border-radius:999px;padding:16px;margin-top:22px;cursor:pointer;box-shadow:0 10px 24px rgba(240,98,146,.3)}
+.btn.ghost{background:#fff;color:var(--sakura);border:1.5px solid var(--sakura);box-shadow:none}
+.note{font-size:11px;color:var(--muted);text-align:center;margin-top:14px}
+.progress{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.progress .bar{flex:1;height:6px;background:var(--sakura-soft);border-radius:3px;overflow:hidden}
+.progress .fill{height:100%;width:0;background:linear-gradient(90deg,#ff8fb3,var(--sakura));transition:width .4s ease}
+.progress .count{font-size:12px;color:var(--muted);letter-spacing:.1em;min-width:52px;text-align:right}
+.qnum{font-family:'Shippori Mincho',serif;color:var(--sakura);font-size:12px;letter-spacing:.3em;margin-bottom:8px}
+.qtext{font-family:'Shippori Mincho',serif;font-weight:600;font-size:18px;line-height:1.8;margin-bottom:22px;min-height:3.6em}
+.choice{display:block;width:100%;text-align:left;font-family:inherit;font-size:15px;line-height:1.7;color:var(--ink);background:#fff;border:1.5px solid #f3d9e2;border-radius:12px;padding:14px 18px;margin-bottom:12px;cursor:pointer;transition:background .15s ease,border-color .15s ease,transform .12s ease}
+.choice:hover{background:var(--sakura-soft);border-color:var(--sakura)}
+.choice:active{transform:scale(.985)}
+.backbtn{display:block;margin:14px auto 0;font-family:inherit;font-size:13px;color:var(--muted);background:none;border:none;cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:8px 12px}
+.chara-face{text-align:center;margin-top:4px}
+.chara-face svg{width:150px;height:150px}
+.level-name{font-family:'Shippori Mincho',serif;font-weight:700;font-size:clamp(24px,7vw,30px);text-align:center;color:var(--sakura);margin:8px 0 2px}
+.meter-wrap{margin:18px 0 6px}
+.meter{height:14px;background:var(--sakura-soft);border-radius:7px;overflow:hidden}
+.meter .fill{height:100%;background:linear-gradient(90deg,#ffb3c9,var(--sakura));border-radius:7px;width:0;transition:width 1s ease}
+.meter-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:4px}
+.result-sec{margin-top:20px}
+.result-sec h3{font-family:'Shippori Mincho',serif;font-size:14px;font-weight:600;color:var(--sakura);letter-spacing:.16em;margin-bottom:8px;padding-bottom:6px;border-bottom:1px dashed #f3c6d6}
+.result-sec p{font-size:14px}
+.result-sec p b{color:var(--sakura)}
+.cross{display:block;text-align:center;font-size:13px;color:var(--sakura);margin-top:16px}
+footer{margin-top:36px;text-align:center;font-size:11px;color:var(--muted)}
+footer a{color:inherit}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 表紙 -->
+  <section class="screen active" id="scr-top">
+    <p class="brand"><a href="/">LOVEGRAM</a></p>
+    <h1>あの人の気持ち、<br><span class="accent">脈あり度</span>を診断</h1>
+    <p class="lede">片思い中のあなたへ。12の質問で、<br>気になる相手からの脈ありレベルをチェックします。</p>
+    <div class="card">
+      <span class="seal">脈ありチェッカー</span>
+      <p style="font-family:'Shippori Mincho',serif;font-size:14px;letter-spacing:.08em;color:var(--muted)">LINEの返信、目が合う頻度、さりげない気づかい。<br>普段の行動から、脈ありレベルをレーダーが読み取ります。</p>
+    </div>
+    <button class="btn" id="start">診断をはじめる(無料・約2分)</button>
+    <p class="note">結果はその場で表示されます。登録は不要です。</p>
+  </section>
+
+  <!-- 質問 -->
+  <section class="screen" id="scr-q">
+    <div class="progress">
+      <div class="bar"><div class="fill" id="fill"></div></div>
+      <div class="count" id="count">1 / 12</div>
+    </div>
+    <p class="qnum" id="qnum">Q1</p>
+    <p class="qtext" id="qtext"></p>
+    <button class="choice" id="opt0"></button>
+    <button class="choice" id="opt1"></button>
+    <button class="choice" id="opt2"></button>
+    <button class="backbtn" id="back" hidden>← ひとつ前の質問に戻る</button>
+  </section>
+
+  <!-- 結果 -->
+  <section class="screen" id="scr-r">
+    <p class="deliver" style="font-family:'Shippori Mincho',serif;text-align:center;color:var(--muted);font-size:13px;letter-spacing:.28em;margin-bottom:16px">— 脈ありレーダー診断結果 —</p>
+    <div class="card">
+      <span class="seal">診断結果</span>
+      <div class="chara-face" id="rChara"></div>
+      <p class="level-name" id="rName"></p>
+      <div class="meter-wrap">
+        <div class="meter"><div class="fill" id="rMeter"></div></div>
+        <div class="meter-label"><span>脈なし</span><span id="rPct">0%</span><span>両想い濃厚</span></div>
+      </div>
+      <div class="result-sec">
+        <h3>今の状況</h3>
+        <p id="rDesc"></p>
+      </div>
+      <div class="result-sec">
+        <h3>次の一歩</h3>
+        <p id="rAdvice"></p>
+      </div>
+    </div>
+    <button class="btn" id="share">結果をシェアする</button>
+    <button class="btn ghost" id="retry">もう一度診断する</button>
+    <a class="cross" href="/">🌸 自分の恋愛タイプも診断してみる</a>
+    <p class="note">この診断はエンタメ目的です。恋愛の可能性を保証するものではありません。</p>
+  </section>
+
+  <footer><a href="/type-list.html">16タイプ一覧</a> ・ <a href="/privacy.html">プライバシーポリシー</a><br>© LOVEGRAM — lovegram.jp</footer>
+</div>
+
+<script>
+/* ================= 質問データ ================= */
+/* 各質問:選択肢3つ、それぞれ0/1/2点 */
+const QUESTIONS=[
+ {q:"LINEやメッセージの返信スピードは?",opts:["わりとすぐ返ってくる","普通、時間はまちまち","遅いか、そもそも既読が付かない"],pts:[2,1,0]},
+ {q:"会話中、相手と目が合う頻度は?",opts:["よく目が合う気がする","たまに合う程度","あまり合わない・意識してすらいない"],pts:[2,1,0]},
+ {q:"二人きりで会おう・話そうとする様子は?",opts:["向こうから誘ってくることがある","誘われたら乗ってくる","誘っても微妙な反応","そもそも二人になったことがない"],pts:[2,1,0.5,0]},
+ {q:"あなたの体調や近況を気にかけてくれる?",opts:["よく気にかけてくれる","聞かれれば答えてくれる程度","あまり気にされていない気がする"],pts:[2,1,0]},
+ {q:"他の人にはしない、あなただけの特別扱いを感じる?",opts:["ある(あだ名・扱いの違いなど)","たまに感じることがある","特にない・みんなに同じ態度"],pts:[2,1,0]},
+ {q:"あなたが話したことをよく覚えている?",opts:["細かいことまで覚えている","大事なことは覚えている","あまり覚えていないことが多い"],pts:[2,1,0]},
+ {q:"SNSでの反応(いいね・ストーリー閲覧など)は?",opts:["反応が早い・頻度も高い","たまに反応がある","ほとんど反応がない"],pts:[2,1,0]},
+ {q:"沈黙になったときの空気は?",opts:["気まずくない、居心地がいい","少し気まずいが悪くはない","気まずくて会話を探してしまう"],pts:[2,1,0]},
+ {q:"予定や将来の話(次いつ会うか等)を一緒に立てたがる?",opts:["向こうから提案してくる","聞けば乗ってくれる","あまり乗り気じゃない・話が続かない"],pts:[2,1,0]},
+ {q:"あなたの恋愛状況(彼氏彼女の有無)を気にする素振りは?",opts:["それとなく聞いてきたことがある","話の流れで触れた程度","一切話題に出たことがない"],pts:[2,1,0]},
+ {q:"周りの友人の反応は?",opts:["「脈ありじゃない?」と言われたことがある","特に何も言われない","「それは厳しいかも」と言われたことがある"],pts:[2,1,0]},
+ {q:"あなたに対する態度は、出会った頃と比べて…",opts:["明らかに距離が縮まった気がする","そんなに変わっていない","むしろ距離を感じるようになった"],pts:[2,1,0]}
+];
+const MAXPTS=QUESTIONS.reduce((s,q)=>s+Math.max(...q.pts),0);
+
+/* ================= 結果5段階 ================= */
+const LEVELS=[
+ {min:0,max:20,name:"静かなレーダー",
+  desc:"今のところ、相手からの分かりやすいサインは少なめです。ただし脈がないと決まったわけではなく、単に相手がまだあなたを「よく知らない」段階の可能性も十分あります。",
+  advice:"焦って距離を詰めるより、まずは会話の回数を増やして「知ってもらう」ことを優先してみましょう。共通の話題や、ちょっとした頼み事から自然に接点を増やすのがおすすめです。",
+  face:"quiet"},
+ {min:21,max:40,name:"かすかな反応",
+  desc:"ところどころに小さなサインが見え始めています。まだ「気になる人の一人」という段階かもしれませんが、悪い印象は持たれていなさそうです。",
+  advice:"あなたから少しだけ自己開示を増やしてみましょう。趣味や好きなものの話をすると、相手があなたを認識するきっかけになります。急ぎすぎず、接触回数を積み重ねる時期です。",
+  face:"faint"},
+ {min:41,max:60,name:"反応あり圏内",
+  desc:"複数のサインが重なってきています。相手もあなたのことを、単なる「その他大勢」ではなく認識している可能性が高い状態です。",
+  advice:"二人の時間を少し増やしてみるタイミングです。「今度〇〇行かない?」と軽めの誘いを出してみると、反応で次のヒントが得られます。",
+  face:"arrow"},
+ {min:61,max:80,name:"はっきり反応中",
+  desc:"かなり明確なサインが出ています。相手もあなたを特別な存在として意識している可能性が高い状態です。友達止まりのやりとりを超えてきています。",
+  advice:"あと一歩で関係が動き出しそうです。二人の予定を具体的に提案する、少し踏み込んだ話題を振ってみるなど、あなたから小さな一歩を踏み出してみましょう。",
+  face:"strong"},
+ {min:81,max:100,name:"両想い濃厚",
+  desc:"かなり強いサインが複数出ています。すでにお互いに特別な感情を持っている可能性が高い、いわゆる「両想いかも」の状態です。",
+  advice:"あとはタイミングだけかもしれません。あなたの気持ちを伝えることを、そろそろ具体的に考えてみてもいい時期です。勇気を出す価値がありそうです。",
+  face:"heart"}
+];
+
+/* ================= キャラクター(レーダー・矢印モチーフ) ================= */
+function radarBody(cx,cy,color){
+ return '<path d="M'+(cx-52)+' '+(cy+70)+' Q'+(cx-52)+' '+(cy+10)+' '+cx+' '+(cy-20)+' Q'+(cx+52)+' '+(cy+10)+' '+(cx+52)+' '+(cy+70)+' Z" fill="'+color+'"/>'
+ +'<circle cx="'+cx+'" cy="'+(cy+10)+'" r="26" fill="#ffe9dd"/>';
+}
+const CH={
+ quiet:'<svg viewBox="0 0 120 120"><circle cx="60" cy="30" r="20" fill="none" stroke="#c9c9d1" stroke-width="4" stroke-dasharray="4 6"/>'
+  +radarBody(60,68,'#9aa0a6')
+  +'<path d="M47 63 q4 3 8 0" stroke="#4a3a44" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M65 63 q4 3 8 0" stroke="#4a3a44" stroke-width="2.4" fill="none" stroke-linecap="round"/>'
+  +'<path d="M55 76 q5 2 10 0" stroke="#4a3a44" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>',
+ faint:'<svg viewBox="0 0 120 120"><circle cx="60" cy="26" r="8" fill="#ffd166" opacity=".8"/><circle cx="60" cy="26" r="16" fill="none" stroke="#ffd166" stroke-width="3" opacity=".5"/>'
+  +radarBody(60,68,'#7fa8e0')
+  +'<path d="M47 62 q4 -4 8 0" stroke="#4a3a44" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M65 62 q4 -4 8 0" stroke="#4a3a44" stroke-width="2.4" fill="none" stroke-linecap="round"/>'
+  +'<path d="M53 75 q7 5 14 0" stroke="#4a3a44" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>',
+ arrow:'<svg viewBox="0 0 120 120"><path d="M60 6 L68 26 L60 20 L52 26 Z" fill="#f06292"/>'
+  +radarBody(60,68,'#f2a5bd')
+  +'<path d="M46 61 q5 -6 9 0" stroke="#4a3a44" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M65 61 q5 -6 9 0" stroke="#4a3a44" stroke-width="2.5" fill="none" stroke-linecap="round"/>'
+  +'<path d="M52 74 q8 7 16 0" stroke="#4a3a44" stroke-width="2.5" fill="none" stroke-linecap="round"/>'
+  +'<circle cx="42" cy="71" r="4" fill="#ffb7c5"/><circle cx="78" cy="71" r="4" fill="#ffb7c5"/></svg>',
+ strong:'<svg viewBox="0 0 120 120"><g stroke="#f06292" stroke-width="4" stroke-linecap="round" fill="none"><path d="M60 4 v12"/><path d="M40 10 l6 10"/><path d="M80 10 l-6 10"/></g><circle cx="60" cy="26" r="10" fill="#ffd166"/>'
+  +radarBody(60,68,'#f06292')
+  +'<path d="M45 60 q5 -7 10 0" stroke="#4a3a44" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M65 60 q5 -7 10 0" stroke="#4a3a44" stroke-width="2.6" fill="none" stroke-linecap="round"/>'
+  +'<path d="M50 73 q10 9 20 0" stroke="#4a3a44" stroke-width="2.6" fill="none" stroke-linecap="round"/>'
+  +'<circle cx="40" cy="70" r="4.5" fill="#ffb7c5"/><circle cx="80" cy="70" r="4.5" fill="#ffb7c5"/></svg>',
+ heart:'<svg viewBox="0 0 120 120"><path d="M60 22 c-6-10 -22-6 -20 6 c2 10 20 18 20 18 s18-8 20-18 c2-12 -14-16 -20-6z" fill="#f06292"/>'
+  +radarBody(60,72,'#ff8fb3')
+  +'<path d="M44 63 q6 -8 11 0" stroke="#4a3a44" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M65 63 q6 -8 11 0" stroke="#4a3a44" stroke-width="2.6" fill="none" stroke-linecap="round"/>'
+  +'<path d="M48 76 q12 11 24 0" stroke="#4a3a44" stroke-width="2.6" fill="none" stroke-linecap="round"/>'
+  +'<circle cx="38" cy="72" r="5" fill="#ffb7c5"/><circle cx="82" cy="72" r="5" fill="#ffb7c5"/></svg>'
+};
+
+/* ================= ロジック ================= */
+let idx=0;
+const answers=[]; // {ptIndex}
+const $=id=>document.getElementById(id);
+const show=id=>{document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));$(id).classList.add("active");window.scrollTo({top:0});};
+
+function renderQ(){
+  const q=QUESTIONS[idx];
+  $("qnum").textContent="Q"+(idx+1);
+  $("qtext").textContent=q.q;
+  for(let i=0;i<3;i++){
+    const el=$("opt"+i);
+    if(q.opts[i]){el.textContent=q.opts[i];el.style.display="block";}
+    else{el.style.display="none";}
+  }
+  $("count").textContent=(idx+1)+" / "+QUESTIONS.length;
+  $("fill").style.width=(idx/QUESTIONS.length*100)+"%";
+  $("back").hidden=(idx===0);
+}
+function answer(choiceIdx){
+  answers.push(QUESTIONS[idx].pts[choiceIdx]);
+  idx++;
+  if(idx<QUESTIONS.length){renderQ();}
+  else{showResult();}
+}
+function goBack(){
+  if(idx===0)return;
+  idx--;answers.pop();renderQ();
+}
+function showResult(){
+  const total=answers.reduce((a,b)=>a+b,0);
+  const pct=Math.round(total/MAXPTS*100);
+  const lv=LEVELS.find(l=>pct>=l.min&&pct<=l.max)||LEVELS[LEVELS.length-1];
+  $("rChara").innerHTML=CH[lv.face];
+  $("rName").textContent=lv.name;
+  $("rPct").textContent=pct+"%";
+  $("rDesc").textContent=lv.desc;
+  $("rAdvice").textContent=lv.advice;
+  show("scr-r");
+  requestAnimationFrame(()=>{$("rMeter").style.width=pct+"%";});
+  window._resultText="脈ありチェッカーで診断したら「"+lv.name+"」("+pct+"%)でした🌸\nあなたも診断してみて→ https://lovegram.jp/miari.html";
+}
+async function shareResult(){
+  const text=window._resultText||"脈ありチェッカー https://lovegram.jp/miari.html";
+  if(navigator.share){try{await navigator.share({text});return;}catch(e){}}
+  try{await navigator.clipboard.writeText(text);alert("結果をコピーしました。SNSに貼り付けてシェアできます!");}
+  catch(e){alert(text);}
+}
+function reset(){idx=0;answers.length=0;renderQ();show("scr-q");}
+$("start").addEventListener("click",()=>{renderQ();show("scr-q");});
+$("opt0").addEventListener("click",()=>answer(0));
+$("opt1").addEventListener("click",()=>answer(1));
+$("opt2").addEventListener("click",()=>answer(2));
+$("back").addEventListener("click",goBack);
+$("share").addEventListener("click",shareResult);
+$("retry").addEventListener("click",reset);
+</script>
+</body>
+</html>
