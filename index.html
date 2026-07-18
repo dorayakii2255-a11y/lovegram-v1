@@ -221,6 +221,10 @@ footer{margin-top:40px;text-align:center;font-size:11px;color:var(--muted)}
       <h3 style="font-family:'Shippori Mincho',serif;font-size:14px;font-weight:600;color:var(--sakura);letter-spacing:.18em;margin-bottom:8px;padding-bottom:6px;border-bottom:1px dashed #f3c6d6">恋愛タイプ診断「ラブグラム」とは</h3>
       <p style="font-size:13px;color:var(--ink)">ラブグラムは、恋人との距離感・愛情表現・すれ違いへの向き合い方・恋愛観という4つの軸から、あなたの恋愛の深層心理を16タイプに分類する無料の恋愛タイプ診断です。12の質問に直感で答えるだけで、自分では気づいていない恋愛のクセや、本当に求めているものが見えてきます。結果は<a href="/type-list.html" style="color:var(--sakura)">16タイプの一覧</a>から読むこともできます。</p>
     </div>
+    <div class="result-sec" style="margin-top:18px">
+      <h3 style="font-family:'Shippori Mincho',serif;font-size:14px;font-weight:600;color:var(--sakura);letter-spacing:.18em;margin-bottom:8px;padding-bottom:6px;border-bottom:1px dashed #f3c6d6">診断ロジックについて</h3>
+      <p style="font-size:13px;color:var(--ink)">タイプは「距離感」「愛情表現」「すれ違いへの向き合い方」「恋愛観」の4つの軸それぞれで、あなたがどちら寄りかを12問の回答から判定し、その組み合わせで16タイプに分けています。心理学の学術的な診断ツールではなく、自己理解のきっかけになることを目的としたエンターテインメントコンテンツです。当てはまらない部分があっても、気軽に読み物として楽しんでください。</p>
+    </div>
   </section>
 
   <!-- 質問 -->
@@ -290,7 +294,8 @@ footer{margin-top:40px;text-align:center;font-size:11px;color:var(--muted)}
     </div>
 
     <button class="btn" id="invite">💌 気になる人と相性診断する</button>
-    <button class="btn" id="share">結果をシェアする</button>
+    <button class="btn" id="shareImg">🖼️ 結果を画像でシェアする</button>
+    <button class="btn ghost" id="share">結果をテキストでシェアする</button>
     <button class="btn ghost" id="retry">もう一度診断する</button>
     <p class="note">この診断はエンタメ目的です。心理学的な検査ではありません。</p>
   </section>
@@ -537,6 +542,80 @@ async function inviteShare(){
   catch(e){alert(text);}
 }
 
+/* ================= シェア画像の自動生成(Canvas) ================= */
+function svgToImage(svgMarkup,size){
+  return new Promise((resolve,reject)=>{
+    const img=new Image();
+    const svg64=btoa(unescape(encodeURIComponent(svgMarkup)));
+    img.onload=()=>resolve(img);
+    img.onerror=reject;
+    img.src="data:image/svg+xml;base64,"+svg64;
+  });
+}
+async function buildShareImage(typeName,catchLine,svgMarkup){
+  const W=1080,H=1080;
+  const cv=document.createElement("canvas");cv.width=W;cv.height=H;
+  const ctx=cv.getContext("2d");
+  /* 背景(桜色グラデーション) */
+  const grad=ctx.createLinearGradient(0,0,W,H);
+  grad.addColorStop(0,"#fffaf9");grad.addColorStop(1,"#ffeef2");
+  ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
+  ctx.fillStyle="rgba(255,183,197,.25)";
+  ctx.beginPath();ctx.ellipse(W*0.85,H*0.05,340,260,0,0,7);ctx.fill();
+  /* カード */
+  const cx0=70,cy0=140,cw=W-140,ch=760;
+  ctx.fillStyle="#ffffff";
+  roundRect(ctx,cx0,cy0,cw,ch,26);ctx.fill();
+  ctx.strokeStyle="#f3d9e2";ctx.lineWidth=2;
+  roundRect(ctx,cx0,cy0,cw,ch,26);ctx.stroke();
+  ctx.fillStyle="#f06292";ctx.fillRect(cx0,cy0,cw,8);
+  /* ブランド */
+  ctx.fillStyle="#c9a05a";ctx.font="600 30px 'Zen Kaku Gothic New',sans-serif";
+  ctx.textAlign="center";
+  ctx.fillText("L O V E G R A M",W/2,100);
+  /* キャラ */
+  try{
+    const img=await svgToImage(svgMarkup,300);
+    ctx.drawImage(img,W/2-150,cy0+40,300,300);
+  }catch(e){/* キャラ描画失敗時はスキップ */}
+  /* タイプ名 */
+  ctx.fillStyle="#f06292";ctx.font="700 56px serif";
+  ctx.fillText(typeName,W/2,cy0+400);
+  /* キャッチコピー */
+  ctx.fillStyle="#c9a05a";ctx.font="400 28px 'Zen Kaku Gothic New',sans-serif";
+  ctx.fillText("「"+catchLine+"」",W/2,cy0+450);
+  /* フッター帯 */
+  ctx.fillStyle="#ffe4ec";
+  roundRect(ctx,cx0+40,cy0+ch-120,cw-80,80,16);ctx.fill();
+  ctx.fillStyle="#f06292";ctx.font="700 30px 'Zen Kaku Gothic New',sans-serif";
+  ctx.fillText("lovegram.jp で診断してみる",W/2,cy0+ch-68);
+  return cv;
+}
+function roundRect(ctx,x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();
+}
+async function shareImageResult(key){
+  const t=TYPES[key];
+  const btn=$("shareImg");const orig=btn.textContent;
+  btn.textContent="画像を作成中…";btn.disabled=true;
+  try{
+    const cv=await buildShareImage(t.name,t.catch,CHARS[key]);
+    const blob=await new Promise(res=>cv.toBlob(res,"image/png"));
+    const file=new File([blob],"lovegram-result.png",{type:"image/png"});
+    if(navigator.canShare&&navigator.canShare({files:[file]})){
+      await navigator.share({files:[file],text:"私の恋愛タイプは「"+t.name+"」でした🌸 https://lovegram.jp/"});
+    }else{
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement("a");a.href=url;a.download="lovegram-result.png";a.click();
+      URL.revokeObjectURL(url);
+      alert("画像を保存しました。SNSに投稿する際に添付してください!");
+    }
+  }catch(e){alert("画像の作成に失敗しました。テキストシェアをご利用ください。");}
+  finally{btn.textContent=orig;btn.disabled=false;}
+}
+
 /* ================= ロジック ================= */
 let idx=0;
 const score={d:0,e:0,c:0,v:0}; // A回答の数(各軸3問)
@@ -633,6 +712,7 @@ $("back").addEventListener("click",goBack);
 $("optA").addEventListener("click",()=>answer(true));
 $("optB").addEventListener("click",()=>answer(false));
 $("share").addEventListener("click",shareResult);
+$("shareImg").addEventListener("click",()=>shareImageResult(window._myKey));
 $("invite").addEventListener("click",inviteShare);
 $("retry").addEventListener("click",reset);
 </script>
