@@ -184,12 +184,11 @@ h1 .accent{color:var(--sakura)}
 .points{list-style:none;padding:0}
 .points li{font-size:13.5px;padding:8px 0 8px 26px;position:relative;border-bottom:1px dashed #f8e3ea}
 .points li::before{content:attr(data-i);position:absolute;left:0;top:8px}
-.invite-banner{
-  background:var(--sakura-soft);border:1.5px solid var(--sakura);
-  border-radius:12px;padding:14px 16px;margin-bottom:18px;
-  font-size:13.5px;text-align:center;line-height:1.8;
-}
-.invite-banner b{color:var(--sakura)}
+.invite-hero{text-align:center;margin-bottom:8px}
+.invite-name{font-family:'Shippori Mincho',serif;font-weight:700;font-size:22px;color:var(--sakura)}
+.invite-msg{font-size:13.5px;color:var(--ink);line-height:2;background:var(--sakura-soft);border:1.5px solid var(--sakura);border-radius:12px;padding:14px 16px;margin-top:12px}
+.invite-msg b{color:var(--sakura)}
+.mode-badge{font-size:11px;color:var(--sakura);border:1px solid var(--sakura);border-radius:999px;padding:3px 10px;white-space:nowrap}
 .chara-face svg{width:140px;height:140px}
 .minis{display:flex;justify-content:center;gap:6px;margin:22px 0 4px}
 .minis svg{width:64px;height:64px}
@@ -204,7 +203,13 @@ footer{margin-top:40px;text-align:center;font-size:11px;color:var(--muted)}
   <!-- 表紙 -->
   <section class="screen active" id="scr-top">
     <p class="brand">LOVEGRAM</p>
-    <div class="invite-banner" id="inviteBanner" hidden></div>
+    <div class="invite-hero" id="inviteHero" hidden>
+      <p class="deliver">— 相性診断のご招待 —</p>
+      <div class="chara-face" id="inviterChara"></div>
+      <p class="invite-name" id="inviterName"></p>
+      <p class="invite-msg">この子があなたを待っています💌<br>あなたも診断すると、<b>ふたりの相性</b>がわかります。</p>
+    </div>
+    <div id="normalHero">
     <h1>本当のあなたの<br><span class="accent">愛し方</span>、知っていますか?</h1>
     <p class="lede">12の質問に直感で答えるだけ。<br>あなたの恋愛の深層心理を、16タイプで診断します。</p>
     <div class="minis" id="minis" aria-hidden="true"></div>
@@ -212,6 +217,7 @@ footer{margin-top:40px;text-align:center;font-size:11px;color:var(--muted)}
     <div class="card">
       <span class="seal">恋の診断書</span>
       <p style="font-family:'Shippori Mincho',serif;font-size:14px;letter-spacing:.08em;color:var(--muted)">自分では気づいていない恋愛のクセ、<br>本当は求めているもの。<br>診断結果が、そっと教えてくれます。</p>
+    </div>
     </div>
     <button class="btn" id="start">診断をはじめる(無料・約2分)</button>
     <p class="note">結果はその場で表示されます。登録は不要です。</p>
@@ -224,6 +230,7 @@ footer{margin-top:40px;text-align:center;font-size:11px;color:var(--muted)}
   <!-- 質問 -->
   <section class="screen" id="scr-q">
     <div class="progress">
+      <span class="mode-badge" id="modeBadge" hidden>💗 相性診断モード</span>
       <div class="bar"><div class="fill" id="fill"></div></div>
       <div class="count" id="count">1 / 12</div>
     </div>
@@ -237,8 +244,9 @@ footer{margin-top:40px;text-align:center;font-size:11px;color:var(--muted)}
 
   <!-- 結果 -->
   <section class="screen" id="scr-r">
-    <p class="deliver">— あなたの恋の診断書 —</p>
-    <div class="card">
+    <p class="deliver" id="deliverTitle">— あなたの恋の診断書 —</p>
+    <div id="resultOrder">
+    <div class="card" id="myCard">
       <span class="seal">診断結果</span>
       <div class="chara-face" id="rChara"></div>
       <p class="type-name" id="rName"></p>
@@ -282,6 +290,7 @@ footer{margin-top:40px;text-align:center;font-size:11px;color:var(--muted)}
         <h3>ふたりのポイント</h3>
         <ul class="points" id="cPoints"></ul>
       </div>
+    </div>
     </div>
 
     <button class="btn" id="invite">💌 気になる人と相性診断する</button>
@@ -508,11 +517,6 @@ function getPartnerKey(){
   return (p&&/^[01]{4}$/.test(p)&&TYPES[p])?p:null;
 }
 const partnerKey=getPartnerKey();
-if(partnerKey){
-  const b=$("inviteBanner");
-  b.innerHTML="💌 <b>"+TYPES[partnerKey].name+"</b>さんから相性診断の招待が届いています!<br>あなたも診断すると、ふたりの相性がわかります。";
-  b.hidden=false;
-}
 function showCompat(myKey){
   if(!partnerKey){$("compatCard").hidden=true;return;}
   const {score,points}=compatScore(myKey,partnerKey);
@@ -524,6 +528,9 @@ function showCompat(myKey){
   const ul=$("cPoints");ul.innerHTML="";
   points.forEach((p,i)=>{const li=document.createElement("li");li.dataset.i=["🏠","💐","🌂","🧭"][i];li.textContent=p;ul.appendChild(li);});
   $("compatCard").hidden=false;
+  /* 招待経由:相性を主役に(先頭へ移動+見出し変更) */
+  $("resultOrder").insertBefore($("compatCard"),$("myCard"));
+  $("deliverTitle").textContent="— ふたりの相性診断書 —";
 }
 async function inviteShare(){
   const myKey=window._myKey;
@@ -616,8 +623,16 @@ function reset(){
   answers.length=0;
   renderQ();show("scr-q");
 }
-$("start").addEventListener("click",()=>{renderQ();show("scr-q");});
+$("start").addEventListener("click",()=>{renderQ();if(partnerKey)$("modeBadge").hidden=false;show("scr-q");});
 $("minis").innerHTML=["0000","1000","0010","1111"].map(k=>CHARS[k]).join("");
+if(partnerKey){
+  $("normalHero").hidden=true;
+  $("inviteHero").hidden=false;
+  $("inviterChara").innerHTML=CHARS[partnerKey];
+  $("inviterName").textContent=TYPES[partnerKey].name+"さん";
+  $("start").textContent="相性診断をはじめる(無料・約2分)";
+  document.title="相性診断のご招待|ラブグラム";
+}
 $("back").addEventListener("click",goBack);
 $("optA").addEventListener("click",()=>answer(true));
 $("optB").addEventListener("click",()=>answer(false));
