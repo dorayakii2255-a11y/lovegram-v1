@@ -129,7 +129,8 @@ footer a{color:inherit}
         <div class="axes" id="axes"></div>
       </div>
     </div>
-    <button class="btn" id="share">結果をシェアする</button>
+    <button class="btn" id="shareImg">🖼️ 結果を画像でシェアする</button>
+    <button class="btn ghost" id="share">結果をテキストでシェアする</button>
     <button class="btn ghost" id="retry">もう一度診断する</button>
     <a class="cross" href="/hsp.html">🌿 HSP気質チェックはこちら</a>
     <a class="cross" href="/">🌸 恋愛タイプ診断(16タイプ)はこちら</a>
@@ -215,6 +216,73 @@ const CHARS={
 "111":'<svg viewBox="0 0 120 120"><circle cx="60" cy="24" r="13" fill="#f5c96e"/><g stroke="#f5c96e" stroke-width="3.5" stroke-linecap="round"><line x1="60" y1="4" x2="60" y2="9"/><line x1="44" y1="10" x2="47" y2="14"/><line x1="76" y1="10" x2="73" y2="14"/></g>'+base(60,62,'#d98aa8')+FACE_WARM+'</svg>'
 };
 
+
+/* ================= シェア画像の自動生成(Canvas) ================= */
+function svgToImage(svgMarkup){
+  return new Promise((resolve,reject)=>{
+    const img=new Image();
+    const svg64=btoa(unescape(encodeURIComponent(svgMarkup)));
+    img.onload=()=>resolve(img);
+    img.onerror=reject;
+    img.src="data:image/svg+xml;base64,"+svg64;
+  });
+}
+function roundRect(ctx,x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();
+}
+async function buildShareImage(typeName,catchLine,svgMarkup){
+  const W=1080,H=1080;
+  const cv=document.createElement("canvas");cv.width=W;cv.height=H;
+  const ctx=cv.getContext("2d");
+  const grad=ctx.createLinearGradient(0,0,W,H);
+  grad.addColorStop(0,"#fffaf9");grad.addColorStop(1,"#f3edfb");
+  ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
+  ctx.fillStyle="#c3b5e855";
+  ctx.beginPath();ctx.ellipse(W*0.85,H*0.05,340,260,0,0,7);ctx.fill();
+  const cx0=70,cy0=140,cw=W-140,ch=760;
+  ctx.fillStyle="#ffffff";
+  roundRect(ctx,cx0,cy0,cw,ch,26);ctx.fill();
+  ctx.strokeStyle="#e5dcf2";ctx.lineWidth=2;
+  roundRect(ctx,cx0,cy0,cw,ch,26);ctx.stroke();
+  ctx.fillStyle="#8d7bc0";ctx.fillRect(cx0,cy0,cw,8);
+  ctx.fillStyle="#c9a05a";ctx.font="600 30px 'Zen Kaku Gothic New',sans-serif";
+  ctx.textAlign="center";
+  ctx.fillText("L O V E G R A M",W/2,100);
+  try{
+    const img=await svgToImage(svgMarkup);
+    ctx.drawImage(img,W/2-150,cy0+40,300,300);
+  }catch(e){}
+  ctx.fillStyle="#8d7bc0";ctx.font="700 44px serif";
+  ctx.fillText(typeName,W/2,cy0+400);
+  ctx.fillStyle="#c9a05a";ctx.font="400 26px 'Zen Kaku Gothic New',sans-serif";
+  ctx.fillText(String(catchLine),W/2,cy0+450);
+  ctx.fillStyle="#c3b5e844";
+  roundRect(ctx,cx0+40,cy0+ch-120,cw-80,80,16);ctx.fill();
+  ctx.fillStyle="#8d7bc0";ctx.font="700 30px 'Zen Kaku Gothic New',sans-serif";
+  ctx.fillText("lovegram.jp で診断してみる",W/2,cy0+ch-68);
+  return cv;
+}
+async function shareImageResult(name,catchLine,svgMarkup){
+  const btn=$("shareImg");const orig=btn.textContent;
+  btn.textContent="画像を作成中…";btn.disabled=true;
+  try{
+    const cv=await buildShareImage(name,catchLine,svgMarkup);
+    const blob=await new Promise(res=>cv.toBlob(res,"image/png"));
+    const file=new File([blob],"lovegram-result.png",{type:"image/png"});
+    if(navigator.canShare&&navigator.canShare({files:[file]})){
+      await navigator.share({files:[file],text:(window._resultText||"")});
+    }else{
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement("a");a.href=url;a.download="lovegram-result.png";a.click();
+      URL.revokeObjectURL(url);
+      alert("画像を保存しました。SNSに投稿する際に添付してください!");
+    }
+  }catch(e){alert("画像の作成に失敗しました。テキストシェアをご利用ください。");}
+  finally{btn.textContent=orig;btn.disabled=false;}
+}
+
 let idx=0;
 const score={s:0,e:0,r:0};
 const answers=[];
@@ -270,7 +338,8 @@ function showResult(){
       el.querySelector(".val").style.marginLeft=leadLeft?"0":"auto";});
   });
   show("scr-r");
-  window._resultText="繊細さんの恋愛タイプ診断で「"+t.name+"」でした💜\nあなたの繊細な愛し方は?→ https://lovegram.jp/hsp-love.html";
+  window._resultText="繊細さんの恋愛タイプ診断で「"+t.name+"」でした💜\nあなたの繊細な愛し方は?→ https://lovegram.jp/hsp-love.html\n#HSP恋愛 #繊細さん #ラブグラム";
+  window._shareData=[t.name,t.catch,CHARS[key]];
 }
 async function shareResult(){
   const text=window._resultText||"繊細さんの恋愛タイプ診断 https://lovegram.jp/hsp-love.html";
@@ -284,6 +353,7 @@ $("optA").addEventListener("click",()=>answer(true));
 $("optB").addEventListener("click",()=>answer(false));
 $("back").addEventListener("click",goBack);
 $("share").addEventListener("click",shareResult);
+$("shareImg").addEventListener("click",()=>shareImageResult(...window._shareData));
 $("retry").addEventListener("click",reset);
 </script>
 </body>

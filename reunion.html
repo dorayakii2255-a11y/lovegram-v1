@@ -145,7 +145,8 @@ footer a{color:inherit}
         <p id="rAdvice"></p>
       </div>
     </div>
-    <button class="btn" id="share">結果をシェアする</button>
+    <button class="btn" id="shareImg">🖼️ 結果を画像でシェアする</button>
+    <button class="btn ghost" id="share">結果をテキストでシェアする</button>
     <button class="btn ghost" id="retry">もう一度占う</button>
     <a class="cross" href="/miari.html">🔍 今好きな人の脈ありも診断してみる</a>
     <a class="cross" href="/">🌸 自分の恋愛タイプも診断してみる</a>
@@ -247,6 +248,75 @@ function pct(){
   const total=answers.reduce((a,b)=>a+b,0);
   return Math.round(total/MAXPTS*100);
 }
+
+/* ================= シェア画像の自動生成(Canvas・卦の線を直接描画) ================= */
+function roundRect(ctx,x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();
+}
+function drawHexagramOnCanvas(ctx,cx,topY,pct){
+  const n=Math.min(63,Math.floor(pct/100*64));
+  const bits=n.toString(2).padStart(6,"0").split("").map(Number).reverse();
+  const lineW=220,lineH=16,gap=14,segGap=24;
+  const segW=(lineW-segGap)/2;
+  bits.forEach((b,i)=>{
+    const y=topY-(i*(lineH+gap));
+    ctx.fillStyle="#3a3630";
+    if(b===1){
+      roundRect(ctx,cx-lineW/2,y,lineW,lineH,4);ctx.fill();
+    }else{
+      roundRect(ctx,cx-lineW/2,y,segW,lineH,4);ctx.fill();
+      roundRect(ctx,cx+lineW/2-segW,y,segW,lineH,4);ctx.fill();
+    }
+  });
+}
+async function buildShareImage(name,catchLine,pct){
+  const W=1080,H=1080;
+  const cv=document.createElement("canvas");cv.width=W;cv.height=H;
+  const ctx=cv.getContext("2d");
+  const grad=ctx.createLinearGradient(0,0,W,H);
+  grad.addColorStop(0,"#fdfaf6");grad.addColorStop(1,"#f7ecda");
+  ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
+  const cx0=70,cy0=140,cw=W-140,ch=760;
+  ctx.fillStyle="#fffdfa";
+  roundRect(ctx,cx0,cy0,cw,ch,20);ctx.fill();
+  ctx.strokeStyle="#e8d9bd";ctx.lineWidth=2;
+  roundRect(ctx,cx0,cy0,cw,ch,20);ctx.stroke();
+  ctx.fillStyle="#b7492f";ctx.fillRect(cx0,cy0,cw,8);
+  ctx.fillStyle="#b8923f";ctx.font="600 30px 'Zen Kaku Gothic New',sans-serif";
+  ctx.textAlign="center";
+  ctx.fillText("L O V E G R A M",W/2,100);
+  drawHexagramOnCanvas(ctx,W/2,cy0+330,pct);
+  ctx.fillStyle="#b7492f";ctx.font="700 44px serif";
+  ctx.fillText(name,W/2,cy0+430);
+  ctx.fillStyle="#b8923f";ctx.font="400 26px 'Zen Kaku Gothic New',sans-serif";
+  ctx.fillText(String(catchLine),W/2,cy0+478);
+  ctx.fillStyle="#f4ead9";
+  roundRect(ctx,cx0+40,cy0+ch-120,cw-80,80,16);ctx.fill();
+  ctx.fillStyle="#b7492f";ctx.font="700 30px 'Zen Kaku Gothic New',sans-serif";
+  ctx.fillText("lovegram.jp で占ってみる",W/2,cy0+ch-68);
+  return cv;
+}
+async function shareImageResult(name,catchLine,pct){
+  const btn=$("shareImg");const orig=btn.textContent;
+  btn.textContent="画像を作成中…";btn.disabled=true;
+  try{
+    const cv=await buildShareImage(name,catchLine,pct);
+    const blob=await new Promise(res=>cv.toBlob(res,"image/png"));
+    const file=new File([blob],"lovegram-result.png",{type:"image/png"});
+    if(navigator.canShare&&navigator.canShare({files:[file]})){
+      await navigator.share({files:[file],text:(window._resultText||"")});
+    }else{
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement("a");a.href=url;a.download="lovegram-result.png";a.click();
+      URL.revokeObjectURL(url);
+      alert("画像を保存しました。SNSに投稿する際に添付してください!");
+    }
+  }catch(e){alert("画像の作成に失敗しました。テキストシェアをご利用ください。");}
+  finally{btn.textContent=orig;btn.disabled=false;}
+}
+
 function drawHexagram(p){
   /* pctを0-63の6bitに変換し、爻(陽=1本線/陰=2本線)を描く。値が高いほど陽の割合が増える傾向にする */
   const n=Math.min(63,Math.floor(p/100*64));
@@ -270,7 +340,8 @@ function showResult(){
   $("rAdvice").textContent=g.advice;
   show("scr-r");
   requestAnimationFrame(()=>{$("rMeter").style.width=p+"%";});
-  window._resultText="易で見る復縁診断で「"+g.name+"」("+p+"%)が出ました🀄\nあなたも占ってみて→ https://lovegram.jp/reunion.html";
+  window._resultText="易で見る復縁診断で「"+g.name+"」("+p+"%)が出ました🀄\nあなたも占ってみて→ https://lovegram.jp/reunion.html\n#ラブグラム #復縁診断 #易占い";
+  window._shareData=[g.name,g.catch,p];
 }
 async function shareResult(){
   const text=window._resultText||"易で見る復縁診断 https://lovegram.jp/reunion.html";
@@ -285,6 +356,7 @@ $("opt1").addEventListener("click",()=>answer(1));
 $("opt2").addEventListener("click",()=>answer(2));
 $("back").addEventListener("click",goBack);
 $("share").addEventListener("click",shareResult);
+$("shareImg").addEventListener("click",()=>shareImageResult(...window._shareData));
 $("retry").addEventListener("click",reset);
 </script>
 </body>

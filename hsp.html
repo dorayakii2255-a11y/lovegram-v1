@@ -88,6 +88,19 @@ footer a{color:inherit}
     </div>
     <button class="btn" id="start">チェックをはじめる(無料・約3分)</button>
     <p class="note">これは医療的な診断ではなく、自分の気質を知るための参考ツールです。</p>
+
+    <div class="result-sec" style="margin-top:34px">
+      <h3>HSPとは</h3>
+      <p style="font-size:13px">HSP(Highly Sensitive Person)は、1990年代に心理学者エレイン・アーロン博士が提唱した概念で、生まれつき感覚刺激や他者の感情に対する感受性が高い「気質」を指す言葉です。人口の一定割合にみられるとされ、病気や障害ではなく、性格の一種として位置づけられています。音・光・においなどの物理的な刺激に敏感だったり、人の感情の機微に人一倍気づきやすかったりする一方で、その分疲れやすいという特徴もあります。</p>
+    </div>
+    <div class="result-sec">
+      <h3>HSS型HSP・HSEとは</h3>
+      <p style="font-size:13px">HSPの中には、繊細でありながら刺激を求める傾向(HSS:High Sensation Seeking)を併せ持つ人がいて、これを「HSS型HSP」と呼びます。新しいことに好奇心を持ちながら、同時に疲れやすいという相反する特徴を抱えるため、「刺激が欲しいのに疲れる」というジレンマを感じやすいタイプです。また、HSPの中でも社交的でエネルギッシュな人は「HSE(Highly Sensitive Extrovert)」と呼ばれることがあります。このチェックでは、繊細さ・刺激追求・社交エネルギーの3つの軸から、これらのタイプを含めた8パターンを診断します。</p>
+    </div>
+    <div class="result-sec">
+      <h3>このチェックについて</h3>
+      <p style="font-size:13px">18の質問に対する回答をもとに、3つの軸それぞれの傾向をスコア化し、組み合わせで8タイプに分類しています。学術的に確立した診断ツールではなく、自分の気質を振り返るためのセルフチェックとしてお楽しみください。</p>
+    </div>
   </section>
 
   <!-- 質問 -->
@@ -127,7 +140,8 @@ footer a{color:inherit}
       </div>
     </div>
     <a class="btn" href="/hsp-love.html" style="text-decoration:none;text-align:center">💜 繊細さんの恋愛タイプも診断する</a>
-    <button class="btn ghost" id="share">結果をシェアする</button>
+    <button class="btn" id="shareImg">🖼️ 結果を画像でシェアする</button>
+    <button class="btn ghost" id="share">結果をテキストでシェアする</button>
     <button class="btn ghost" id="retry">もう一度チェックする</button>
     <a class="cross" href="/">🌸 恋愛タイプ診断(16タイプ)はこちら</a>
     <p class="note">この結果は医療的な診断ではありません。HSP・HSS・HSEは学術的に確立した診断名ではなく、気質を理解するための通称です。日常生活に支障を感じるほどのつらさがある場合は、専門家(医師・カウンセラー)への相談をおすすめします。</p>
@@ -215,6 +229,73 @@ const CHARS={
 "000":'<svg viewBox="0 0 120 120"><rect x="42" y="14" width="36" height="10" rx="3" fill="#9aa5b1"/><rect x="48" y="24" width="24" height="8" rx="2" fill="#b6c0cb"/>'+base(60,64,'#8593a2')+F_CALM+'</svg>'
 };
 
+
+/* ================= シェア画像の自動生成(Canvas) ================= */
+function svgToImage(svgMarkup){
+  return new Promise((resolve,reject)=>{
+    const img=new Image();
+    const svg64=btoa(unescape(encodeURIComponent(svgMarkup)));
+    img.onload=()=>resolve(img);
+    img.onerror=reject;
+    img.src="data:image/svg+xml;base64,"+svg64;
+  });
+}
+function roundRect(ctx,x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();
+}
+async function buildShareImage(typeName,catchLine,svgMarkup){
+  const W=1080,H=1080;
+  const cv=document.createElement("canvas");cv.width=W;cv.height=H;
+  const ctx=cv.getContext("2d");
+  const grad=ctx.createLinearGradient(0,0,W,H);
+  grad.addColorStop(0,"#fffaf9");grad.addColorStop(1,"#f3edfb");
+  ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
+  ctx.fillStyle="#c3b5e855";
+  ctx.beginPath();ctx.ellipse(W*0.85,H*0.05,340,260,0,0,7);ctx.fill();
+  const cx0=70,cy0=140,cw=W-140,ch=760;
+  ctx.fillStyle="#ffffff";
+  roundRect(ctx,cx0,cy0,cw,ch,26);ctx.fill();
+  ctx.strokeStyle="#e5dcf2";ctx.lineWidth=2;
+  roundRect(ctx,cx0,cy0,cw,ch,26);ctx.stroke();
+  ctx.fillStyle="#8d7bc0";ctx.fillRect(cx0,cy0,cw,8);
+  ctx.fillStyle="#c9a05a";ctx.font="600 30px 'Zen Kaku Gothic New',sans-serif";
+  ctx.textAlign="center";
+  ctx.fillText("L O V E G R A M",W/2,100);
+  try{
+    const img=await svgToImage(svgMarkup);
+    ctx.drawImage(img,W/2-150,cy0+40,300,300);
+  }catch(e){}
+  ctx.fillStyle="#8d7bc0";ctx.font="700 44px serif";
+  ctx.fillText(typeName,W/2,cy0+400);
+  ctx.fillStyle="#c9a05a";ctx.font="400 26px 'Zen Kaku Gothic New',sans-serif";
+  ctx.fillText(String(catchLine),W/2,cy0+450);
+  ctx.fillStyle="#c3b5e844";
+  roundRect(ctx,cx0+40,cy0+ch-120,cw-80,80,16);ctx.fill();
+  ctx.fillStyle="#8d7bc0";ctx.font="700 30px 'Zen Kaku Gothic New',sans-serif";
+  ctx.fillText("lovegram.jp で診断してみる",W/2,cy0+ch-68);
+  return cv;
+}
+async function shareImageResult(name,catchLine,svgMarkup){
+  const btn=$("shareImg");const orig=btn.textContent;
+  btn.textContent="画像を作成中…";btn.disabled=true;
+  try{
+    const cv=await buildShareImage(name,catchLine,svgMarkup);
+    const blob=await new Promise(res=>cv.toBlob(res,"image/png"));
+    const file=new File([blob],"lovegram-result.png",{type:"image/png"});
+    if(navigator.canShare&&navigator.canShare({files:[file]})){
+      await navigator.share({files:[file],text:(window._resultText||"")});
+    }else{
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement("a");a.href=url;a.download="lovegram-result.png";a.click();
+      URL.revokeObjectURL(url);
+      alert("画像を保存しました。SNSに投稿する際に添付してください!");
+    }
+  }catch(e){alert("画像の作成に失敗しました。テキストシェアをご利用ください。");}
+  finally{btn.textContent=orig;btn.disabled=false;}
+}
+
 let idx=0;
 const score={h:0,s:0,e:0};
 const answers=[];
@@ -267,7 +348,8 @@ function showResult(){
       el.querySelector(".val").style.marginLeft=leadRight?"auto":"0";});
   });
   show("scr-r");
-  window._resultText="HSP気質チェック(3軸版)の結果は「"+t.name+"」("+t.tag+")でした🌿\nあなたはHSP?HSS型HSP?→ https://lovegram.jp/hsp.html";
+  window._resultText="HSP気質チェック(3軸版)の結果は「"+t.name+"」("+t.tag+")でした🌿\nあなたはHSP?HSS型HSP?→ https://lovegram.jp/hsp.html\n#HSP診断 #HSS型HSP #繊細さん";
+  window._shareData=[t.name,t.tag,CHARS[key]];
 }
 async function shareResult(){
   const text=window._resultText||"HSP気質チェック https://lovegram.jp/hsp.html";
@@ -282,6 +364,7 @@ $("opt1").addEventListener("click",()=>answer(1));
 $("opt2").addEventListener("click",()=>answer(2));
 $("back").addEventListener("click",goBack);
 $("share").addEventListener("click",shareResult);
+$("shareImg").addEventListener("click",()=>shareImageResult(...window._shareData));
 $("retry").addEventListener("click",reset);
 </script>
 </body>

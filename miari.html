@@ -118,7 +118,8 @@ footer a{color:inherit}
         <p id="rAdvice"></p>
       </div>
     </div>
-    <button class="btn" id="share">結果をシェアする</button>
+    <button class="btn" id="shareImg">🖼️ 結果を画像でシェアする</button>
+    <button class="btn ghost" id="share">結果をテキストでシェアする</button>
     <button class="btn ghost" id="retry">もう一度診断する</button>
     <a class="cross" href="/">🌸 自分の恋愛タイプも診断してみる</a>
     <a class="cross" href="/reunion.html">🀄 易で見る復縁診断もやってみる</a>
@@ -203,6 +204,73 @@ const CH={
 };
 
 /* ================= ロジック ================= */
+
+/* ================= シェア画像の自動生成(Canvas) ================= */
+function svgToImage(svgMarkup){
+  return new Promise((resolve,reject)=>{
+    const img=new Image();
+    const svg64=btoa(unescape(encodeURIComponent(svgMarkup)));
+    img.onload=()=>resolve(img);
+    img.onerror=reject;
+    img.src="data:image/svg+xml;base64,"+svg64;
+  });
+}
+function roundRect(ctx,x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();
+}
+async function buildShareImage(typeName,catchLine,svgMarkup){
+  const W=1080,H=1080;
+  const cv=document.createElement("canvas");cv.width=W;cv.height=H;
+  const ctx=cv.getContext("2d");
+  const grad=ctx.createLinearGradient(0,0,W,H);
+  grad.addColorStop(0,"#fffaf9");grad.addColorStop(1,"#f3edfb");
+  ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
+  ctx.fillStyle="#ffb3c955";
+  ctx.beginPath();ctx.ellipse(W*0.85,H*0.05,340,260,0,0,7);ctx.fill();
+  const cx0=70,cy0=140,cw=W-140,ch=760;
+  ctx.fillStyle="#ffffff";
+  roundRect(ctx,cx0,cy0,cw,ch,26);ctx.fill();
+  ctx.strokeStyle="#e5dcf2";ctx.lineWidth=2;
+  roundRect(ctx,cx0,cy0,cw,ch,26);ctx.stroke();
+  ctx.fillStyle="#f06292";ctx.fillRect(cx0,cy0,cw,8);
+  ctx.fillStyle="#c9a05a";ctx.font="600 30px 'Zen Kaku Gothic New',sans-serif";
+  ctx.textAlign="center";
+  ctx.fillText("L O V E G R A M",W/2,100);
+  try{
+    const img=await svgToImage(svgMarkup);
+    ctx.drawImage(img,W/2-150,cy0+40,300,300);
+  }catch(e){}
+  ctx.fillStyle="#f06292";ctx.font="700 44px serif";
+  ctx.fillText(typeName,W/2,cy0+400);
+  ctx.fillStyle="#c9a05a";ctx.font="400 26px 'Zen Kaku Gothic New',sans-serif";
+  ctx.fillText(String(catchLine),W/2,cy0+450);
+  ctx.fillStyle="#ffb3c944";
+  roundRect(ctx,cx0+40,cy0+ch-120,cw-80,80,16);ctx.fill();
+  ctx.fillStyle="#f06292";ctx.font="700 30px 'Zen Kaku Gothic New',sans-serif";
+  ctx.fillText("lovegram.jp で診断してみる",W/2,cy0+ch-68);
+  return cv;
+}
+async function shareImageResult(name,catchLine,svgMarkup){
+  const btn=$("shareImg");const orig=btn.textContent;
+  btn.textContent="画像を作成中…";btn.disabled=true;
+  try{
+    const cv=await buildShareImage(name,catchLine,svgMarkup);
+    const blob=await new Promise(res=>cv.toBlob(res,"image/png"));
+    const file=new File([blob],"lovegram-result.png",{type:"image/png"});
+    if(navigator.canShare&&navigator.canShare({files:[file]})){
+      await navigator.share({files:[file],text:(window._resultText||"")});
+    }else{
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement("a");a.href=url;a.download="lovegram-result.png";a.click();
+      URL.revokeObjectURL(url);
+      alert("画像を保存しました。SNSに投稿する際に添付してください!");
+    }
+  }catch(e){alert("画像の作成に失敗しました。テキストシェアをご利用ください。");}
+  finally{btn.textContent=orig;btn.disabled=false;}
+}
+
 let idx=0;
 const answers=[]; // {ptIndex}
 const $=id=>document.getElementById(id);
@@ -242,7 +310,8 @@ function showResult(){
   $("rAdvice").textContent=lv.advice;
   show("scr-r");
   requestAnimationFrame(()=>{$("rMeter").style.width=pct+"%";});
-  window._resultText="脈ありチェッカーで診断したら「"+lv.name+"」("+pct+"%)でした🌸\nあなたも診断してみて→ https://lovegram.jp/miari.html";
+  window._resultText="脈ありチェッカーで診断したら「"+lv.name+"」("+pct+"%)でした🌸\nあなたも診断してみて→ https://lovegram.jp/miari.html\n#ラブグラム #脈あり診断";
+  window._shareData=[lv.name,pct+"%",CH[lv.face]];
 }
 async function shareResult(){
   const text=window._resultText||"脈ありチェッカー https://lovegram.jp/miari.html";
@@ -257,6 +326,7 @@ $("opt1").addEventListener("click",()=>answer(1));
 $("opt2").addEventListener("click",()=>answer(2));
 $("back").addEventListener("click",goBack);
 $("share").addEventListener("click",shareResult);
+$("shareImg").addEventListener("click",()=>shareImageResult(...window._shareData));
 $("retry").addEventListener("click",reset);
 </script>
 </body>
