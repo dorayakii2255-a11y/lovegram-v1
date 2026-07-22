@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ラブグラム | 恋愛深層心理タイプ診断</title>
+<meta name="description" content="12の質問で、あなたの恋愛の深層心理を16タイプに診断。本当のあなたの愛し方が分かります。">
+<meta property="og:title" content="ラブグラム | 恋愛深層心理タイプ診断">
+<meta property="og:description" content="12の質問で、あなたの恋愛の深層心理を16タイプに診断。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lovegram.jp/lovetype.html">
+<meta property="og:image" content="https://lovegram.jp/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lovegram.jp/ogp.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8374174874157238"
+     crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#fffaf9;      /* 背景:ほんのり桜がかった白 */
+  --card:#ffffff;       /* カード面 */
+  --ink:#4a3a44;        /* 本文:柔らかい墨色 */
+  --sakura:#f06292;     /* 主アクセント:濃い桜色 */
+  --sakura-soft:#ffe4ec;/* 淡い桜:面に使う */
+  --gold:#c9a05a;       /* 補助アクセント:上品な金 */
+  --muted:#9b8a93;      /* 補助文 */
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Zen Kaku Gothic New',sans-serif;
+  background:
+    radial-gradient(70vw 50vw at 100% 0%, #fff0f4 0%, transparent 55%),
+    radial-gradient(60vw 45vw at 0% 100%, #fdf3ea 0%, transparent 55%),
+    var(--paper);
+  color:var(--ink);
+  min-height:100svh;
+  line-height:1.9;
+  letter-spacing:.02em;
+}
+.wrap{max-width:520px;margin:0 auto;padding:24px 20px 64px}
+.screen{display:none}
+.screen.active{display:block;animation:rise .5s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.screen.active{animation:none}}
+
+/* ---- 表紙 ---- */
+.brand{
+  font-family:'Shippori Mincho',serif;
+  font-size:13px;letter-spacing:.42em;color:var(--gold);
+  text-align:center;margin:26px 0 6px;
+}
+h1{
+  font-family:'Shippori Mincho',serif;
+  font-weight:600;font-size:clamp(28px,8vw,38px);
+  text-align:center;line-height:1.55;color:#3d2e37;
+}
+h1 .accent{color:var(--sakura)}
+.lede{color:var(--muted);font-size:14px;text-align:center;margin:18px 0 30px}
+
+/* 診断書カード */
+.card{
+  position:relative;
+  background:var(--card);
+  border:1px solid #f3d9e2;
+  border-top:4px solid var(--sakura);
+  border-radius:14px;
+  padding:26px 22px;
+  box-shadow:0 14px 34px rgba(240,98,146,.12);
+}
+.card .seal{
+  position:absolute;top:-16px;right:16px;
+  background:var(--sakura);color:#fff;
+  font-family:'Shippori Mincho',serif;font-size:10px;letter-spacing:.18em;
+  border-radius:999px;padding:7px 14px;
+  box-shadow:0 6px 14px rgba(240,98,146,.35);
+}
+
+.btn{
+  display:block;width:100%;
+  font-family:'Zen Kaku Gothic New',sans-serif;
+  font-weight:700;font-size:16px;letter-spacing:.08em;
+  color:#fff;
+  background:linear-gradient(135deg,var(--sakura),#ff8fb3);
+  border:none;border-radius:999px;
+  padding:16px;margin-top:26px;cursor:pointer;
+  transition:transform .15s ease,box-shadow .15s ease;
+  box-shadow:0 10px 24px rgba(240,98,146,.3);
+}
+.btn:hover{transform:translateY(-1px)}
+.btn:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.btn.ghost{
+  background:#fff;color:var(--sakura);
+  border:1.5px solid var(--sakura);box-shadow:none;
+}
+.note{font-size:11px;color:var(--muted);text-align:center;margin-top:14px}
+
+/* ---- 質問 ---- */
+.progress{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.progress .bar{flex:1;height:6px;background:var(--sakura-soft);border-radius:3px;overflow:hidden}
+.progress .fill{height:100%;width:0;background:linear-gradient(90deg,#ff8fb3,var(--sakura));transition:width .4s ease}
+.progress .count{font-size:12px;color:var(--muted);letter-spacing:.1em;min-width:52px;text-align:right}
+.qnum{
+  font-family:'Shippori Mincho',serif;color:var(--sakura);
+  font-size:12px;letter-spacing:.3em;margin-bottom:8px;
+}
+.qtext{
+  font-family:'Shippori Mincho',serif;font-weight:600;
+  font-size:19px;line-height:1.8;margin-bottom:24px;min-height:4.2em;color:#3d2e37;
+}
+.choice{
+  display:block;width:100%;text-align:left;
+  font-family:inherit;font-size:15px;line-height:1.7;color:var(--ink);
+  background:#fff;
+  border:1.5px solid #f3d9e2;
+  border-radius:12px;padding:16px 18px;margin-bottom:14px;cursor:pointer;
+  transition:background .15s ease,border-color .15s ease,transform .12s ease;
+  box-shadow:0 3px 10px rgba(240,98,146,.06);
+}
+.choice:hover{background:var(--sakura-soft);border-color:var(--sakura)}
+.choice:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.choice:active{transform:scale(.985)}
+.hint{font-size:12px;color:var(--muted);text-align:center;margin-top:4px}
+.backbtn{
+  display:block;margin:18px auto 0;
+  font-family:inherit;font-size:13px;color:var(--muted);
+  background:none;border:none;cursor:pointer;
+  text-decoration:underline;text-underline-offset:3px;
+  padding:8px 12px;
+}
+.backbtn:hover{color:var(--sakura)}
+.backbtn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+/* ---- 結果 ---- */
+.deliver{
+  font-family:'Shippori Mincho',serif;text-align:center;
+  color:var(--muted);font-size:13px;letter-spacing:.28em;margin-bottom:16px;
+}
+.type-code{text-align:center;font-family:'Shippori Mincho',serif;font-weight:700;font-size:26px;letter-spacing:.28em;color:var(--gold);margin:6px 0 -2px}
+.rarity{text-align:center;margin:10px auto 4px;display:table;padding:6px 16px;background:var(--sakura-soft);border-radius:999px;font-size:12px;color:var(--sakura);font-weight:700}
+.dev-wrap{margin:18px 4px 6px}
+.dev-label{text-align:center;font-size:13px;color:var(--ink);margin-bottom:8px}
+.dev-label b{font-family:'Shippori Mincho',serif;font-size:22px;color:var(--sakura);margin-left:4px}
+.dev-graph{position:relative;height:70px;border-bottom:2px solid #f3c6d6}
+.dev-curve{position:absolute;left:0;right:0;bottom:0;height:100%;
+ background:radial-gradient(120% 92% at 50% 100%, var(--sakura-soft) 0%, var(--sakura-soft) 40%, transparent 62%);}
+.dev-marker{position:absolute;bottom:0;width:3px;height:100%;background:var(--sakura);transition:left 1s ease}
+.dev-marker::before{content:"";position:absolute;top:-5px;left:-4px;width:11px;height:11px;border-radius:50%;background:var(--sakura)}
+.dev-scale{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:4px}
+.type-name{
+  font-family:'Shippori Mincho',serif;font-weight:700;
+  font-size:clamp(26px,7.5vw,34px);text-align:center;color:var(--sakura);
+  margin:10px 0 4px;line-height:1.5;
+}
+.catch{
+  text-align:center;font-size:13px;color:var(--gold);
+  letter-spacing:.06em;margin-bottom:22px;
+}
+.result-sec{margin-top:22px}
+.result-sec h3{
+  font-family:'Shippori Mincho',serif;font-size:14px;font-weight:600;
+  color:var(--sakura);letter-spacing:.18em;margin-bottom:8px;
+  padding-bottom:6px;border-bottom:1px dashed #f3c6d6;
+}
+.result-sec p{font-size:14px;color:var(--ink)}
+.result-sec p b{color:var(--sakura);font-weight:700}
+
+.axes{margin-top:8px}
+.axis{margin-bottom:14px}
+.axis .labels{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:4px}
+.axis .labels .lead{color:var(--sakura);font-weight:700}
+.axis .track{height:8px;background:var(--sakura-soft);border-radius:4px;overflow:hidden}
+.axis .val{height:100%;background:linear-gradient(90deg,#ffb3c9,var(--sakura));border-radius:4px;width:0;transition:width .8s ease}
+.axis .pct{font-size:11px;color:var(--gold);text-align:right;margin-top:2px;font-variant-numeric:tabular-nums}
+
+.match{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
+.match span{
+  font-size:12px;padding:7px 12px;border-radius:999px;
+  border:1px solid #f3c6d6;color:var(--ink);background:#fff;
+}
+.match span.good{border-color:var(--sakura);background:var(--sakura-soft)}
+.match span.care{border-color:var(--gold);background:#faf3e6}
+.chara-face{text-align:center;margin-top:6px}
+.compat{margin-top:22px}
+.pair{display:flex;justify-content:center;align-items:center;gap:4px;margin-top:8px}
+.pair svg{width:92px;height:92px}
+.pair .heart{font-size:22px}
+.pair-names{text-align:center;font-size:12px;color:var(--muted);margin-top:2px}
+.score{font-family:'Shippori Mincho',serif;font-weight:700;font-size:42px;text-align:center;color:var(--sakura);line-height:1.3}
+.verdict{text-align:center;font-size:13px;color:var(--gold);margin-bottom:6px}
+.points{list-style:none;padding:0}
+.points li{font-size:13.5px;padding:8px 0 8px 26px;position:relative;border-bottom:1px dashed #f8e3ea}
+.points li::before{content:attr(data-i);position:absolute;left:0;top:8px}
+.invite-hero{text-align:center;margin-bottom:8px}
+.invite-name{font-family:'Shippori Mincho',serif;font-weight:700;font-size:22px;color:var(--sakura)}
+.invite-msg{font-size:13.5px;color:var(--ink);line-height:2;background:var(--sakura-soft);border:1.5px solid var(--sakura);border-radius:12px;padding:14px 16px;margin-top:12px}
+.invite-msg b{color:var(--sakura)}
+.mode-badge{font-size:11px;color:var(--sakura);border:1px solid var(--sakura);border-radius:999px;padding:3px 10px;white-space:nowrap}
+.chara-face svg{width:140px;height:140px}
+.minis{display:flex;justify-content:center;gap:6px;margin:22px 0 4px}
+.minis svg{width:64px;height:64px}
+.minis-cap{font-size:12px;color:var(--muted);text-align:center;margin-bottom:2px}
+footer{margin-top:40px;text-align:center;font-size:11px;color:var(--muted)}
+</style>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 表紙 -->
+  <section class="screen active" id="scr-top">
+    <p class="brand">LOVEGRAM</p>
+    <div class="invite-hero" id="inviteHero" hidden>
+      <p class="deliver">— 相性診断のご招待 —</p>
+      <div class="chara-face" id="inviterChara"></div>
+      <p class="invite-name" id="inviterName"></p>
+      <p class="invite-msg">この子があなたを待っています💌<br>あなたも診断すると、<b>ふたりの相性</b>がわかります。</p>
+    </div>
+    <div id="normalHero">
+    <h1>本当のあなたの<br><span class="accent">愛し方</span>、知っていますか?</h1>
+    <p class="lede">12の質問に直感で答えるだけ。<br>あなたの恋愛の深層心理を、16タイプで診断します。</p>
+    <div class="minis" id="minis" aria-hidden="true"></div>
+    <p class="minis-cap">16タイプのキャラクターから、あなたはどの子?</p>
+    </div>
+    <button class="btn" id="start">診断をはじめる(無料・約2分)</button>
+    <p class="note">結果はその場で表示されます。登録は不要です。</p>
+    <div class="result-sec" style="margin-top:34px">
+      <h3 style="font-family:'Shippori Mincho',serif;font-size:14px;font-weight:600;color:var(--sakura);letter-spacing:.18em;margin-bottom:8px;padding-bottom:6px;border-bottom:1px dashed #f3c6d6">恋愛タイプ診断「ラブグラム」とは</h3>
+      <p style="font-size:13px;color:var(--ink)">ラブグラムは、恋人との距離感・愛情表現・すれ違いへの向き合い方・恋愛観という4つの軸から、あなたの恋愛の深層心理を16タイプに分類する無料の恋愛タイプ診断です。12の質問に直感で答えるだけで、自分では気づいていない恋愛のクセや、本当に求めているものが見えてきます。結果は<a href="/type-list.html" style="color:var(--sakura)">16タイプの一覧</a>から読むこともできます。</p>
+    </div>
+    <div class="result-sec" style="margin-top:18px">
+      <h3 style="font-family:'Shippori Mincho',serif;font-size:14px;font-weight:600;color:var(--sakura);letter-spacing:.18em;margin-bottom:8px;padding-bottom:6px;border-bottom:1px dashed #f3c6d6">診断ロジックについて</h3>
+      <p style="font-size:13px;color:var(--ink)">タイプは「距離感」「愛情表現」「すれ違いへの向き合い方」「恋愛観」の4つの軸それぞれで、あなたがどちら寄りかを12問の回答から判定し、その組み合わせで16タイプに分けています。心理学の学術的な診断ツールではなく、自己理解のきっかけになることを目的としたエンターテインメントコンテンツです。当てはまらない部分があっても、気軽に読み物として楽しんでください。</p>
+    </div>
+  </section>
+
+  <!-- 質問 -->
+  <section class="screen" id="scr-q">
+    <div class="progress">
+      <span class="mode-badge" id="modeBadge" hidden>💗 相性診断モード</span>
+      <div class="bar"><div class="fill" id="fill"></div></div>
+      <div class="count" id="count">1 / 12</div>
+    </div>
+    <p class="qnum" id="qnum">Q1</p>
+    <p class="qtext" id="qtext"></p>
+    <button class="choice" id="optA"></button>
+    <button class="choice" id="optB"></button>
+    <p class="hint">迷ったら、直感でより近いほうを選んでください</p>
+    <button class="backbtn" id="back" hidden>← ひとつ前の質問に戻る</button>
+  </section>
+
+  <!-- 結果 -->
+  <section class="screen" id="scr-r">
+    <p class="deliver" id="deliverTitle">— あなたの恋の診断書 —</p>
+    <div id="resultOrder">
+    <div class="card" id="myCard">
+      <span class="seal">診断結果</span>
+      <div class="chara-face" id="rChara"></div>
+      <p class="type-code" id="rCode"></p>
+      <p class="type-name" id="rName"></p>
+      <p class="catch" id="rCatch"></p>
+      <div class="rarity" id="rRarity"></div>
+      <div class="dev-wrap">
+        <div class="dev-label">恋愛偏差値 <b id="rDevNum">50</b></div>
+        <div class="dev-graph" id="rDevGraph">
+          <div class="dev-curve"></div>
+          <div class="dev-marker" id="rDevMarker"></div>
+        </div>
+        <div class="dev-scale"><span>低</span><span>平均50</span><span>高</span></div>
+      </div>
+
+      <div class="result-sec">
+        <h3>あなたの恋愛スタイル</h3>
+        <p id="rStyle"></p>
+      </div>
+      <div class="result-sec">
+        <h3>でも、本当のあなたは</h3>
+        <p id="rTruth"></p>
+      </div>
+      <div class="result-sec">
+        <h3>あなたが本当に求めているもの</h3>
+        <p id="rNeed"></p>
+      </div>
+      <div class="result-sec">
+        <h3>あるある</h3>
+        <p id="rAruaru"></p>
+      </div>
+      <div class="result-sec">
+        <h3>成長のヒント</h3>
+        <p id="rGrowth"></p>
+      </div>
+
+      <div class="result-sec">
+        <h3>こころの4軸</h3>
+        <div class="axes" id="axes"></div>
+      </div>
+
+      <div class="result-sec">
+        <h3>相性のヒント</h3>
+        <div class="match">
+          <span class="good" id="rGood"></span>
+          <span class="care" id="rCare"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 相性診断の結果(招待リンク経由のときのみ表示) -->
+    <div class="card compat" id="compatCard" hidden>
+      <span class="seal">ふたりの相性</span>
+      <div class="pair"><span id="cMe"></span><span class="heart">💗</span><span id="cYou"></span></div>
+      <p class="pair-names" id="cNames"></p>
+      <p class="score" id="cScore"></p>
+      <p class="verdict" id="cVerdict"></p>
+      <div class="result-sec">
+        <h3>ふたりのポイント</h3>
+        <ul class="points" id="cPoints"></ul>
+      </div>
+    </div>
+    </div>
+
+    <button class="btn" id="invite">💌 気になる人と相性診断する</button>
+    <button class="btn" id="shareImg">🖼️ 結果を画像でシェアする</button>
+    <button class="btn ghost" id="share">結果をテキストでシェアする</button>
+    <button class="btn ghost" id="retry">もう一度診断する</button>
+    <p class="note">この診断はエンタメ目的です。心理学的な検査ではありません。恋愛偏差値・希少度・4文字コードは楽しむための演出で、実際の統計値ではありません。</p>
+  </section>
+
+  <footer><a href="/hsp.html" style="color:inherit">HSP気質チェック</a> ・ <a href="/hsp-love.html" style="color:inherit">繊細さんの恋愛診断</a> ・ <a href="/reunion.html" style="color:inherit">易で見る復縁診断</a> ・ <a href="/miari.html" style="color:inherit">脈ありチェッカー</a> ・ <a href="/type-list.html" style="color:inherit">16タイプ一覧</a> ・ <a href="/privacy.html" style="color:inherit">プライバシーポリシー</a><br>© LOVEGRAM — lovegram.jp</footer>
+</div>
+
+<script>
+/* ================= データ ================= */
+/* 軸: d=距離感(A密着/B自由) e=愛情表現(A言葉/B行動) c=衝突時(A対話/B熟考) v=恋愛観(A直感/B設計) */
+const QUESTIONS=[
+ {ax:"d",q:"休日、恋人の予定が急に空いたと連絡が来た。あなたの本音は?",a:"やった、会いたい!すぐ予定を組みたい",b:"嬉しいけど、今日は自分の予定も大事にしたい"},
+ {ax:"d",q:"恋人と毎日連絡を取り合うことについて、近いのは?",a:"毎日つながっている感覚が安心する",b:"用事がなければ、なくても平気"},
+ {ax:"d",q:"「ひとりの時間が欲しい」と恋人に言われたら?",a:"少し寂しい。距離を感じてしまう",b:"わかる。自分にも必要な時間だから",},
+ {ax:"e",q:"「好き」という気持ち、どう伝えることが多い?",a:"言葉にしてはっきり伝える",b:"言葉より、行動や態度でさりげなく示す"},
+ {ax:"e",q:"恋人からもらって一番うれしいのは?",a:"気持ちのこもった言葉やメッセージ",b:"さりげない気づかいや行動"},
+ {ax:"e",q:"記念日、あなたがしそうなのは?",a:"手紙やメッセージで想いを伝える",b:"サプライズや計画で気持ちを形にする"},
+ {ax:"c",q:"恋人とすれ違いが起きたとき、あなたは?",a:"モヤモヤしたまま放置できない。すぐ話したい",b:"一度距離を置いて、頭を整理してから話したい"},
+ {ax:"c",q:"ケンカの最中、相手が黙り込んだら?",a:"「ちゃんと話そう」と向き合いたくなる",b:"お互い冷静になる時間だと受け止める"},
+ {ax:"c",q:"言いにくい不満があるとき、あなたは?",a:"多少気まずくても早めに伝える",b:"タイミングを見計らって、慎重に切り出す"},
+ {ax:"v",q:"恋に落ちる瞬間は、どちらが近い?",a:"理屈じゃない。気づいたら好きになっている",b:"一緒にいる未来が想像できたとき"},
+ {ax:"v",q:"付き合う前に考えるのは?",a:"今この人といて楽しいかどうか",b:"価値観や将来が合うかどうか"},
+ {ax:"v",q:"恋愛で大切にしたいのは?",a:"心が動く瞬間のときめき",b:"積み重ねていける安心感"}
+];
+
+const AXES=[
+ {key:"d",left:"密着",right:"自由"},
+ {key:"e",left:"言葉",right:"行動"},
+ {key:"c",left:"対話",right:"熟考"},
+ {key:"v",left:"直感",right:"設計"}
+];
+
+/* タイプキー: 各軸でA多数=0/B多数=1 の4桁 (d,e,c,v) */
+const NICK={
+"0000":"タイヨ","0001":"ニワ","0010":"ウタ","0011":"ケンジ",
+"0100":"ナイト","0101":"ダイコク","0110":"マモル","0111":"タクミ",
+"1000":"カケル","1001":"コウカイ","1010":"パレット","1011":"ユウガ",
+"1100":"カル","1101":"サク","1110":"レンズ","1111":"フクロウ"
+};
+/* 4文字コード: 距離感C/F(密着/自由)・愛情W/A(言葉/行動)・衝突T/P(対話/熟考)・恋愛観N/B(今/設計) */
+const CODEMAP=[["C","F"],["W","A"],["T","P"],["N","B"]];
+function typeCode(key){return key.split("").map((b,i)=>CODEMAP[i][+b]).join("");}
+/* 希少度%(全タイプ合計100%になるよう設定・演出値) */
+const RARITY={
+"0000":10,"0001":7,"0010":5,"0011":6,
+"0100":6,"0101":7,"0110":5,"0111":4,
+"1000":9,"1001":5,"1010":4,"1011":6,
+"1100":6,"1101":7,"1110":6,"1111":7
+};
+const TYPES={
+"0000":{name:"情熱の太陽タイプ",catch:"愛したい気持ちが、いつも言葉からあふれてしまう人",
+ style:"好きになったら一直線。「好き」「会いたい」を素直に言葉にでき、ケンカをしても自分から向き合いにいける強さがあります。一緒にいる人は太陽に照らされるような温かさを感じています。",
+ truth:"実は<b>「与えた分だけ返ってこないと不安になる」</b>一面を隠しています。返信が遅いだけで「何かしたかな」と考えてしまう。明るさの裏で、誰よりも「愛されている証拠」を欲しがっているのはあなた自身かもしれません。",
+ need:"言葉です。行動よりプレゼントより、「好きだよ」と言葉で確認させてくれる人。それだけで不安の9割は溶けていきます。",
+ good:"誠実な建築家タイプ",care:"自由な冒険者タイプ",
+ aruaru:"既読がついているのに返信が来ないと、送った文面を見返して「変なこと言ったかな」と3周くらい考えてしまう。",
+ growth:"不安になったときほど、相手に確認を求める前に「今日の自分は大丈夫」と一度立ち止まる練習を。安心は誰かにもらうものだけでなく、自分の中にも育てられます。"},
+"0001":{name:"一途な庭師タイプ",catch:"ひとつの愛を、時間をかけて育てていく人",
+ style:"想いを言葉で伝えながら、関係をコツコツ育てるタイプ。衝突からも逃げず、「ふたりの将来」を見据えて話し合える成熟した恋愛観の持ち主です。",
+ truth:"ただ、<b>「計画通りに進まない恋」に人一倍動揺する</b>一面も。相手の気まぐれや予定変更に、口では「いいよ」と言いながら心がざわついていませんか。",
+ need:"安心して水をやり続けられる畑。つまり、あなたの誠実さを「重い」ではなく「ありがたい」と受け取ってくれる人です。",
+ good:"頼れる大黒柱タイプ",care:"気まぐれな芸術家タイプ",
+ aruaru:"相手の急な予定変更に「いいよ」と即答しつつ、内心では小さくスケジュール帳を睨んでいる。",
+ growth:"計画通りにいかないことを「失敗」ではなく「予定外の発見」と捉え直す練習をすると、恋も人生も軽やかになります。"},
+"0010":{name:"甘えん坊の詩人タイプ",catch:"言葉で愛を紡ぎながら、心の中で何度も読み返す人",
+ style:"甘えることも、想いを言葉にすることも得意。ただ衝突のときはすぐにぶつからず、一度自分の心の中で言葉を選び直す繊細さがあります。",
+ truth:"その繊細さゆえに、<b>「本当に言いたかったこと」を飲み込んでしまう</b>ことも。伝えた言葉の何倍もの想いが、送信されなかった下書きのように心に残っていませんか。",
+ need:"急かさずに待ってくれる人。あなたの言葉が熟すまで隣で待てる人の前でだけ、あなたの愛情は本領を発揮します。",
+ good:"静かな守護者タイプ",care:"直感型の狩人タイプ",
+ aruaru:"本当に言いたい言葉はLINEの下書きのまま、結局送るのは当たり障りのない一言。",
+ growth:"完璧な言葉を探すより、拙くても今の気持ちをそのまま送ってみる勇気が、あなたの本当の魅力を伝えます。"},
+"0011":{name:"誠実な建築家タイプ",catch:"愛を、崩れない設計図から積み上げる人",
+ style:"想いは言葉できちんと伝え、将来のことも現実的に考える。感情に流されず、じっくり考えてから話し合いに臨む、信頼の厚いタイプです。",
+ truth:"一方で、<b>「正しさ」で恋愛を進めようとして息苦しくなる</b>ことも。ちゃんとしなきゃ、と思うほど、素直な「会いたい」が言えなくなっていませんか。",
+ need:"設計図にない寄り道を「それも楽しい」と言ってくれる人。あなたの真面目さを緩めてくれる存在が、恋を長続きさせます。",
+ good:"情熱の太陽タイプ",care:"クールな観察者タイプ",
+ aruaru:"デートプランを几帳面に立てたのに、相手の思いつきの寄り道に一瞬フリーズしてしまう。",
+ growth:"計画にない「余白」を意図的に残しておくと、そこから生まれる自然な会話が関係を深めてくれます。"},
+"0100":{name:"尽くす騎士タイプ",catch:"言葉より先に、体が動いてしまう人",
+ style:"好きな人のためなら労を惜しまない行動派。困っていればすぐ駆けつけ、すれ違いがあれば正面から向き合う、まっすぐな愛し方をします。",
+ truth:"ただ、<b>尽くすことで「嫌われない保険」をかけている</b>節も。何かをしてあげていないと、自分の価値を信じられなくなる瞬間がありませんか。",
+ need:"何もしなくても隣にいてくれる時間。「してくれるから好き」ではなく「いるだけでいい」と言ってくれる人が、あなたの鎧を外してくれます。",
+ good:"甘えん坊の詩人タイプ",care:"マイペースな戦略家タイプ",
+ aruaru:"頼まれてもいないのに荷物を持つ、傘を差し出す、気づいたら奢っている——気づくと尽くしている自分がいる。",
+ growth:"「今日は何もしない」を試してみましょう。あなたが何もしなくても大切にされる関係こそ、本物の証です。"},
+"0101":{name:"頼れる大黒柱タイプ",catch:"愛を、日々の積み重ねで証明していく人",
+ style:"派手な言葉はなくても、行動と継続で愛を示すタイプ。問題があれば話し合いを避けず、ふたりの生活を現実的に支えようとします。",
+ truth:"けれど、<b>「支える側」でいることに安心して、弱音を見せられない</b>ところが。本当は誰かに寄りかかりたい夜があること、気づかれないようにしていませんか。",
+ need:"あなたが崩れても受け止めると言ってくれる人。支え合いは片方通行では続きません。あなたにも甘える権利があります。",
+ good:"一途な庭師タイプ",care:"自由な冒険者タイプ",
+ aruaru:"「大丈夫?」と聞かれると反射的に「大丈夫」と返してしまう。本当はちょっと疲れているときも。",
+ growth:"弱さを見せることは、頼りなさではなく信頼の証です。小さなことから頼る練習をしてみましょう。"},
+"0110":{name:"静かな守護者タイプ",catch:"気づかれないところで、いちばん深く愛している人",
+ style:"多くを語らず、そばで見守りながら行動で支えるタイプ。衝突しても感情的にならず、時間をかけて関係を修復しようとする落ち着きがあります。",
+ truth:"その静けさの奥で、<b>「気づいてほしい」という叫びを押し殺している</b>ことも。言わなくても伝わるはず、と期待しては静かに傷ついていませんか。",
+ need:"あなたの沈黙を読んでくれる人。「今日なんかあった?」と気づいてくれるひと言が、あなたにとって何よりの愛の言葉です。",
+ good:"情熱の太陽タイプ",care:"理想家の航海士タイプ",
+ aruaru:"何も言わずにそっとティッシュや常備薬を差し出す。相手が気づくかどうかは気にしていない。",
+ growth:"「気づいて」と言葉にすることに慣れていきましょう。沈黙のギフトだけでなく、声にした気持ちも同じくらい価値があります。"},
+"0111":{name:"職人気質の匠タイプ",catch:"不器用でも、確かな愛を黙々と形にする人",
+ style:"愛情表現は控えめでも、決めた相手への忠誠心は誰にも負けません。感情より事実で考え、長期的な視点でふたりの関係を組み立てていきます。",
+ truth:"ただ、<b>愛情表現を「照れくさい」で済ませて後回しにしがち</b>。伝わっているだろう、はあなたが思うより伝わっていないかもしれません。",
+ need:"あなたのペースを尊重しつつ、時々ちゃんと「好き?」と聞いてくれる人。答える機会さえあれば、あなたの愛は言葉にもなれます。",
+ good:"誠実な建築家タイプ",care:"直感型の狩人タイプ",
+ aruaru:"「好き」と言うタイミングを逃し続けて、気づけば半年間態度だけで示している。",
+ growth:"月に一度でいいので、言葉で気持ちを伝える日を決めてみましょう。照れくささは慣れで乗り越えられます。"},
+"1000":{name:"自由な冒険者タイプ",catch:"恋も人生も、風の吹くほうへ進みたい人",
+ style:"束縛を好まず、恋人とも対等で風通しのいい関係を築くタイプ。気持ちは言葉でオープンに伝え、揉めごともその場で解決したい快活さがあります。",
+ truth:"でも、<b>自由を守ろうとするあまり「深入りする前に引く」癖</b>が。本気になりかけると、わざと軽い自分を演じてしまうことはありませんか。",
+ need:"翼を切らずに隣を飛んでくれる人。「行ってらっしゃい」と「おかえり」を両方言える人となら、あなたは深く愛することを恐れなくなります。",
+ good:"マイペースな戦略家タイプ",care:"情熱の太陽タイプ",
+ aruaru:"本気になりかけると急に「そんな深い意味はないよ」と自分から予防線を張ってしまう。",
+ growth:"本気になることは自由を失うことではありません。深く愛しても、あなたはあなたのままでいられます。"},
+"1001":{name:"理想家の航海士タイプ",catch:"自分の航路を持ったまま、ふたりの目的地を探す人",
+ style:"自立した関係を好みつつ、将来のビジョンはしっかり話し合いたいタイプ。対話を重ねて、お互いの理想をすり合わせていく知的な恋愛をします。",
+ truth:"ただ、<b>理想が高いぶん「現実の相手」に減点方式になりがち</b>。地図と違う景色に出会ったとき、それを誤りと見るか発見と見るかで、恋の寿命が変わります。",
+ need:"議論ではなく対話ができる人。勝ち負けのない話し合いの心地よさを知ったとき、あなたの恋は理想を超えていきます。",
+ good:"独立した外交官タイプ",care:"静かな守護者タイプ",
+ aruaru:"相手の些細な言動を「理想の航路とズレていないか」と無意識にチェックしてしまう。",
+ growth:"地図にない景色を「間違い」ではなく「新しい発見」として楽しむ余裕を持つと、恋の航海はもっと自由になります。"},
+"1010":{name:"気まぐれな芸術家タイプ",catch:"心が動いた瞬間だけを、正直に生きる人",
+ style:"感性のままに恋をするタイプ。気持ちは言葉や表現で豊かに伝えますが、揉めたときはひとりの世界にこもって気持ちを整理します。",
+ truth:"その気まぐれは、実は<b>「本心を見せて幻滅されるのが怖い」</b>という防衛かもしれません。ミステリアスな自分を演出して、安全な距離を保っていませんか。",
+ need:"あなたの波を「そういうところが好き」と面白がってくれる人。直そうとせず眺めていてくれる相手の前で、あなたはいちばん自由に愛せます。",
+ good:"クールな観察者タイプ",care:"一途な庭師タイプ",
+ aruaru:"楽しい時間の後、急に一人になりたくなって連絡を減らし、相手を不安にさせてしまう。",
+ growth:"距離を置く前に「少し充電したいだけ」と一言添える練習を。それだけで相手の不安はぐっと減ります。"},
+"1011":{name:"独立した外交官タイプ",catch:"ほどよい距離で、いちばん深い信頼を結ぶ人",
+ style:"自分の世界を保ちながら、言葉での意思疎通と将来設計を大切にするタイプ。感情的にならず、時間をかけて信頼を積み上げる大人の恋をします。",
+ truth:"ただ、<b>スマートさが「本音の見えない人」に映る</b>ことも。傷つく前に一歩引く癖が、相手には壁に見えているかもしれません。",
+ need:"交渉ではなく、無防備な雑談ができる相手。とりとめのない話で笑い合える夜が、あなたの心の鍵を開けます。",
+ good:"理想家の航海士タイプ",care:"尽くす騎士タイプ",
+ aruaru:"傷つく前に自分から一歩引いて、「大人な対応」で済ませてしまう。",
+ growth:"無防備になる練習をしてみましょう。取り繕わない本音の方が、実はスマートな関係を作ります。"},
+"1100":{name:"直感型の狩人タイプ",catch:"欲しいと思った瞬間、もう動き出している人",
+ style:"ピンと来たら迷わず行動するタイプ。言葉を並べるより会いに行く、渡す、連れ出す。衝突もその場で片づけて、次の瞬間には笑っていたい主義です。",
+ truth:"ただ、<b>手に入ると安心して熱が下がる</b>傾向に自分でも気づいているはず。追いかける恋しか知らないままだと、続く愛の味を知らずに終わるかもしれません。",
+ need:"攻略しきれない人、ではなく「攻略が要らない関係」。素の自分で退屈な日曜を一緒に過ごせたとき、本当の恋が始まります。",
+ good:"甘えん坊の詩人タイプ",care:"職人気質の匠タイプ",
+ aruaru:"追いかけている間は情熱的なのに、手に入った途端に熱が冷めていく自分に戸惑う。",
+ growth:"「手に入れること」ではなく「一緒に育てること」に目的を変えてみると、恋の楽しみ方が広がります。"},
+"1101":{name:"マイペースな戦略家タイプ",catch:"自分のペースを守りながら、着実に愛を進める人",
+ style:"恋愛に振り回されず、自分の生活と両立させながら関係を進めるタイプ。感情論より建設的な話し合いを好み、行動で誠意を示します。",
+ truth:"ただ、<b>コスパやタイパで恋を測ってしまう瞬間</b>が。効率で選んだ関係は効率で壊れます。無駄な時間こそが愛を育てることを、頭では分かっているはずです。",
+ need:"予定にない時間を楽しませてくれる人。「なんとなく一緒にいた3時間」を幸せと感じられたら、あなたの恋は本物です。",
+ good:"自由な冒険者タイプ",care:"尽くす騎士タイプ",
+ aruaru:"デートの予定を立てるとき、無意識にコスパやタイパを計算してしまう。",
+ growth:"非効率な時間ほど、後から振り返ると一番の思い出になっていたりします。あえて予定を決めない日を作ってみましょう。"},
+"1110":{name:"クールな観察者タイプ",catch:"一歩引いた場所から、誰よりも相手を見ている人",
+ style:"多くを語らず、相手をよく観察して静かに寄り添うタイプ。感情の起伏が少なく、直感で「この人だ」と決めたら態度で示していきます。",
+ truth:"その観察眼は、<b>傷つかないための「安全確認」でもある</b>のでは。見極めているうちにタイミングを逃した恋、ひとつやふたつ心当たりがありませんか。",
+ need:"分析を止めて飛び込みたくなる人。理屈で説明できない「なんか好き」を信じたとき、あなたの恋は動き出します。",
+ good:"気まぐれな芸術家タイプ",care:"誠実な建築家タイプ",
+ aruaru:"相手をじっくり観察しすぎて、気づけばタイミングを逃してしまったことがある。",
+ growth:"分析が終わってから動くのではなく、7割の確信で動いてみる練習を。恋は完全なデータが揃うのを待ってくれません。"},
+"1111":{name:"孤高の研究者タイプ",catch:"自分の世界を極めながら、運命の理解者を待つ人",
+ style:"ひとりの時間を愛し、恋愛も慎重に、長期的な視点で考えるタイプ。軽々しく心を開かないぶん、一度信じた相手への信頼は揺るぎません。",
+ truth:"ただ、<b>「理解されないだろう」と最初から諦めて扉を閉めている</b>ことも。孤独が好きなのではなく、傷つかない場所が好きなだけかもしれません。",
+ need:"あなたの世界に土足で入らず、それでも根気強くノックし続けてくれる人。扉を開ける勇気は、実はもうあなたの中にあります。",
+ good:"独立した外交官タイプ",care:"情熱の太陽タイプ",
+ aruaru:"心を開く前に「どうせ理解されない」と結論を出し、扉を閉じてしまう。",
+ growth:"最初から完全に理解されなくても大丈夫。少しずつ扉を開けていく過程こそが、信頼を育てるプロセスです。"}
+};
+
+/* ================= キャラクター ================= */
+const FACE={
+ happy:'<path d="M47 53 q4 -6 8 0" stroke="#4a3a44" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M65 53 q4 -6 8 0" stroke="#4a3a44" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M53 65 q7 7 14 0" stroke="#4a3a44" stroke-width="2.6" fill="none" stroke-linecap="round"/>',
+ dot:'<circle cx="49" cy="53" r="2.6" fill="#4a3a44"/><circle cx="71" cy="53" r="2.6" fill="#4a3a44"/><path d="M56 65 q4 4 8 0" stroke="#4a3a44" stroke-width="2.4" fill="none" stroke-linecap="round"/>',
+ wink:'<path d="M46 53 q4 -5 8 1" stroke="#4a3a44" stroke-width="2.6" fill="none" stroke-linecap="round"/><line x1="66" y1="53" x2="74" y2="53" stroke="#4a3a44" stroke-width="2.6" stroke-linecap="round"/><path d="M54 65 q6 6 12 0" stroke="#4a3a44" stroke-width="2.6" fill="none" stroke-linecap="round"/>',
+ calm:'<path d="M46 54 q4 4 8 0" stroke="#4a3a44" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M66 54 q4 4 8 0" stroke="#4a3a44" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M56 65 q4 3 8 0" stroke="#4a3a44" stroke-width="2.4" fill="none" stroke-linecap="round"/>',
+ cool:'<line x1="45" y1="53" x2="53" y2="53" stroke="#4a3a44" stroke-width="2.6" stroke-linecap="round"/><line x1="67" y1="53" x2="75" y2="53" stroke="#4a3a44" stroke-width="2.6" stroke-linecap="round"/><path d="M55 65 q7 4 11 -1" stroke="#4a3a44" stroke-width="2.4" fill="none" stroke-linecap="round"/>'
+};
+function chara(body,motif,face,extra){
+ return '<svg viewBox="0 0 120 120" role="img">'+ (motif||'')
+ +'<path d="M32 108 Q32 76 60 76 Q88 76 88 108 Z" fill="'+body+'"/>'
+ +'<circle cx="60" cy="56" r="26" fill="#ffe9dd"/>'
+ +'<circle cx="45" cy="63" r="4.5" fill="#ffb7c5"/><circle cx="75" cy="63" r="4.5" fill="#ffb7c5"/>'
+ +face+(extra||'')+'</svg>';
+}
+const CHARS={
+"0000":chara("#f06292",
+ '<circle cx="60" cy="32" r="18" fill="#f6b73c"/><g stroke="#f6b73c" stroke-width="5" stroke-linecap="round"><line x1="60" y1="6" x2="60" y2="12"/><line x1="40" y1="12" x2="44" y2="17"/><line x1="80" y1="12" x2="76" y2="17"/><line x1="32" y1="30" x2="39" y2="31"/><line x1="88" y1="30" x2="81" y2="31"/></g><circle cx="60" cy="32" r="12" fill="#ffd166"/>',
+ FACE.happy,'<path d="M92 84 c-3-5 -11-3 -10 3 c1 5 10 9 10 9 s9-4 10-9 c1-6 -7-8 -10-3z" fill="#f06292"/>'),
+"0001":chara("#7cb87c",
+ '<path d="M60 34 q-2 -12 8 -16" stroke="#5a9c5a" stroke-width="3.5" fill="none" stroke-linecap="round"/><ellipse cx="72" cy="15" rx="7" ry="4.5" fill="#8fd18f" transform="rotate(-25 72 15)"/><ellipse cx="55" cy="24" rx="6" ry="4" fill="#8fd18f" transform="rotate(20 55 24)"/>',
+ FACE.dot,'<g><rect x="88" y="86" width="14" height="10" rx="2" fill="#5a9c5a"/><path d="M88 89 l-7 -4" stroke="#5a9c5a" stroke-width="3" stroke-linecap="round"/></g>'),
+"0010":chara("#b39ddb",
+ '<ellipse cx="57" cy="27" rx="20" ry="8" fill="#9575cd"/><circle cx="57" cy="18" r="3.5" fill="#7e57c2"/>',
+ FACE.calm,'<path d="M90 78 q6 -14 14 -16 q-3 10 -10 18z" fill="#ffd166"/><line x1="90" y1="82" x2="94" y2="78" stroke="#c9a05a" stroke-width="2.5" stroke-linecap="round"/>'),
+"0011":chara("#5b8dd9",
+ '<path d="M38 34 Q60 14 82 34 L82 38 L38 38 Z" fill="#4a7bc8"/><rect x="36" y="36" width="48" height="6" rx="3" fill="#5b8dd9"/><rect x="57" y="18" width="6" height="18" fill="#7fa8e0"/>',
+ FACE.dot,''),
+"0100":chara("#e2725b",
+ '<path d="M40 36 Q60 14 80 36 Z" fill="#c9c9d1"/><path d="M60 8 q10 4 8 16 l-6 8" stroke="#f06292" stroke-width="5" fill="none" stroke-linecap="round"/>',
+ FACE.happy,'<g><path d="M14 78 q0 -8 9 -8 q9 0 9 8 q0 10 -9 14 q-9 -4 -9 -14z" fill="#c9a05a"/><path d="M23 72 v16 M15 79 h16" stroke="#fff" stroke-width="2"/></g>'),
+"0101":chara("#a1785c",
+ '<path d="M32 36 L60 14 L88 36 Z" fill="#8a6248"/><rect x="72" y="18" width="7" height="12" fill="#8a6248"/>',
+ FACE.dot,''),
+"0110":chara("#6a9b7e",
+ '<path d="M32 56 Q32 20 60 20 Q88 20 88 56 L80 56 Q80 30 60 30 Q40 30 40 56 Z" fill="#55836a"/>',
+ FACE.calm,'<g><rect x="90" y="80" width="12" height="15" rx="3" fill="#ffd166" stroke="#c9a05a" stroke-width="2"/><line x1="96" y1="76" x2="96" y2="80" stroke="#c9a05a" stroke-width="2.5"/></g>'),
+"0111":chara("#4a6fa5",
+ '',
+ FACE.cool+'<path d="M35 45 H85" stroke="#f06292" stroke-width="6" stroke-linecap="round"/><path d="M85 45 l8 -5 M85 45 l9 2" stroke="#f06292" stroke-width="4" stroke-linecap="round"/>',''),
+"1000":chara("#4fb0a5",
+ '<path d="M34 32 Q60 10 86 32 L86 36 L34 36 Z" fill="#3d918a"/><rect x="28" y="34" width="64" height="7" rx="3.5" fill="#357d77"/><rect x="34" y="27" width="52" height="5" fill="#ffd166"/>',
+ FACE.wink,'<path d="M94 24 l16 -7 l-7 16 l-4 -6 z" fill="#f06292"/>'),
+"1001":chara("#3f6fb5",
+ '<ellipse cx="60" cy="28" rx="24" ry="10" fill="#fff"/><rect x="36" y="28" width="48" height="7" rx="3.5" fill="#2f5a99"/><circle cx="60" cy="26" r="4" fill="#f06292"/>',
+ FACE.happy,''),
+"1010":chara("#9b6fc3",
+ '<ellipse cx="52" cy="24" rx="19" ry="8" fill="#7e4fb0" transform="rotate(-10 52 24)"/><circle cx="45" cy="15" r="3.5" fill="#6a3f96"/>',
+ '<circle cx="49" cy="53" r="2.6" fill="#4a3a44"/><circle cx="71" cy="53" r="2.6" fill="#4a3a44"/><path d="M53 65 q3.5 3.5 7 0 q3.5 3.5 7 0" stroke="#4a3a44" stroke-width="2.4" fill="none" stroke-linecap="round"/>',
+ '<g><ellipse cx="97" cy="86" rx="12" ry="9" fill="#f5e6d3" stroke="#c9a05a" stroke-width="2"/><circle cx="93" cy="83" r="2.2" fill="#f06292"/><circle cx="100" cy="83" r="2.2" fill="#5b8dd9"/><circle cx="97" cy="90" r="2.2" fill="#7cb87c"/></g>'),
+"1011":chara("#7d8ba1",
+ '',
+ FACE.calm,'<path d="M52 80 l8 5 l8 -5 l-3 8 l-5 -3 l-5 3 z" fill="#f06292"/>'),
+"1100":chara("#ef8b4e",
+ '<path d="M36 30 H84" stroke="#d97636" stroke-width="6" stroke-linecap="round"/><path d="M78 12 q6 8 0 16" stroke="#f06292" stroke-width="4" fill="none" stroke-linecap="round"/>',
+ FACE.wink,'<g><line x1="10" y1="94" x2="34" y2="82" stroke="#c9a05a" stroke-width="3" stroke-linecap="round"/><path d="M34 82 l-8 0 l5 6 z" fill="#f06292"/><path d="M10 94 l-2 5 l6 -2 z" fill="#8a6248"/></g>'),
+"1101":chara("#6f9e8f",
+ '<path d="M52 34 q-2 -18 12 -20 q10 -1 10 8 q0 5 -6 5 l-2 7 z" fill="#557f72"/><circle cx="68" cy="19" r="1.8" fill="#fff"/>',
+ FACE.cool,''),
+"1110":chara("#6fa7c7",
+ '',
+ FACE.cool,'<g><circle cx="94" cy="82" r="9" fill="none" stroke="#4a3a44" stroke-width="2.6"/><line x1="100" y1="89" x2="107" y2="96" stroke="#4a3a44" stroke-width="3.5" stroke-linecap="round"/></g>'),
+"1111":chara("#7e6bb5",
+ '<rect x="38" y="24" width="44" height="9" rx="2" fill="#8e7cc3"/><rect x="42" y="16" width="36" height="8" rx="2" fill="#c9a05a"/><rect x="42" y="16" width="36" height="3" rx="1.5" fill="#e0bd77"/>',
+ '<g stroke="#4a3a44" stroke-width="2.4" fill="none"><circle cx="49" cy="53" r="8"/><circle cx="71" cy="53" r="8"/><line x1="57" y1="53" x2="63" y2="53"/></g><circle cx="49" cy="53" r="2.4" fill="#4a3a44"/><circle cx="71" cy="53" r="2.4" fill="#4a3a44"/><path d="M56 66 q4 3 8 0" stroke="#4a3a44" stroke-width="2.4" fill="none" stroke-linecap="round"/>',
+ '<path d="M92 22 c-2-3 -7-2 -6 2 c1 3 6 5 6 5 s5-2 6-5 c1-4 -4-5 -6-2z" fill="#f06292"/>')
+};
+
+/* ================= 相性診断 ================= */
+/* 軸ごとの相性ルール:[同じとき加点, 違うとき加点, 同じときの解説, 違うときの解説] */
+const COMPAT_RULES={
+ d:[28,8,"恋人との距離感の好みがぴったり。一緒にいたい度合いが同じなので、束縛感やさみしさのすれ違いが起きにくいふたりです。",
+      "「もっと一緒にいたい」派と「自分の時間も欲しい」派の組み合わせ。悪いことではありませんが、会う頻度や連絡のペースは早めにすり合わせておくと安心です。"],
+ e:[12,18,"愛情表現のスタイルが同じなので、お互いの「好き」がまっすぐ伝わりやすいふたりです。",
+      "言葉で伝える人と行動で示す人の組み合わせ。実は補い合える名コンビで、相手の表現方法を「愛情の形」として受け取れれば最強です。"],
+ c:[24,10,"すれ違いへの向き合い方が同じ。ケンカになっても同じペースで仲直りに向かえるのは大きな強みです。",
+      "すぐ話したい人と、一度冷静になりたい人の組み合わせ。「時間を置くのは逃げじゃない」とお互いに知っておくだけで、ケンカの8割は防げます。"],
+ v:[26,10,"恋愛観の軸が同じなので、関係の進むスピード感に無理がありません。自然体でいられるふたりです。",
+      "ときめき重視と安心感重視の組み合わせ。相手の大切にしているものを尊重できれば、恋の楽しさと安定の両方を手に入れられます。"]
+};
+function compatScore(k1,k2){
+  let s=0;const pts=[];
+  AXES.forEach((a,i)=>{
+    const same=k1[i]===k2[i];
+    const r=COMPAT_RULES[a.key];
+    s+=same?r[0]:r[1];
+    pts.push(same?r[2]:r[3]);
+  });
+  /* ペア固有のゆらぎ(±4)を決定的に加える */
+  let h=0;const pair=k1<k2?k1+k2:k2+k1;
+  for(const ch of pair)h=(h*31+ch.charCodeAt(0))%997;
+  s+=(h%9)-4;
+  return {score:Math.max(38,Math.min(100,s)),points:pts};
+}
+function verdictText(s){
+  if(s>=90)return "運命レベル。お互いの「そのまま」が心地いい組み合わせです";
+  if(s>=75)return "とても良い相性。安心とときめきのバランスが取れたふたりです";
+  if(s>=60)return "良い相性。違いはあるけれど、それが魅力になる組み合わせです";
+  if(s>=48)return "伸びしろたっぷり。お互いを知るほど深まっていく関係です";
+  return "正反対の刺激的なふたり。だからこそ惹かれ合う、目が離せない組み合わせです";
+}
+function getPartnerKey(){
+  const p=new URLSearchParams(location.search).get("p");
+  return (p&&/^[01]{4}$/.test(p)&&TYPES[p])?p:null;
+}
+const partnerKey=getPartnerKey();
+function showCompat(myKey){
+  if(!partnerKey){$("compatCard").hidden=true;return;}
+  const {score,points}=compatScore(myKey,partnerKey);
+  $("cMe").innerHTML=CHARS[myKey];
+  $("cYou").innerHTML=CHARS[partnerKey];
+  $("cNames").textContent=TYPES[myKey].name+"("+NICK[myKey]+") × "+TYPES[partnerKey].name+"("+NICK[partnerKey]+")";
+  $("cScore").textContent="相性 "+score+"%";
+  $("cVerdict").textContent=verdictText(score);
+  const ul=$("cPoints");ul.innerHTML="";
+  points.forEach((p,i)=>{const li=document.createElement("li");li.dataset.i=["🏠","💐","🌂","🧭"][i];li.textContent=p;ul.appendChild(li);});
+  $("compatCard").hidden=false;
+  /* 招待経由:相性を主役に(先頭へ移動+見出し変更) */
+  $("resultOrder").insertBefore($("compatCard"),$("myCard"));
+  $("deliverTitle").textContent="— ふたりの相性診断書 —";
+}
+async function inviteShare(){
+  const myKey=window._myKey;
+  const url="https://lovegram.jp/lovetype.html?p="+myKey;
+  const text="私の恋愛タイプは「"+TYPES[myKey].name+"("+NICK[myKey]+")」でした🌸\nこのリンクから診断すると、私との相性がわかるよ💗\n"+url;
+  if(navigator.share){try{await navigator.share({text});return;}catch(e){}}
+  try{await navigator.clipboard.writeText(text);alert("招待メッセージをコピーしました。LINEやDMに貼り付けて送ってね!");}
+  catch(e){alert(text);}
+}
+
+/* ================= シェア画像の自動生成(Canvas) ================= */
+function svgToImage(svgMarkup,size){
+  return new Promise((resolve,reject)=>{
+    const img=new Image();
+    const svg64=btoa(unescape(encodeURIComponent(svgMarkup)));
+    img.onload=()=>resolve(img);
+    img.onerror=reject;
+    img.src="data:image/svg+xml;base64,"+svg64;
+  });
+}
+async function buildShareImage(code,typeName,nick,catchLine,rarity,dev,svgMarkup){
+  const W=1080,H=1080;
+  const cv=document.createElement("canvas");cv.width=W;cv.height=H;
+  const ctx=cv.getContext("2d");
+  const grad=ctx.createLinearGradient(0,0,W,H);
+  grad.addColorStop(0,"#fffaf9");grad.addColorStop(1,"#ffeef2");
+  ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
+  ctx.fillStyle="rgba(255,183,197,.25)";
+  ctx.beginPath();ctx.ellipse(W*0.85,H*0.05,340,260,0,0,7);ctx.fill();
+  const cx0=60,cy0=120,cw=W-120,ch=840;
+  ctx.fillStyle="#ffffff";
+  roundRect(ctx,cx0,cy0,cw,ch,26);ctx.fill();
+  ctx.strokeStyle="#f3d9e2";ctx.lineWidth=2;
+  roundRect(ctx,cx0,cy0,cw,ch,26);ctx.stroke();
+  ctx.fillStyle="#f06292";ctx.fillRect(cx0,cy0,cw,8);
+  ctx.textAlign="center";
+  ctx.fillStyle="#c9a05a";ctx.font="600 28px 'Zen Kaku Gothic New',sans-serif";
+  ctx.fillText("L O V E G R A M",W/2,cy0+56);
+  /* 4文字コード(大きく) */
+  ctx.fillStyle="#c9a05a";ctx.font="700 64px serif";
+  ctx.save();ctx.letterSpacing="18px";
+  ctx.fillText(code,W/2,cy0+130);ctx.restore();
+  /* キャラ */
+  try{
+    const img=await svgToImage(svgMarkup,260);
+    ctx.drawImage(img,W/2-130,cy0+150,260,260);
+  }catch(e){}
+  /* タイプ名+愛称 */
+  ctx.fillStyle="#f06292";ctx.font="700 46px serif";
+  ctx.fillText(typeName,W/2,cy0+470);
+  ctx.fillStyle="#c9a05a";ctx.font="400 26px 'Zen Kaku Gothic New',sans-serif";
+  ctx.fillText("(愛称:"+nick+")",W/2,cy0+512);
+  ctx.fillStyle="#9b8a93";ctx.font="400 24px 'Zen Kaku Gothic New',sans-serif";
+  ctx.fillText("「"+catchLine+"」",W/2,cy0+552);
+  /* 希少度・偏差値の2カラム */
+  const boxY=cy0+590,boxH=110;
+  ctx.fillStyle="#ffe4ec";
+  roundRect(ctx,cx0+40,boxY,(cw-100)/2,boxH,14);ctx.fill();
+  roundRect(ctx,W/2+10,boxY,(cw-100)/2,boxH,14);ctx.fill();
+  ctx.fillStyle="#9b8a93";ctx.font="400 22px 'Zen Kaku Gothic New',sans-serif";
+  ctx.fillText("希少度",cx0+40+(cw-100)/4,boxY+38);
+  ctx.fillText("恋愛偏差値",W/2+10+(cw-100)/4,boxY+38);
+  ctx.fillStyle="#f06292";ctx.font="700 44px serif";
+  ctx.fillText("約"+rarity+"%",cx0+40+(cw-100)/4,boxY+86);
+  ctx.fillText(String(dev),W/2+10+(cw-100)/4,boxY+86);
+  /* フッター帯 */
+  ctx.fillStyle="#f06292";
+  roundRect(ctx,cx0+40,cy0+ch-96,cw-80,64,14);ctx.fill();
+  ctx.fillStyle="#ffffff";ctx.font="700 28px 'Zen Kaku Gothic New',sans-serif";
+  ctx.fillText("lovegram.jp で診断してみる",W/2,cy0+ch-54);
+  return cv;
+}
+function roundRect(ctx,x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();
+}
+async function shareImageResult(key){
+  const t=TYPES[key];
+  const btn=$("shareImg");const orig=btn.textContent;
+  btn.textContent="画像を作成中…";btn.disabled=true;
+  try{
+    const cv=await buildShareImage(typeCode(key),t.name,NICK[key],t.catch,RARITY[key],window._devScore||50,CHARS[key]);
+    const blob=await new Promise(res=>cv.toBlob(res,"image/png"));
+    const file=new File([blob],"lovegram-result.png",{type:"image/png"});
+    if(navigator.canShare&&navigator.canShare({files:[file]})){
+      await navigator.share({files:[file],text:(window._resultText||"")});
+    }else{
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement("a");a.href=url;a.download="lovegram-result.png";a.click();
+      URL.revokeObjectURL(url);
+      alert("画像を保存しました。SNSに投稿する際に添付してください!");
+    }
+  }catch(e){alert("画像の作成に失敗しました。テキストシェアをご利用ください。");}
+  finally{btn.textContent=orig;btn.disabled=false;}
+}
+
+/* ================= ロジック ================= */
+let idx=0;
+const score={d:0,e:0,c:0,v:0}; // A回答の数(各軸3問)
+const $=id=>document.getElementById(id);
+const show=id=>{document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));$(id).classList.add("active");window.scrollTo({top:0});};
+
+function renderQ(){
+  const q=QUESTIONS[idx];
+  $("qnum").textContent="Q"+(idx+1);
+  $("qtext").textContent=q.q;
+  $("optA").textContent=q.a;
+  $("optB").textContent=q.b;
+  $("count").textContent=(idx+1)+" / "+QUESTIONS.length;
+  $("fill").style.width=((idx)/QUESTIONS.length*100)+"%";
+  $("back").hidden=(idx===0);
+}
+const answers=[]; // 回答履歴(true=A)
+function answer(isA){
+  const q=QUESTIONS[idx];
+  if(isA)score[q.ax]++;
+  answers.push(isA);
+  idx++;
+  if(idx<QUESTIONS.length){renderQ();}
+  else{showResult();}
+}
+function goBack(){
+  if(idx===0)return;
+  idx--;
+  const q=QUESTIONS[idx];
+  const wasA=answers.pop();
+  if(wasA)score[q.ax]--;
+  renderQ();
+}
+function pct(aCount){ /* A側の強さ% 0..3 -> 12/38/62/88 */
+  return [12,38,62,88][aCount];
+}
+function showResult(){
+  const key=AXES.map(a=>score[a.key]>=2?"0":"1").join("");
+  const t=TYPES[key];
+  window._myKey=key;
+  $("rChara").innerHTML=CHARS[key]||"";
+  $("rName").textContent=t.name+"(愛称:"+NICK[key]+")";
+  $("rCatch").textContent="「"+t.catch+"」";
+  $("rStyle").innerHTML=t.style;
+  $("rTruth").innerHTML=t.truth;
+  $("rNeed").innerHTML=t.need;
+  $("rAruaru").innerHTML=t.aruaru;
+  $("rGrowth").innerHTML=t.growth;
+  $("rGood").textContent="💕 相性◎ "+t.good;
+  $("rCare").textContent="⚡ 刺激的 "+t.care;
+
+  const ax=$("axes");ax.innerHTML="";
+  AXES.forEach(a=>{
+    const p=pct(score[a.key]);
+    const leadLeft=p>=50;
+    const el=document.createElement("div");
+    el.className="axis";
+    el.innerHTML=
+      '<div class="labels"><span class="'+(leadLeft?"lead":"")+'">'+a.left+'</span><span class="'+(!leadLeft?"lead":"")+'">'+a.right+'</span></div>'+
+      '<div class="track"><div class="val"></div></div>'+
+      '<div class="pct">'+(leadLeft?a.left+" "+p:a.right+" "+(100-p))+'%</div>';
+    ax.appendChild(el);
+    requestAnimationFrame(()=>{el.querySelector(".val").style.width=(leadLeft?p:100-p)+"%";
+      el.querySelector(".val").style.marginLeft=leadLeft?"0":"auto";});
+  });
+
+  $("rCode").textContent=typeCode(key);
+  $("rRarity").textContent="🏅 全体の約"+RARITY[key]+"%の"+(RARITY[key]<=5?"希少":"")+"タイプ";
+
+  /* 恋愛偏差値: 各軸の振れ幅(どちらかに強く寄っているほど個性的=高偏差値)を演出値化 */
+  const spread=AXES.reduce((s,a)=>s+Math.abs(pct(score[a.key])-50),0)/AXES.length; /* 0-50 */
+  const dev=Math.round(40+spread*0.9+ (RARITY[key]<=5?6:0)); /* おおむね40-70に収まる */
+  const devClamped=Math.max(30,Math.min(75,dev));
+  $("rDevNum").textContent=devClamped;
+  requestAnimationFrame(()=>{
+    /* 偏差値30-75を左右5%-95%にマップ */
+    const posPct=5+((devClamped-30)/45)*90;
+    $("rDevMarker").style.left=posPct+"%";
+  });
+  window._devScore=devClamped;
+
+  showCompat(key);
+  show("scr-r");
+  history.replaceState(null,"","#result");
+  window._resultText="私のラブグラム診断結果は【"+typeCode(key)+"】「"+t.name+"("+NICK[key]+")」🌸\n恋愛偏差値"+window._devScore+"・全体の約"+RARITY[key]+"%のタイプでした\nあなたの恋愛タイプは? #ラブグラム #恋愛タイプ診断\nhttps://lovegram.jp/lovetype.html";
+}
+async function shareResult(){
+  const text=window._resultText||"ラブグラム|恋愛深層心理タイプ診断 https://lovegram.jp/lovetype.html";
+  if(navigator.share){
+    try{await navigator.share({text});return;}catch(e){/* cancelled */}
+  }
+  try{await navigator.clipboard.writeText(text);alert("結果をコピーしました。SNSに貼り付けてシェアできます!");}
+  catch(e){alert(text);}
+}
+function reset(){
+  idx=0;Object.keys(score).forEach(k=>score[k]=0);
+  answers.length=0;
+  renderQ();show("scr-q");
+}
+$("start").addEventListener("click",()=>{renderQ();if(partnerKey)$("modeBadge").hidden=false;show("scr-q");});
+$("minis").innerHTML=["0000","1000","0010","1111"].map(k=>CHARS[k]).join("");
+if(partnerKey){
+  $("normalHero").hidden=true;
+  $("inviteHero").hidden=false;
+  $("inviterChara").innerHTML=CHARS[partnerKey];
+  $("inviterName").textContent=TYPES[partnerKey].name+"("+NICK[partnerKey]+")さん";
+  $("start").textContent="相性診断をはじめる(無料・約2分)";
+  document.title="相性診断のご招待|ラブグラム";
+}
+$("back").addEventListener("click",goBack);
+$("optA").addEventListener("click",()=>answer(true));
+$("optB").addEventListener("click",()=>answer(false));
+$("share").addEventListener("click",shareResult);
+$("shareImg").addEventListener("click",()=>shareImageResult(window._myKey));
+$("invite").addEventListener("click",inviteShare);
+$("retry").addEventListener("click",reset);
+</script>
+</body>
+</html>
