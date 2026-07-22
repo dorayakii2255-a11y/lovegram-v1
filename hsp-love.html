@@ -56,6 +56,16 @@ h1 .accent2{color:var(--sakura)}
 .hint{font-size:12px;color:var(--muted);text-align:center;margin-top:4px}
 .chara-face{text-align:center;margin-top:4px}
 .chara-face svg{width:150px;height:150px}
+.rarity{text-align:center;margin:10px auto 4px;display:table;padding:6px 16px;background:var(--fuji-soft);border-radius:999px;font-size:12px;color:var(--fuji);font-weight:700}
+.dev-wrap{margin:18px 4px 6px}
+.dev-label{text-align:center;font-size:13px;color:var(--ink);margin-bottom:8px}
+.dev-label b{font-family:'Shippori Mincho',serif;font-size:22px;color:var(--sakura);margin-left:4px}
+.dev-graph{position:relative;height:70px;border-bottom:2px solid #ddd4f0}
+.dev-curve{position:absolute;left:0;right:0;bottom:0;height:100%;
+ background:radial-gradient(120% 92% at 50% 100%, var(--fuji-soft) 0%, var(--fuji-soft) 40%, transparent 62%);}
+.dev-marker{position:absolute;bottom:0;width:3px;height:100%;background:var(--sakura);transition:left 1s ease}
+.dev-marker::before{content:"";position:absolute;top:-5px;left:-4px;width:11px;height:11px;border-radius:50%;background:var(--sakura)}
+.dev-scale{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:4px}
 .type-name{font-family:'Shippori Mincho',serif;font-weight:700;font-size:clamp(23px,6.8vw,29px);text-align:center;color:var(--fuji);margin:8px 0 2px}
 .catch{text-align:center;font-size:13px;color:var(--gold);letter-spacing:.04em;margin-bottom:14px}
 .axes{margin-top:8px}
@@ -112,6 +122,15 @@ footer a{color:inherit}
       <div class="chara-face" id="rChara"></div>
       <p class="type-name" id="rName"></p>
       <p class="catch" id="rCatch"></p>
+      <div class="rarity" id="rRarity"></div>
+      <div class="dev-wrap">
+        <div class="dev-label">共感力偏差値 <b id="rDevNum">50</b></div>
+        <div class="dev-graph" id="rDevGraph">
+          <div class="dev-curve"></div>
+          <div class="dev-marker" id="rDevMarker"></div>
+        </div>
+        <div class="dev-scale"><span>マイペース</span><span>平均50</span><span>共感の達人</span></div>
+      </div>
       <div class="result-sec">
         <h3>あなたの愛し方</h3>
         <p id="rStyle"></p>
@@ -134,7 +153,7 @@ footer a{color:inherit}
     <button class="btn ghost" id="retry">もう一度診断する</button>
     <a class="cross" href="/hsp.html">🌿 HSP気質チェックはこちら</a>
     <a class="cross" href="/lovetype.html">🌸 恋愛タイプ診断(16タイプ)はこちら</a>
-    <p class="note">この診断はエンタメ目的の自己理解ツールです。医療的な診断ではありません。</p>
+    <p class="note">この診断はエンタメ目的の自己理解ツールです。医療的な診断ではありません。共感力偏差値・希少度は楽しむための演出で、実際の統計値ではありません。</p>
   </section>
 
   <footer><a href="/hsp.html">HSP気質チェック</a> ・ <a href="/miari.html">脈ありチェッカー</a> ・ <a href="/privacy.html">プライバシーポリシー</a><br>© LOVEGRAM — lovegram.jp</footer>
@@ -232,7 +251,7 @@ function roundRect(ctx,x,y,w,h,r){
   ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);
   ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();
 }
-async function buildShareImage(typeName,catchLine,svgMarkup){
+async function buildShareImage(name,catchLine,svgMarkup,rarity,dev){
   const W=1080,H=1080;
   const cv=document.createElement("canvas");cv.width=W;cv.height=H;
   const ctx=cv.getContext("2d");
@@ -241,34 +260,46 @@ async function buildShareImage(typeName,catchLine,svgMarkup){
   ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
   ctx.fillStyle="#c3b5e855";
   ctx.beginPath();ctx.ellipse(W*0.85,H*0.05,340,260,0,0,7);ctx.fill();
-  const cx0=70,cy0=140,cw=W-140,ch=760;
+  const cx0=60,cy0=120,cw=W-120,ch=840;
   ctx.fillStyle="#ffffff";
   roundRect(ctx,cx0,cy0,cw,ch,26);ctx.fill();
   ctx.strokeStyle="#e5dcf2";ctx.lineWidth=2;
   roundRect(ctx,cx0,cy0,cw,ch,26);ctx.stroke();
   ctx.fillStyle="#8d7bc0";ctx.fillRect(cx0,cy0,cw,8);
-  ctx.fillStyle="#c9a05a";ctx.font="600 30px 'Zen Kaku Gothic New',sans-serif";
   ctx.textAlign="center";
-  ctx.fillText("L O V E G R A M",W/2,100);
+  ctx.fillStyle="#c9a05a";ctx.font="600 28px 'Zen Kaku Gothic New',sans-serif";
+  ctx.fillText("L O V E G R A M",W/2,cy0+56);
+  ctx.fillStyle="#8d7bc0";ctx.font="700 26px 'Zen Kaku Gothic New',sans-serif";
+  ctx.fillText("繊細さんの恋愛タイプ",W/2,cy0+108);
   try{
     const img=await svgToImage(svgMarkup);
-    ctx.drawImage(img,W/2-150,cy0+40,300,300);
+    ctx.drawImage(img,W/2-130,cy0+150,260,260);
   }catch(e){}
+  ctx.fillStyle="#8d7bc0";ctx.font="700 46px serif";
+  ctx.fillText(name,W/2,cy0+470);
+  ctx.fillStyle="#9b8a93";ctx.font="400 24px 'Zen Kaku Gothic New',sans-serif";
+  ctx.fillText("「"+catchLine+"」",W/2,cy0+512);
+  const boxY=cy0+555,boxH=110;
+  ctx.fillStyle="#ece7f8";
+  roundRect(ctx,cx0+40,boxY,(cw-100)/2,boxH,14);ctx.fill();
+  roundRect(ctx,W/2+10,boxY,(cw-100)/2,boxH,14);ctx.fill();
+  ctx.fillStyle="#948da3";ctx.font="400 22px 'Zen Kaku Gothic New',sans-serif";
+  ctx.fillText("希少度",cx0+40+(cw-100)/4,boxY+38);
+  ctx.fillText("共感力偏差値",W/2+10+(cw-100)/4,boxY+38);
   ctx.fillStyle="#8d7bc0";ctx.font="700 44px serif";
-  ctx.fillText(typeName,W/2,cy0+400);
-  ctx.fillStyle="#c9a05a";ctx.font="400 26px 'Zen Kaku Gothic New',sans-serif";
-  ctx.fillText(String(catchLine),W/2,cy0+450);
-  ctx.fillStyle="#c3b5e844";
-  roundRect(ctx,cx0+40,cy0+ch-120,cw-80,80,16);ctx.fill();
-  ctx.fillStyle="#8d7bc0";ctx.font="700 30px 'Zen Kaku Gothic New',sans-serif";
-  ctx.fillText("lovegram.jp で診断してみる",W/2,cy0+ch-68);
+  ctx.fillText("約"+rarity+"%",cx0+40+(cw-100)/4,boxY+86);
+  ctx.fillText(String(dev),W/2+10+(cw-100)/4,boxY+86);
+  ctx.fillStyle="#8d7bc0";
+  roundRect(ctx,cx0+40,cy0+ch-96,cw-80,64,14);ctx.fill();
+  ctx.fillStyle="#ffffff";ctx.font="700 28px 'Zen Kaku Gothic New',sans-serif";
+  ctx.fillText("lovegram.jp で診断してみる",W/2,cy0+ch-54);
   return cv;
 }
-async function shareImageResult(name,catchLine,svgMarkup){
+async function shareImageResult(name,catchLine,svgMarkup,rarity,dev){
   const btn=$("shareImg");const orig=btn.textContent;
   btn.textContent="画像を作成中…";btn.disabled=true;
   try{
-    const cv=await buildShareImage(name,catchLine,svgMarkup);
+    const cv=await buildShareImage(name,catchLine,svgMarkup,rarity,dev);
     const blob=await new Promise(res=>cv.toBlob(res,"image/png"));
     const file=new File([blob],"lovegram-result.png",{type:"image/png"});
     if(navigator.canShare&&navigator.canShare({files:[file]})){
@@ -284,6 +315,11 @@ async function shareImageResult(name,catchLine,svgMarkup){
 }
 
 let idx=0;
+/* 希少度%(8タイプ合計100・演出値) */
+const RARITY={
+"000":10,"001":14,"010":11,"011":13,
+"100":12,"101":15,"110":12,"111":13
+};
 const score={s:0,e:0,r:0};
 const answers=[];
 const $=id=>document.getElementById(id);
@@ -324,6 +360,17 @@ function showResult(){
   $("rStyle").innerHTML=t.style;
   $("rTired").innerHTML=t.tired;
   $("rHint").innerHTML=t.hint;
+  $("rRarity").textContent="🏅 全体の約"+RARITY[key]+"%の"+(RARITY[key]<=11?"希少":"")+"タイプ";
+  /* 共感力偏差値: e軸でA(感情まるごと)を選ぶほどscore.eが大きく=共感力が高い設計 */
+  const empathy=score.e/4*100; /* score.e(0-4)が大きいほど共感力高い */
+  const dev=Math.round(38+empathy*0.34+(score.s>=3?4:0));
+  const devClamped=Math.max(30,Math.min(75,dev));
+  $("rDevNum").textContent=devClamped;
+  window._devScore=devClamped;
+  requestAnimationFrame(()=>{
+    const posPct=5+((devClamped-30)/45)*90;
+    $("rDevMarker").style.left=posPct+"%";
+  });
   const ax=$("axes");ax.innerHTML="";
   AXES.forEach(a=>{
     const p=pct4(score[a.key]);
@@ -338,8 +385,8 @@ function showResult(){
       el.querySelector(".val").style.marginLeft=leadLeft?"0":"auto";});
   });
   show("scr-r");
-  window._resultText="繊細さんの恋愛タイプ診断で「"+t.name+"」でした💜\nあなたの繊細な愛し方は?→ https://lovegram.jp/hsp-love.html\n#HSP恋愛 #繊細さん #ラブグラム";
-  window._shareData=[t.name,t.catch,CHARS[key]];
+  window._resultText="繊細さんの恋愛タイプ診断で「"+t.name+"」💜\n共感力偏差値"+devClamped+"・全体の約"+RARITY[key]+"%のタイプでした\nあなたの繊細な愛し方は?→ https://lovegram.jp/hsp-love.html\n#HSP恋愛 #繊細さん #ラブグラム";
+  window._shareData=[t.name,t.catch,CHARS[key],RARITY[key],devClamped];
 }
 async function shareResult(){
   const text=window._resultText||"繊細さんの恋愛タイプ診断 https://lovegram.jp/hsp-love.html";
