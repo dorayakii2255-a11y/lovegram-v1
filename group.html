@@ -3,245 +3,106 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ラブグラム | 恋愛深層心理タイプ診断</title>
-<meta name="description" content="12の質問で、あなたの恋愛の深層心理を16タイプに診断。本当のあなたの愛し方が分かります。">
-<meta property="og:title" content="ラブグラム | 恋愛深層心理タイプ診断">
-<meta property="og:description" content="12の質問で、あなたの恋愛の深層心理を16タイプに診断。">
+<title>グループ相性診断|みんなで恋愛タイプ相性チェック|ラブグラム</title>
+<meta name="description" content="友達や気になる人たちと、みんなで相性診断。ひとり2分の診断を順番に回すだけで、グループ全員の相性マトリクスとベストカップルがわかります。無料・登録不要。">
+<meta property="og:title" content="グループ相性診断|ラブグラム">
+<meta property="og:description" content="みんなで診断して、グループの相性マトリクスとベストカップルを発表!">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://lovegram.jp/lovetype.html">
+<meta property="og:url" content="https://lovegram.jp/group.html">
 <meta property="og:image" content="https://lovegram.jp/ogp.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://lovegram.jp/ogp.png">
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8374174874157238"
-     crossorigin="anonymous"></script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8374174874157238" crossorigin="anonymous"></script>
+<script defer src="/_vercel/insights/script.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --paper:#fffaf9;      /* 背景:ほんのり桜がかった白 */
-  --card:#ffffff;       /* カード面 */
-  --ink:#4a3a44;        /* 本文:柔らかい墨色 */
-  --sakura:#f06292;     /* 主アクセント:濃い桜色 */
-  --sakura-soft:#ffe4ec;/* 淡い桜:面に使う */
-  --gold:#c9a05a;       /* 補助アクセント:上品な金 */
-  --muted:#9b8a93;      /* 補助文 */
-}
+:root{--paper:#fffaf9;--card:#ffffff;--ink:#4a3a44;--sakura:#f06292;--sakura-soft:#ffe4ec;--gold:#c9a05a;--muted:#9b8a93}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{
-  font-family:'Zen Kaku Gothic New',sans-serif;
-  background:
-    radial-gradient(70vw 50vw at 100% 0%, #fff0f4 0%, transparent 55%),
-    radial-gradient(60vw 45vw at 0% 100%, #fdf3ea 0%, transparent 55%),
-    var(--paper);
-  color:var(--ink);
-  min-height:100svh;
-  line-height:1.9;
-  letter-spacing:.02em;
-}
-.wrap{max-width:520px;margin:0 auto;padding:24px 20px 64px}
-.screen{display:none}
-.screen.active{display:block;animation:rise .5s ease both}
+body{font-family:'Zen Kaku Gothic New',sans-serif;background:
+ radial-gradient(70vw 50vw at 100% 0%, #fff0f4 0%, transparent 55%),
+ radial-gradient(60vw 45vw at 0% 100%, #fdf3ea 0%, transparent 55%),var(--paper);
+ color:var(--ink);min-height:100svh;line-height:1.9;letter-spacing:.02em}
+.wrap{max-width:560px;margin:0 auto;padding:24px 20px 64px}
+.screen{display:none}.screen.active{display:block;animation:rise .5s ease both}
 @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.screen.active{animation:none}}
-
-/* ---- 表紙 ---- */
-.brand{
-  font-family:'Shippori Mincho',serif;
-  font-size:13px;letter-spacing:.42em;color:var(--gold);
-  text-align:center;margin:26px 0 6px;
-}
-h1{
-  font-family:'Shippori Mincho',serif;
-  font-weight:600;font-size:clamp(28px,8vw,38px);
-  text-align:center;line-height:1.55;color:#3d2e37;
-}
+.brand{font-family:'Shippori Mincho',serif;font-size:13px;letter-spacing:.42em;color:var(--gold);text-align:center;margin:26px 0 6px}
+.brand a{color:inherit;text-decoration:none}
+h1{font-family:'Shippori Mincho',serif;font-weight:600;font-size:clamp(24px,7vw,32px);text-align:center;line-height:1.5;color:#3d2e37}
 h1 .accent{color:var(--sakura)}
-.lede{color:var(--muted);font-size:14px;text-align:center;margin:18px 0 30px}
-
-/* 診断書カード */
-.card{
-  position:relative;
-  background:var(--card);
-  border:1px solid #f3d9e2;
-  border-top:4px solid var(--sakura);
-  border-radius:14px;
-  padding:26px 22px;
-  box-shadow:0 14px 34px rgba(240,98,146,.12);
-}
-.card .seal{
-  position:absolute;top:-16px;right:16px;
-  background:var(--sakura);color:#fff;
-  font-family:'Shippori Mincho',serif;font-size:10px;letter-spacing:.18em;
-  border-radius:999px;padding:7px 14px;
-  box-shadow:0 6px 14px rgba(240,98,146,.35);
-}
-
-.btn{
-  display:block;width:100%;
-  font-family:'Zen Kaku Gothic New',sans-serif;
-  font-weight:700;font-size:16px;letter-spacing:.08em;
-  color:#fff;
-  background:linear-gradient(135deg,var(--sakura),#ff8fb3);
-  border:none;border-radius:999px;
-  padding:16px;margin-top:26px;cursor:pointer;
-  transition:transform .15s ease,box-shadow .15s ease;
-  box-shadow:0 10px 24px rgba(240,98,146,.3);
-}
-.btn:hover{transform:translateY(-1px)}
-.btn:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
-.btn.ghost{
-  background:#fff;color:var(--sakura);
-  border:1.5px solid var(--sakura);box-shadow:none;
-}
+.lede{color:var(--muted);font-size:14px;text-align:center;margin:16px 0 26px}
+.card{position:relative;background:var(--card);border:1px solid #f3d9e2;border-top:4px solid var(--sakura);border-radius:14px;padding:24px 20px;box-shadow:0 14px 34px rgba(240,98,146,.10)}
+.card .seal{position:absolute;top:-16px;right:16px;background:var(--sakura);color:#fff;font-family:'Shippori Mincho',serif;font-size:10px;letter-spacing:.18em;border-radius:999px;padding:7px 14px}
+.btn{display:block;width:100%;font-weight:700;font-size:16px;letter-spacing:.06em;color:#fff;background:linear-gradient(135deg,var(--sakura),#ff8fb3);border:none;border-radius:999px;padding:16px;margin-top:18px;cursor:pointer;box-shadow:0 10px 24px rgba(240,98,146,.3);font-family:inherit;text-decoration:none;text-align:center}
+.btn.ghost{background:#fff;color:var(--sakura);border:1.5px solid var(--sakura);box-shadow:none}
+.btn:disabled{opacity:.5}
 .note{font-size:11px;color:var(--muted);text-align:center;margin-top:14px}
-
-/* ---- 質問 ---- */
+.step-info{background:var(--sakura-soft);border-radius:12px;padding:12px 16px;font-size:13px;text-align:center;margin-bottom:18px;color:var(--ink)}
+.step-info b{color:var(--sakura)}
+.name-input{width:100%;font-family:inherit;font-size:16px;padding:14px 16px;border:1.5px solid #f3d9e2;border-radius:12px;text-align:center;margin-top:6px}
+.name-input:focus{outline:none;border-color:var(--sakura)}
 .progress{display:flex;align-items:center;gap:12px;margin-bottom:22px}
 .progress .bar{flex:1;height:6px;background:var(--sakura-soft);border-radius:3px;overflow:hidden}
 .progress .fill{height:100%;width:0;background:linear-gradient(90deg,#ff8fb3,var(--sakura));transition:width .4s ease}
-.progress .count{font-size:12px;color:var(--muted);letter-spacing:.1em;min-width:52px;text-align:right}
-.qnum{
-  font-family:'Shippori Mincho',serif;color:var(--sakura);
-  font-size:12px;letter-spacing:.3em;margin-bottom:8px;
-}
-.qtext{
-  font-family:'Shippori Mincho',serif;font-weight:600;
-  font-size:19px;line-height:1.8;margin-bottom:24px;min-height:4.2em;color:#3d2e37;
-}
-.choice{
-  display:block;width:100%;text-align:left;
-  font-family:inherit;font-size:15px;line-height:1.7;color:var(--ink);
-  background:#fff;
-  border:1.5px solid #f3d9e2;
-  border-radius:12px;padding:16px 18px;margin-bottom:14px;cursor:pointer;
-  transition:background .15s ease,border-color .15s ease,transform .12s ease;
-  box-shadow:0 3px 10px rgba(240,98,146,.06);
-}
+.progress .count{font-size:12px;color:var(--muted);min-width:52px;text-align:right}
+.qnum{font-family:'Shippori Mincho',serif;color:var(--sakura);font-size:12px;letter-spacing:.3em;margin-bottom:8px}
+.qtext{font-family:'Shippori Mincho',serif;font-weight:600;font-size:18px;line-height:1.8;margin-bottom:22px;min-height:3.2em}
+.choice{display:block;width:100%;text-align:left;font-family:inherit;font-size:15px;line-height:1.7;color:var(--ink);background:#fff;border:1.5px solid #f3d9e2;border-radius:12px;padding:14px 18px;margin-bottom:12px;cursor:pointer}
 .choice:hover{background:var(--sakura-soft);border-color:var(--sakura)}
-.choice:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
-.choice:active{transform:scale(.985)}
-.hint{font-size:12px;color:var(--muted);text-align:center;margin-top:4px}
-.backbtn{
-  display:block;margin:18px auto 0;
-  font-family:inherit;font-size:13px;color:var(--muted);
-  background:none;border:none;cursor:pointer;
-  text-decoration:underline;text-underline-offset:3px;
-  padding:8px 12px;
-}
-.backbtn:hover{color:var(--sakura)}
-.backbtn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
-
-/* ---- 結果 ---- */
-.deliver{
-  font-family:'Shippori Mincho',serif;text-align:center;
-  color:var(--muted);font-size:13px;letter-spacing:.28em;margin-bottom:16px;
-}
-.type-code{text-align:center;font-family:'Shippori Mincho',serif;font-weight:700;font-size:26px;letter-spacing:.28em;color:var(--gold);margin:6px 0 -2px}
-.rarity{text-align:center;margin:10px auto 4px;display:table;padding:6px 16px;background:var(--sakura-soft);border-radius:999px;font-size:12px;color:var(--sakura);font-weight:700}
-.dev-wrap{margin:18px 4px 6px}
-.dev-label{text-align:center;font-size:13px;color:var(--ink);margin-bottom:8px}
-.dev-label b{font-family:'Shippori Mincho',serif;font-size:22px;color:var(--sakura);margin-left:4px}
-.dev-graph{position:relative;height:70px;border-bottom:2px solid #f3c6d6}
-.dev-curve{position:absolute;left:0;right:0;bottom:0;height:100%;
- background:radial-gradient(120% 92% at 50% 100%, var(--sakura-soft) 0%, var(--sakura-soft) 40%, transparent 62%);}
-.dev-marker{position:absolute;bottom:0;width:3px;height:100%;background:var(--sakura);transition:left 1s ease}
-.dev-marker::before{content:"";position:absolute;top:-5px;left:-4px;width:11px;height:11px;border-radius:50%;background:var(--sakura)}
-.dev-scale{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:4px}
-.type-name{
-  font-family:'Shippori Mincho',serif;font-weight:700;
-  font-size:clamp(26px,7.5vw,34px);text-align:center;color:var(--sakura);
-  margin:10px 0 4px;line-height:1.5;
-}
-.catch{
-  text-align:center;font-size:13px;color:var(--gold);
-  letter-spacing:.06em;margin-bottom:22px;
-}
-.result-sec{margin-top:22px}
-.result-sec h3{
-  font-family:'Shippori Mincho',serif;font-size:14px;font-weight:600;
-  color:var(--sakura);letter-spacing:.18em;margin-bottom:8px;
-  padding-bottom:6px;border-bottom:1px dashed #f3c6d6;
-}
-.result-sec p{font-size:14px;color:var(--ink)}
-.result-sec p b{color:var(--sakura);font-weight:700}
-
-.axes{margin-top:8px}
-.axis{margin-bottom:14px}
-.axis .labels{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:4px}
-.axis .labels .lead{color:var(--sakura);font-weight:700}
-.axis .track{height:8px;background:var(--sakura-soft);border-radius:4px;overflow:hidden}
-.axis .val{height:100%;background:linear-gradient(90deg,#ffb3c9,var(--sakura));border-radius:4px;width:0;transition:width .8s ease}
-.axis .pct{font-size:11px;color:var(--gold);text-align:right;margin-top:2px;font-variant-numeric:tabular-nums}
-
-.match{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
-.match span{
-  font-size:12px;padding:7px 12px;border-radius:999px;
-  border:1px solid #f3c6d6;color:var(--ink);background:#fff;
-}
-.match span.good{border-color:var(--sakura);background:var(--sakura-soft)}
-.match span.care{border-color:var(--gold);background:#faf3e6}
-.chara-face{text-align:center;margin-top:6px}
-.compat{margin-top:22px}
-.pair{display:flex;justify-content:center;align-items:center;gap:4px;margin-top:8px}
-.pair svg{width:92px;height:92px}
-.pair .heart{font-size:22px}
-.pair-names{text-align:center;font-size:12px;color:var(--muted);margin-top:2px}
-.score{font-family:'Shippori Mincho',serif;font-weight:700;font-size:42px;text-align:center;color:var(--sakura);line-height:1.3}
-.verdict{text-align:center;font-size:13px;color:var(--gold);margin-bottom:6px}
-.points{list-style:none;padding:0}
-.points li{font-size:13.5px;padding:8px 0 8px 26px;position:relative;border-bottom:1px dashed #f8e3ea}
-.points li::before{content:attr(data-i);position:absolute;left:0;top:8px}
-.invite-hero{text-align:center;margin-bottom:8px}
-.invite-name{font-family:'Shippori Mincho',serif;font-weight:700;font-size:22px;color:var(--sakura)}
-.invite-msg{font-size:13.5px;color:var(--ink);line-height:2;background:var(--sakura-soft);border:1.5px solid var(--sakura);border-radius:12px;padding:14px 16px;margin-top:12px}
-.invite-msg b{color:var(--sakura)}
-.mode-badge{font-size:11px;color:var(--sakura);border:1px solid var(--sakura);border-radius:999px;padding:3px 10px;white-space:nowrap}
-.chara-face svg{width:140px;height:140px}
-.minis{display:flex;justify-content:center;gap:6px;margin:22px 0 4px}
-.minis svg{width:64px;height:64px}
-.minis-cap{font-size:12px;color:var(--muted);text-align:center;margin-bottom:2px}
-footer{margin-top:40px;text-align:center;font-size:11px;color:var(--muted)}
+.members{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:14px 0}
+.member-chip{display:flex;align-items:center;gap:6px;background:#fff;border:1.5px solid #f3d9e2;border-radius:999px;padding:5px 12px 5px 6px;font-size:13px}
+.member-chip svg{width:26px;height:26px}
+.matrix{width:100%;border-collapse:collapse;margin:10px 0;font-size:12px}
+.matrix th,.matrix td{border:1px solid #f3d9e2;padding:6px 4px;text-align:center}
+.matrix th{background:var(--sakura-soft);color:var(--sakura);font-weight:700}
+.matrix td.self{background:#f8f8f8;color:#ccc}
+.matrix td .sc{font-weight:700;font-size:13px}
+.best{background:var(--sakura-soft);border-radius:14px;padding:18px;text-align:center;margin:16px 0}
+.best .lbl{font-size:12px;color:var(--sakura);letter-spacing:.12em}
+.best .pair{font-family:'Shippori Mincho',serif;font-weight:700;font-size:20px;color:#3d2e37;margin:6px 0}
+.best .sc{font-size:32px;font-weight:700;color:var(--sakura);font-family:'Shippori Mincho',serif}
+.best .heart{font-size:22px}
+.result-sec{margin-top:20px}
+.result-sec h3{font-family:'Shippori Mincho',serif;font-size:14px;font-weight:600;color:var(--sakura);letter-spacing:.14em;margin-bottom:8px;padding-bottom:6px;border-bottom:1px dashed #f3c6d6}
+.result-sec p{font-size:13.5px}
+.cross{display:block;text-align:center;font-size:13px;color:var(--sakura);margin-top:16px;text-decoration:none}
+footer{margin-top:36px;text-align:center;font-size:11px;color:var(--muted)}
+footer a{color:inherit}
 </style>
-<script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
 <div class="wrap">
 
   <!-- 表紙 -->
   <section class="screen active" id="scr-top">
-    <p class="brand">LOVEGRAM</p>
-    <div class="invite-hero" id="inviteHero" hidden>
-      <p class="deliver">— 相性診断のご招待 —</p>
-      <div class="chara-face" id="inviterChara"></div>
-      <p class="invite-name" id="inviterName"></p>
-      <p class="invite-msg">この子があなたを待っています💌<br>あなたも診断すると、<b>ふたりの相性</b>がわかります。</p>
+    <p class="brand"><a href="/">LOVEGRAM</a></p>
+    <h1>みんなで、<br><span class="accent">グループ相性</span>診断</h1>
+    <p class="lede">友達グループ、気になるあの人たちと。<br>ひとり2分の診断を順番に回すだけで、<br>全員の相性マトリクスとベストカップルがわかります。</p>
+    <div class="card">
+      <span class="seal">3〜6人向け</span>
+      <p style="font-family:'Shippori Mincho',serif;font-size:14px;color:var(--muted)">遊び方はかんたん。<br>1人目が診断 → リンクを次の人に回す → 全員終わったら結果発表!<br>飲み会・合コン・友達との集まりにどうぞ🌸</p>
     </div>
-    <div id="normalHero">
-    <h1>本当のあなたの<br><span class="accent">愛し方</span>、知っていますか?</h1>
-    <p class="lede">12の質問に直感で答えるだけ。<br>あなたの恋愛の深層心理を、16タイプで診断します。</p>
-    <div class="minis" id="minis" aria-hidden="true"></div>
-    <p class="minis-cap">16タイプのキャラクターから、あなたはどの子?</p>
+    <button class="btn" id="startNew">グループ診断をはじめる</button>
+    <p class="note">登録不要・無料。診断結果はリンクに保存され、順番に回して使います。</p>
+  </section>
+
+  <!-- 名前入力 -->
+  <section class="screen" id="scr-name">
+    <div class="step-info" id="nameStep"></div>
+    <div class="card">
+      <p style="font-family:'Shippori Mincho',serif;text-align:center;font-size:16px;margin-bottom:4px">あなたのお名前は?</p>
+      <input class="name-input" id="nameInput" maxlength="6" placeholder="ニックネーム(6文字まで)">
+      <div class="members" id="nameMembers"></div>
     </div>
-    <button class="btn" id="start">診断をはじめる(無料・約2分)</button>
-    <p class="note">結果はその場で表示されます。登録は不要です。</p>
-    <div class="result-sec" style="margin-top:34px">
-      <h3 style="font-family:'Shippori Mincho',serif;font-size:14px;font-weight:600;color:var(--sakura);letter-spacing:.18em;margin-bottom:8px;padding-bottom:6px;border-bottom:1px dashed #f3c6d6">恋愛タイプ診断「ラブグラム」とは</h3>
-      <p style="font-size:13px;color:var(--ink)">ラブグラムは、恋人との距離感・愛情表現・すれ違いへの向き合い方・恋愛観という4つの軸から、あなたの恋愛の深層心理を16タイプに分類する無料の恋愛タイプ診断です。12の質問に直感で答えるだけで、自分では気づいていない恋愛のクセや、本当に求めているものが見えてきます。結果は<a href="/type-list.html" style="color:var(--sakura)">16タイプの一覧</a>から読むこともできます。</p>
-    </div>
-    <div class="result-sec" style="margin-top:18px">
-      <h3 style="font-family:'Shippori Mincho',serif;font-size:14px;font-weight:600;color:var(--sakura);letter-spacing:.18em;margin-bottom:8px;padding-bottom:6px;border-bottom:1px dashed #f3c6d6">診断ロジックについて</h3>
-      <p style="font-size:13px;color:var(--ink)">タイプは「距離感」「愛情表現」「すれ違いへの向き合い方」「恋愛観」の4つの軸それぞれで、あなたがどちら寄りかを12問の回答から判定し、その組み合わせで16タイプに分けています。心理学の学術的な診断ツールではなく、自己理解のきっかけになることを目的としたエンターテインメントコンテンツです。当てはまらない部分があっても、気軽に読み物として楽しんでください。</p>
-    </div>
+    <button class="btn" id="toQuiz">診断にすすむ</button>
+    <p class="note">本名でなくてOK。あだ名やイニシャルでも楽しめます。</p>
   </section>
 
   <!-- 質問 -->
   <section class="screen" id="scr-q">
     <div class="progress">
-      <span class="mode-badge" id="modeBadge" hidden>💗 相性診断モード</span>
       <div class="bar"><div class="fill" id="fill"></div></div>
       <div class="count" id="count">1 / 12</div>
     </div>
@@ -249,132 +110,58 @@ footer{margin-top:40px;text-align:center;font-size:11px;color:var(--muted)}
     <p class="qtext" id="qtext"></p>
     <button class="choice" id="optA"></button>
     <button class="choice" id="optB"></button>
-    <p class="hint">迷ったら、直感でより近いほうを選んでください</p>
-    <button class="backbtn" id="back" hidden>← ひとつ前の質問に戻る</button>
+  </section>
+
+  <!-- 次の人に回す -->
+  <section class="screen" id="scr-pass">
+    <div class="card">
+      <span class="seal">診断完了</span>
+      <div style="text-align:center" id="passChara"></div>
+      <p style="text-align:center;font-family:'Shippori Mincho',serif;font-size:18px;font-weight:700;color:var(--sakura)" id="passType"></p>
+      <p style="text-align:center;font-size:13px;color:var(--muted)" id="passMsg"></p>
+    </div>
+    <button class="btn" id="passBtn">📤 次の人にリンクを回す</button>
+    <button class="btn ghost" id="seeResultBtn">みんなの結果を見る(締める)</button>
+    <p class="note" id="passNote"></p>
   </section>
 
   <!-- 結果 -->
-  <section class="screen" id="scr-r">
-    <p class="deliver" id="deliverTitle">— あなたの恋の診断書 —</p>
-    <div id="resultOrder">
-    <div class="card" id="myCard">
-      <span class="seal">診断結果</span>
-      <div class="chara-face" id="rChara"></div>
-      <p class="type-code" id="rCode"></p>
-      <p class="type-name" id="rName"></p>
-      <p class="catch" id="rCatch"></p>
-      <div class="rarity" id="rRarity"></div>
-      <div class="dev-wrap">
-        <div class="dev-label">恋愛偏差値 <b id="rDevNum">50</b></div>
-        <div class="dev-graph" id="rDevGraph">
-          <div class="dev-curve"></div>
-          <div class="dev-marker" id="rDevMarker"></div>
-        </div>
-        <div class="dev-scale"><span>低</span><span>平均50</span><span>高</span></div>
-      </div>
-
+  <section class="screen" id="scr-result">
+    <p style="font-family:'Shippori Mincho',serif;text-align:center;color:var(--muted);font-size:13px;letter-spacing:.28em;margin-bottom:14px">— グループ相性診断結果 —</p>
+    <div class="card">
+      <span class="seal">結果発表</span>
+      <div class="best" id="bestBox"></div>
       <div class="result-sec">
-        <h3>あなたの恋愛スタイル</h3>
-        <p id="rStyle"></p>
+        <h3>全員の相性マトリクス</h3>
+        <div id="matrixWrap" style="overflow-x:auto"></div>
+        <p style="font-size:11px;color:var(--muted);margin-top:6px">数字が大きいほど相性◎。色が濃いマスがベストペアです。</p>
       </div>
       <div class="result-sec">
-        <h3>でも、本当のあなたは</h3>
-        <p id="rTruth"></p>
+        <h3>参加メンバー</h3>
+        <div class="members" id="resultMembers"></div>
       </div>
       <div class="result-sec">
-        <h3>あなたが本当に求めているもの</h3>
-        <p id="rNeed"></p>
-      </div>
-      <div class="result-sec">
-        <h3>あるある</h3>
-        <p id="rAruaru"></p>
-      </div>
-      <div class="result-sec">
-        <h3>成長のヒント</h3>
-        <p id="rGrowth"></p>
-      </div>
-
-      <div class="result-sec">
-        <h3>こころの4軸</h3>
-        <div class="axes" id="axes"></div>
-      </div>
-
-      <div class="result-sec">
-        <h3>相性のヒント</h3>
-        <div class="match">
-          <span class="good" id="rGood"></span>
-          <span class="care" id="rCare"></span>
-        </div>
+        <h3>このグループの傾向</h3>
+        <p id="groupTrait"></p>
       </div>
     </div>
-
-    <!-- 相性診断の結果(招待リンク経由のときのみ表示) -->
-    <div class="card compat" id="compatCard" hidden>
-      <span class="seal">ふたりの相性</span>
-      <div class="pair"><span id="cMe"></span><span class="heart">💗</span><span id="cYou"></span></div>
-      <p class="pair-names" id="cNames"></p>
-      <p class="score" id="cScore"></p>
-      <p class="verdict" id="cVerdict"></p>
-      <div class="result-sec">
-        <h3>ふたりのポイント</h3>
-        <ul class="points" id="cPoints"></ul>
-      </div>
-    </div>
-    </div>
-
-    <button class="btn" id="invite">💌 気になる人と相性診断する</button>
-    <a class="btn ghost" href="/group.html" style="text-decoration:none;text-align:center">👥 みんなでグループ相性診断する</a>
-    <button class="btn" id="shareImg">🖼️ 結果を画像でシェアする</button>
-    <button class="btn ghost" id="share">結果をテキストでシェアする</button>
-    <button class="btn ghost" id="retry">もう一度診断する</button>
-    <p class="note">この診断はエンタメ目的です。心理学的な検査ではありません。恋愛偏差値・希少度・4文字コードは楽しむための演出で、実際の統計値ではありません。</p>
+    <button class="btn" id="shareBtn">結果をシェアする</button>
+    <button class="btn ghost" id="againBtn">新しいグループで診断する</button>
+    <a class="cross" href="/lovetype.html">🌸 自分の恋愛タイプを詳しく見る</a>
+    <p class="note">この診断はエンタメ目的です。相性の数値は楽しむための演出です。</p>
   </section>
 
-  <footer><a href="/hsp.html" style="color:inherit">HSP気質チェック</a> ・ <a href="/hsp-love.html" style="color:inherit">繊細さんの恋愛診断</a> ・ <a href="/reunion.html" style="color:inherit">易で見る復縁診断</a> ・ <a href="/miari.html" style="color:inherit">脈ありチェッカー</a> ・ <a href="/type-list.html" style="color:inherit">16タイプ一覧</a> ・ <a href="/privacy.html" style="color:inherit">プライバシーポリシー</a><br>© LOVEGRAM — lovegram.jp</footer>
+  <footer><a href="/lovetype.html">恋愛タイプ診断</a> ・ <a href="/">診断一覧</a> ・ <a href="/privacy.html">プライバシーポリシー</a><br>© LOVEGRAM — lovegram.jp</footer>
 </div>
 
 <script>
-/* ================= データ ================= */
-/* 軸: d=距離感(A密着/B自由) e=愛情表現(A言葉/B行動) c=衝突時(A対話/B熟考) v=恋愛観(A直感/B設計) */
-const QUESTIONS=[
- {ax:"d",q:"休日、恋人の予定が急に空いたと連絡が来た。あなたの本音は?",a:"やった、会いたい!すぐ予定を組みたい",b:"嬉しいけど、今日は自分の予定も大事にしたい"},
- {ax:"d",q:"恋人と毎日連絡を取り合うことについて、近いのは?",a:"毎日つながっている感覚が安心する",b:"用事がなければ、なくても平気"},
- {ax:"d",q:"「ひとりの時間が欲しい」と恋人に言われたら?",a:"少し寂しい。距離を感じてしまう",b:"わかる。自分にも必要な時間だから",},
- {ax:"e",q:"「好き」という気持ち、どう伝えることが多い?",a:"言葉にしてはっきり伝える",b:"言葉より、行動や態度でさりげなく示す"},
- {ax:"e",q:"恋人からもらって一番うれしいのは?",a:"気持ちのこもった言葉やメッセージ",b:"さりげない気づかいや行動"},
- {ax:"e",q:"記念日、あなたがしそうなのは?",a:"手紙やメッセージで想いを伝える",b:"サプライズや計画で気持ちを形にする"},
- {ax:"c",q:"恋人とすれ違いが起きたとき、あなたは?",a:"モヤモヤしたまま放置できない。すぐ話したい",b:"一度距離を置いて、頭を整理してから話したい"},
- {ax:"c",q:"ケンカの最中、相手が黙り込んだら?",a:"「ちゃんと話そう」と向き合いたくなる",b:"お互い冷静になる時間だと受け止める"},
- {ax:"c",q:"言いにくい不満があるとき、あなたは?",a:"多少気まずくても早めに伝える",b:"タイミングを見計らって、慎重に切り出す"},
- {ax:"v",q:"恋に落ちる瞬間は、どちらが近い?",a:"理屈じゃない。気づいたら好きになっている",b:"一緒にいる未来が想像できたとき"},
- {ax:"v",q:"付き合う前に考えるのは?",a:"今この人といて楽しいかどうか",b:"価値観や将来が合うかどうか"},
- {ax:"v",q:"恋愛で大切にしたいのは?",a:"心が動く瞬間のときめき",b:"積み重ねていける安心感"}
-];
-
-const AXES=[
- {key:"d",left:"密着",right:"自由"},
- {key:"e",left:"言葉",right:"行動"},
- {key:"c",left:"対話",right:"熟考"},
- {key:"v",left:"直感",right:"設計"}
-];
-
-/* タイプキー: 各軸でA多数=0/B多数=1 の4桁 (d,e,c,v) */
 const NICK={
 "0000":"タイヨ","0001":"ニワ","0010":"ウタ","0011":"ケンジ",
 "0100":"ナイト","0101":"ダイコク","0110":"マモル","0111":"タクミ",
 "1000":"カケル","1001":"コウカイ","1010":"パレット","1011":"ユウガ",
 "1100":"カル","1101":"サク","1110":"レンズ","1111":"フクロウ"
 };
-/* 4文字コード: 距離感C/F(密着/自由)・愛情W/A(言葉/行動)・衝突T/P(対話/熟考)・恋愛観N/B(今/設計) */
-const CODEMAP=[["C","F"],["W","A"],["T","P"],["N","B"]];
-function typeCode(key){return key.split("").map((b,i)=>CODEMAP[i][+b]).join("");}
-/* 希少度%(全タイプ合計100%になるよう設定・演出値) */
-const RARITY={
-"0000":10,"0001":7,"0010":5,"0011":6,
-"0100":6,"0101":7,"0110":5,"0111":4,
-"1000":9,"1001":5,"1010":4,"1011":6,
-"1100":6,"1101":7,"1110":6,"1111":7
-};
+
 const TYPES={
 "0000":{name:"情熱の太陽タイプ",catch:"愛したい気持ちが、いつも言葉からあふれてしまう人",
  style:"好きになったら一直線。「好き」「会いたい」を素直に言葉にでき、ケンカをしても自分から向き合いにいける強さがあります。一緒にいる人は太陽に照らされるような温かさを感じています。",
@@ -490,7 +277,6 @@ const TYPES={
  growth:"最初から完全に理解されなくても大丈夫。少しずつ扉を開けていく過程こそが、信頼を育てるプロセスです。"}
 };
 
-/* ================= キャラクター ================= */
 const FACE={
  happy:'<path d="M47 53 q4 -6 8 0" stroke="#4a3a44" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M65 53 q4 -6 8 0" stroke="#4a3a44" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M53 65 q7 7 14 0" stroke="#4a3a44" stroke-width="2.6" fill="none" stroke-linecap="round"/>',
  dot:'<circle cx="49" cy="53" r="2.6" fill="#4a3a44"/><circle cx="71" cy="53" r="2.6" fill="#4a3a44"/><path d="M56 65 q4 4 8 0" stroke="#4a3a44" stroke-width="2.4" fill="none" stroke-linecap="round"/>',
@@ -498,6 +284,7 @@ const FACE={
  calm:'<path d="M46 54 q4 4 8 0" stroke="#4a3a44" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M66 54 q4 4 8 0" stroke="#4a3a44" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M56 65 q4 3 8 0" stroke="#4a3a44" stroke-width="2.4" fill="none" stroke-linecap="round"/>',
  cool:'<line x1="45" y1="53" x2="53" y2="53" stroke="#4a3a44" stroke-width="2.6" stroke-linecap="round"/><line x1="67" y1="53" x2="75" y2="53" stroke="#4a3a44" stroke-width="2.6" stroke-linecap="round"/><path d="M55 65 q7 4 11 -1" stroke="#4a3a44" stroke-width="2.4" fill="none" stroke-linecap="round"/>'
 };
+
 function chara(body,motif,face,extra){
  return '<svg viewBox="0 0 120 120" role="img">'+ (motif||'')
  +'<path d="M32 108 Q32 76 60 76 Q88 76 88 108 Z" fill="'+body+'"/>'
@@ -505,6 +292,7 @@ function chara(body,motif,face,extra){
  +'<circle cx="45" cy="63" r="4.5" fill="#ffb7c5"/><circle cx="75" cy="63" r="4.5" fill="#ffb7c5"/>'
  +face+(extra||'')+'</svg>';
 }
+
 const CHARS={
 "0000":chara("#f06292",
  '<circle cx="60" cy="32" r="18" fill="#f6b73c"/><g stroke="#f6b73c" stroke-width="5" stroke-linecap="round"><line x1="60" y1="6" x2="60" y2="12"/><line x1="40" y1="12" x2="44" y2="17"/><line x1="80" y1="12" x2="76" y2="17"/><line x1="32" y1="30" x2="39" y2="31"/><line x1="88" y1="30" x2="81" y2="31"/></g><circle cx="60" cy="32" r="12" fill="#ffd166"/>',
@@ -558,8 +346,28 @@ const CHARS={
  '<path d="M92 22 c-2-3 -7-2 -6 2 c1 3 6 5 6 5 s5-2 6-5 c1-4 -4-5 -6-2z" fill="#f06292"/>')
 };
 
-/* ================= 相性診断 ================= */
-/* 軸ごとの相性ルール:[同じとき加点, 違うとき加点, 同じときの解説, 違うときの解説] */
+const QUESTIONS=[
+ {ax:"d",q:"休日、恋人の予定が急に空いたと連絡が来た。あなたの本音は?",a:"やった、会いたい!すぐ予定を組みたい",b:"嬉しいけど、今日は自分の予定も大事にしたい"},
+ {ax:"d",q:"恋人と毎日連絡を取り合うことについて、近いのは?",a:"毎日つながっている感覚が安心する",b:"用事がなければ、なくても平気"},
+ {ax:"d",q:"「ひとりの時間が欲しい」と恋人に言われたら?",a:"少し寂しい。距離を感じてしまう",b:"わかる。自分にも必要な時間だから",},
+ {ax:"e",q:"「好き」という気持ち、どう伝えることが多い?",a:"言葉にしてはっきり伝える",b:"言葉より、行動や態度でさりげなく示す"},
+ {ax:"e",q:"恋人からもらって一番うれしいのは?",a:"気持ちのこもった言葉やメッセージ",b:"さりげない気づかいや行動"},
+ {ax:"e",q:"記念日、あなたがしそうなのは?",a:"手紙やメッセージで想いを伝える",b:"サプライズや計画で気持ちを形にする"},
+ {ax:"c",q:"恋人とすれ違いが起きたとき、あなたは?",a:"モヤモヤしたまま放置できない。すぐ話したい",b:"一度距離を置いて、頭を整理してから話したい"},
+ {ax:"c",q:"ケンカの最中、相手が黙り込んだら?",a:"「ちゃんと話そう」と向き合いたくなる",b:"お互い冷静になる時間だと受け止める"},
+ {ax:"c",q:"言いにくい不満があるとき、あなたは?",a:"多少気まずくても早めに伝える",b:"タイミングを見計らって、慎重に切り出す"},
+ {ax:"v",q:"恋に落ちる瞬間は、どちらが近い?",a:"理屈じゃない。気づいたら好きになっている",b:"一緒にいる未来が想像できたとき"},
+ {ax:"v",q:"付き合う前に考えるのは?",a:"今この人といて楽しいかどうか",b:"価値観や将来が合うかどうか"},
+ {ax:"v",q:"恋愛で大切にしたいのは?",a:"心が動く瞬間のときめき",b:"積み重ねていける安心感"}
+];
+
+const AXES=[
+ {key:"d",left:"密着",right:"自由"},
+ {key:"e",left:"言葉",right:"行動"},
+ {key:"c",left:"対話",right:"熟考"},
+ {key:"v",left:"直感",right:"設計"}
+];
+
 const COMPAT_RULES={
  d:[28,8,"恋人との距離感の好みがぴったり。一緒にいたい度合いが同じなので、束縛感やさみしさのすれ違いが起きにくいふたりです。",
       "「もっと一緒にいたい」派と「自分の時間も欲しい」派の組み合わせ。悪いことではありませんが、会う頻度や連絡のペースは早めにすり合わせておくと安心です。"],
@@ -570,6 +378,7 @@ const COMPAT_RULES={
  v:[26,10,"恋愛観の軸が同じなので、関係の進むスピード感に無理がありません。自然体でいられるふたりです。",
       "ときめき重視と安心感重視の組み合わせ。相手の大切にしているものを尊重できれば、恋の楽しさと安定の両方を手に入れられます。"]
 };
+
 function compatScore(k1,k2){
   let s=0;const pts=[];
   AXES.forEach((a,i)=>{
@@ -584,6 +393,7 @@ function compatScore(k1,k2){
   s+=(h%9)-4;
   return {score:Math.max(38,Math.min(100,s)),points:pts};
 }
+
 function verdictText(s){
   if(s>=90)return "運命レベル。お互いの「そのまま」が心地いい組み合わせです";
   if(s>=75)return "とても良い相性。安心とときめきのバランスが取れたふたりです";
@@ -591,127 +401,44 @@ function verdictText(s){
   if(s>=48)return "伸びしろたっぷり。お互いを知るほど深まっていく関係です";
   return "正反対の刺激的なふたり。だからこそ惹かれ合う、目が離せない組み合わせです";
 }
-function getPartnerKey(){
-  const p=new URLSearchParams(location.search).get("p");
-  return (p&&/^[01]{4}$/.test(p)&&TYPES[p])?p:null;
-}
-const partnerKey=getPartnerKey();
-function showCompat(myKey){
-  if(!partnerKey){$("compatCard").hidden=true;return;}
-  const {score,points}=compatScore(myKey,partnerKey);
-  $("cMe").innerHTML=CHARS[myKey];
-  $("cYou").innerHTML=CHARS[partnerKey];
-  $("cNames").textContent=TYPES[myKey].name+"("+NICK[myKey]+") × "+TYPES[partnerKey].name+"("+NICK[partnerKey]+")";
-  $("cScore").textContent="相性 "+score+"%";
-  $("cVerdict").textContent=verdictText(score);
-  const ul=$("cPoints");ul.innerHTML="";
-  points.forEach((p,i)=>{const li=document.createElement("li");li.dataset.i=["🏠","💐","🌂","🧭"][i];li.textContent=p;ul.appendChild(li);});
-  $("compatCard").hidden=false;
-  /* 招待経由:相性を主役に(先頭へ移動+見出し変更) */
-  $("resultOrder").insertBefore($("compatCard"),$("myCard"));
-  $("deliverTitle").textContent="— ふたりの相性診断書 —";
-}
-async function inviteShare(){
-  const myKey=window._myKey;
-  const url="https://lovegram.jp/lovetype.html?p="+myKey;
-  const text="私の恋愛タイプは「"+TYPES[myKey].name+"("+NICK[myKey]+")」でした🌸\nこのリンクから診断すると、私との相性がわかるよ💗\n"+url;
-  if(navigator.share){try{await navigator.share({text});return;}catch(e){}}
-  try{await navigator.clipboard.writeText(text);alert("招待メッセージをコピーしました。LINEやDMに貼り付けて送ってね!");}
-  catch(e){alert(text);}
-}
-
-/* ================= シェア画像の自動生成(Canvas) ================= */
-function svgToImage(svgMarkup,size){
-  return new Promise((resolve,reject)=>{
-    const img=new Image();
-    const svg64=btoa(unescape(encodeURIComponent(svgMarkup)));
-    img.onload=()=>resolve(img);
-    img.onerror=reject;
-    img.src="data:image/svg+xml;base64,"+svg64;
-  });
-}
-async function buildShareImage(code,typeName,nick,catchLine,rarity,dev,svgMarkup){
-  const W=1080,H=1080;
-  const cv=document.createElement("canvas");cv.width=W;cv.height=H;
-  const ctx=cv.getContext("2d");
-  const grad=ctx.createLinearGradient(0,0,W,H);
-  grad.addColorStop(0,"#fffaf9");grad.addColorStop(1,"#ffeef2");
-  ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
-  ctx.fillStyle="rgba(255,183,197,.25)";
-  ctx.beginPath();ctx.ellipse(W*0.85,H*0.05,340,260,0,0,7);ctx.fill();
-  const cx0=60,cy0=120,cw=W-120,ch=840;
-  ctx.fillStyle="#ffffff";
-  roundRect(ctx,cx0,cy0,cw,ch,26);ctx.fill();
-  ctx.strokeStyle="#f3d9e2";ctx.lineWidth=2;
-  roundRect(ctx,cx0,cy0,cw,ch,26);ctx.stroke();
-  ctx.fillStyle="#f06292";ctx.fillRect(cx0,cy0,cw,8);
-  ctx.textAlign="center";
-  ctx.fillStyle="#c9a05a";ctx.font="600 28px 'Zen Kaku Gothic New',sans-serif";
-  ctx.fillText("L O V E G R A M",W/2,cy0+56);
-  /* 4文字コード(大きく) */
-  ctx.fillStyle="#c9a05a";ctx.font="700 64px serif";
-  ctx.save();ctx.letterSpacing="18px";
-  ctx.fillText(code,W/2,cy0+130);ctx.restore();
-  /* キャラ */
-  try{
-    const img=await svgToImage(svgMarkup,260);
-    ctx.drawImage(img,W/2-130,cy0+150,260,260);
-  }catch(e){}
-  /* タイプ名+愛称 */
-  ctx.fillStyle="#f06292";ctx.font="700 46px serif";
-  ctx.fillText(typeName,W/2,cy0+470);
-  ctx.fillStyle="#c9a05a";ctx.font="400 26px 'Zen Kaku Gothic New',sans-serif";
-  ctx.fillText("(愛称:"+nick+")",W/2,cy0+512);
-  ctx.fillStyle="#9b8a93";ctx.font="400 24px 'Zen Kaku Gothic New',sans-serif";
-  ctx.fillText("「"+catchLine+"」",W/2,cy0+552);
-  /* 希少度・偏差値の2カラム */
-  const boxY=cy0+590,boxH=110;
-  ctx.fillStyle="#ffe4ec";
-  roundRect(ctx,cx0+40,boxY,(cw-100)/2,boxH,14);ctx.fill();
-  roundRect(ctx,W/2+10,boxY,(cw-100)/2,boxH,14);ctx.fill();
-  ctx.fillStyle="#9b8a93";ctx.font="400 22px 'Zen Kaku Gothic New',sans-serif";
-  ctx.fillText("希少度",cx0+40+(cw-100)/4,boxY+38);
-  ctx.fillText("恋愛偏差値",W/2+10+(cw-100)/4,boxY+38);
-  ctx.fillStyle="#f06292";ctx.font="700 44px serif";
-  ctx.fillText("約"+rarity+"%",cx0+40+(cw-100)/4,boxY+86);
-  ctx.fillText(String(dev),W/2+10+(cw-100)/4,boxY+86);
-  /* フッター帯 */
-  ctx.fillStyle="#f06292";
-  roundRect(ctx,cx0+40,cy0+ch-96,cw-80,64,14);ctx.fill();
-  ctx.fillStyle="#ffffff";ctx.font="700 28px 'Zen Kaku Gothic New',sans-serif";
-  ctx.fillText("lovegram.jp で診断してみる",W/2,cy0+ch-54);
-  return cv;
-}
-function roundRect(ctx,x,y,w,h,r){
-  ctx.beginPath();
-  ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);
-  ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();
-}
-async function shareImageResult(key){
-  const t=TYPES[key];
-  const btn=$("shareImg");const orig=btn.textContent;
-  btn.textContent="画像を作成中…";btn.disabled=true;
-  try{
-    const cv=await buildShareImage(typeCode(key),t.name,NICK[key],t.catch,RARITY[key],window._devScore||50,CHARS[key]);
-    const blob=await new Promise(res=>cv.toBlob(res,"image/png"));
-    const file=new File([blob],"lovegram-result.png",{type:"image/png"});
-    if(navigator.canShare&&navigator.canShare({files:[file]})){
-      await navigator.share({files:[file],text:(window._resultText||"")});
-    }else{
-      const url=URL.createObjectURL(blob);
-      const a=document.createElement("a");a.href=url;a.download="lovegram-result.png";a.click();
-      URL.revokeObjectURL(url);
-      alert("画像を保存しました。SNSに投稿する際に添付してください!");
-    }
-  }catch(e){alert("画像の作成に失敗しました。テキストシェアをご利用ください。");}
-  finally{btn.textContent=orig;btn.disabled=false;}
-}
-
-/* ================= ロジック ================= */
-let idx=0;
-const score={d:0,e:0,c:0,v:0}; // A回答の数(各軸3問)
+/* ===== グループ診断ロジック ===== */
 const $=id=>document.getElementById(id);
 const show=id=>{document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));$(id).classList.add("active");window.scrollTo({top:0});};
+
+/* URLからメンバー配列を復元。形式: ?g=名前~キー_名前~キー ... (名前はencodeURIComponent) */
+function parseMembers(){
+  const g=new URLSearchParams(location.search).get("g");
+  if(!g)return [];
+  return g.split("_").map(seg=>{
+    const [n,k]=seg.split("~");
+    if(!k||!/^[01]{4}$/.test(k)||!TYPES[k])return null;
+    return {name:decodeURIComponent(n).slice(0,6)||"名無し",key:k};
+  }).filter(Boolean).slice(0,6);
+}
+function buildURL(members){
+  const g=members.map(m=>encodeURIComponent(m.name)+"~"+m.key).join("_");
+  return location.origin+"/group.html?g="+g;
+}
+
+let members=parseMembers();
+let idx=0;const score={d:0,e:0,c:0,v:0};
+let myName="";
+
+function renderNameStep(){
+  if(members.length===0){
+    $("nameStep").innerHTML="あなたが<b>1人目</b>です。まずは自分から診断しましょう🌸";
+  }else{
+    const names=members.map(m=>m.name).join("・");
+    $("nameStep").innerHTML="<b>"+names+"</b> さんが診断済み。<br>あなたは<b>"+(members.length+1)+"人目</b>です!";
+  }
+  const mm=$("nameMembers");mm.innerHTML="";
+  members.forEach(m=>{
+    const c=document.createElement("span");c.className="member-chip";
+    c.innerHTML=CHARS[m.key]+"<span>"+escapeHtml(m.name)+"</span>";
+    mm.appendChild(c);
+  });
+}
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 
 function renderQ(){
   const q=QUESTIONS[idx];
@@ -720,109 +447,134 @@ function renderQ(){
   $("optA").textContent=q.a;
   $("optB").textContent=q.b;
   $("count").textContent=(idx+1)+" / "+QUESTIONS.length;
-  $("fill").style.width=((idx)/QUESTIONS.length*100)+"%";
-  $("back").hidden=(idx===0);
+  $("fill").style.width=(idx/QUESTIONS.length*100)+"%";
 }
-const answers=[]; // 回答履歴(true=A)
 function answer(isA){
   const q=QUESTIONS[idx];
   if(isA)score[q.ax]++;
-  answers.push(isA);
   idx++;
-  if(idx<QUESTIONS.length){renderQ();}
-  else{showResult();}
+  if(idx<QUESTIONS.length)renderQ();
+  else finishMyQuiz();
 }
-function goBack(){
-  if(idx===0)return;
-  idx--;
-  const q=QUESTIONS[idx];
-  const wasA=answers.pop();
-  if(wasA)score[q.ax]--;
-  renderQ();
-}
-function pct(aCount){ /* A側の強さ% 0..3 -> 12/38/62/88 */
-  return [12,38,62,88][aCount];
-}
-function showResult(){
-  const key=AXES.map(a=>score[a.key]>=2?"0":"1").join("");
+function myKey(){return AXES.map(a=>score[a.key]>=2?"0":"1").join("");}
+
+function finishMyQuiz(){
+  const key=myKey();
+  members.push({name:myName,key:key});
   const t=TYPES[key];
-  window._myKey=key;
-  $("rChara").innerHTML=CHARS[key]||"";
-  $("rName").textContent=t.name+"(愛称:"+NICK[key]+")";
-  $("rCatch").textContent="「"+t.catch+"」";
-  $("rStyle").innerHTML=t.style;
-  $("rTruth").innerHTML=t.truth;
-  $("rNeed").innerHTML=t.need;
-  $("rAruaru").innerHTML=t.aruaru;
-  $("rGrowth").innerHTML=t.growth;
-  $("rGood").textContent="💕 相性◎ "+t.good;
-  $("rCare").textContent="⚡ 刺激的 "+t.care;
+  $("passChara").innerHTML='<div style="width:120px;height:120px;margin:0 auto">'+CHARS[key]+'</div>';
+  $("passType").textContent=myName+"さん = "+t.name+"("+NICK[key]+")";
+  $("passMsg").textContent="診断おつかれさま!このリンクを次の人に回すと、みんなの相性が集まっていきます。";
+  const n=members.length;
+  $("passNote").textContent="現在"+n+"人が参加中。3人以上で結果を締められます。"+(n>=6?"(上限の6人に達しました)":"");
+  $("passBtn").style.display = n>=6 ? "none" : "block";
+  $("seeResultBtn").style.display = n>=2 ? "block" : "none";
+  if(n<2){ $("seeResultBtn").style.display="none"; }
+  show("scr-pass");
+}
 
-  const ax=$("axes");ax.innerHTML="";
-  AXES.forEach(a=>{
-    const p=pct(score[a.key]);
-    const leadLeft=p>=50;
-    const el=document.createElement("div");
-    el.className="axis";
-    el.innerHTML=
-      '<div class="labels"><span class="'+(leadLeft?"lead":"")+'">'+a.left+'</span><span class="'+(!leadLeft?"lead":"")+'">'+a.right+'</span></div>'+
-      '<div class="track"><div class="val"></div></div>'+
-      '<div class="pct">'+(leadLeft?a.left+" "+p:a.right+" "+(100-p))+'%</div>';
-    ax.appendChild(el);
-    requestAnimationFrame(()=>{el.querySelector(".val").style.width=(leadLeft?p:100-p)+"%";
-      el.querySelector(".val").style.marginLeft=leadLeft?"0":"auto";});
+async function passToNext(){
+  const url=buildURL(members);
+  const text="【グループ相性診断】あなたも診断して、私たちとの相性を見てみて🌸\n"+url;
+  if(navigator.share){try{await navigator.share({text});return;}catch(e){}}
+  try{await navigator.clipboard.writeText(text);alert("リンクをコピーしました!LINEなどで次の人に送ってください。");}
+  catch(e){prompt("このリンクを次の人に送ってください:",url);}
+}
+
+/* ===== 結果表示 ===== */
+function showResult(){
+  const n=members.length;
+  /* 全ペアの相性を計算 */
+  let best={score:-1,i:0,j:1};
+  const grid=[];
+  for(let i=0;i<n;i++){grid[i]=[];for(let j=0;j<n;j++){
+    if(i===j){grid[i][j]=null;continue;}
+    const sc=compatScore(members[i].key,members[j].key).score;
+    grid[i][j]=sc;
+    if(i<j&&sc>best.score)best={score:sc,i,j};
+  }}
+  /* ベストカップル */
+  const bi=members[best.i],bj=members[best.j];
+  $("bestBox").innerHTML='<div class="lbl">💗 BEST COUPLE 💗</div>'
+    +'<div style="display:flex;justify-content:center;gap:6px;align-items:center;margin:8px 0">'
+    +'<span style="width:56px;height:56px;display:inline-block">'+CHARS[bi.key]+'</span>'
+    +'<span class="heart">💗</span>'
+    +'<span style="width:56px;height:56px;display:inline-block">'+CHARS[bj.key]+'</span></div>'
+    +'<div class="pair">'+escapeHtml(bi.name)+' × '+escapeHtml(bj.name)+'</div>'
+    +'<div class="sc">'+best.score+'%</div>'
+    +'<div style="font-size:12px;color:var(--muted);margin-top:4px">'+verdictText(best.score)+'</div>';
+
+  /* マトリクス */
+  let html='<table class="matrix"><tr><th></th>';
+  members.forEach(m=>{html+='<th>'+escapeHtml(m.name)+'</th>';});
+  html+='</tr>';
+  for(let i=0;i<n;i++){
+    html+='<tr><th>'+escapeHtml(members[i].name)+'</th>';
+    for(let j=0;j<n;j++){
+      if(i===j){html+='<td class="self">—</td>';}
+      else{
+        const sc=grid[i][j];
+        const isBest=(i===best.i&&j===best.j)||(i===best.j&&j===best.i);
+        const bg=isBest?'background:var(--sakura);color:#fff;':('background:rgba(240,98,146,'+((sc-38)/62*0.5).toFixed(2)+');');
+        html+='<td style="'+bg+'"><span class="sc">'+sc+'</span></td>';
+      }
+    }
+    html+='</tr>';
+  }
+  html+='</table>';
+  $("matrixWrap").innerHTML=html;
+
+  /* メンバー一覧 */
+  const rm=$("resultMembers");rm.innerHTML="";
+  members.forEach(m=>{
+    const c=document.createElement("span");c.className="member-chip";
+    c.innerHTML=CHARS[m.key]+"<span>"+escapeHtml(m.name)+"("+NICK[m.key]+")</span>";
+    rm.appendChild(c);
   });
 
-  $("rCode").textContent=typeCode(key);
-  $("rRarity").textContent="🏅 全体の約"+RARITY[key]+"%の"+(RARITY[key]<=5?"希少":"")+"タイプ";
+  /* グループ傾向: 平均相性 */
+  let sum=0,cnt=0;
+  for(let i=0;i<n;i++)for(let j=i+1;j<n;j++){sum+=grid[i][j];cnt++;}
+  const avg=Math.round(sum/cnt);
+  let trait;
+  if(avg>=75)trait="全体的にとても相性の良いグループです!お互い自然体でいられる、居心地のいいメンバーが揃っています。";
+  else if(avg>=62)trait="バランスの取れた良いグループ。似ている人も、違って刺激し合える人もいて、飽きない関係が築けそうです。";
+  else if(avg>=52)trait="個性豊かなグループ。タイプがバラけているぶん、お互いを知るほど発見がある面白い組み合わせです。";
+  else trait="正反対な人が集まった刺激的なグループ!違いが大きいぶん、うまくかみ合うと最高に面白い関係になります。";
+  $("groupTrait").textContent="グループ平均相性は "+avg+"%。"+trait;
 
-  /* 恋愛偏差値: 各軸の振れ幅(どちらかに強く寄っているほど個性的=高偏差値)を演出値化 */
-  const spread=AXES.reduce((s,a)=>s+Math.abs(pct(score[a.key])-50),0)/AXES.length; /* 0-50 */
-  const dev=Math.round(40+spread*0.9+ (RARITY[key]<=5?6:0)); /* おおむね40-70に収まる */
-  const devClamped=Math.max(30,Math.min(75,dev));
-  $("rDevNum").textContent=devClamped;
-  requestAnimationFrame(()=>{
-    /* 偏差値30-75を左右5%-95%にマップ */
-    const posPct=5+((devClamped-30)/45)*90;
-    $("rDevMarker").style.left=posPct+"%";
-  });
-  window._devScore=devClamped;
-
-  showCompat(key);
-  show("scr-r");
-  history.replaceState(null,"","#result");
-  window._resultText="私のラブグラム診断結果は【"+typeCode(key)+"】「"+t.name+"("+NICK[key]+")」🌸\n恋愛偏差値"+window._devScore+"・全体の約"+RARITY[key]+"%のタイプでした\nあなたの恋愛タイプは? #ラブグラム #恋愛タイプ診断\nhttps://lovegram.jp/lovetype.html";
+  window._shareText="【グループ相性診断】私たち"+n+"人でやってみた🌸\nベストカップルは "+bi.name+"×"+bj.name+"("+best.score+"%)!\nグループ平均相性"+avg+"%\nみんなもやってみて→ https://lovegram.jp/group.html\n#ラブグラム #相性診断";
+  show("scr-result");
 }
 async function shareResult(){
-  const text=window._resultText||"ラブグラム|恋愛深層心理タイプ診断 https://lovegram.jp/lovetype.html";
-  if(navigator.share){
-    try{await navigator.share({text});return;}catch(e){/* cancelled */}
-  }
-  try{await navigator.clipboard.writeText(text);alert("結果をコピーしました。SNSに貼り付けてシェアできます!");}
+  const text=window._shareText||"グループ相性診断 https://lovegram.jp/group.html";
+  if(navigator.share){try{await navigator.share({text});return;}catch(e){}}
+  try{await navigator.clipboard.writeText(text);alert("結果をコピーしました!SNSでシェアできます。");}
   catch(e){alert(text);}
 }
-function reset(){
-  idx=0;Object.keys(score).forEach(k=>score[k]=0);
-  answers.length=0;
+
+/* ===== イベント ===== */
+$("startNew").addEventListener("click",()=>{members=[];history.replaceState(null,"","/group.html");renderNameStep();show("scr-name");});
+$("toQuiz").addEventListener("click",()=>{
+  const v=$("nameInput").value.trim();
+  if(!v){$("nameInput").focus();$("nameInput").style.borderColor="#f06292";return;}
+  myName=v.slice(0,6);
+  idx=0;score.d=score.e=score.c=score.v=0;
   renderQ();show("scr-q");
-}
-$("start").addEventListener("click",()=>{renderQ();if(partnerKey)$("modeBadge").hidden=false;show("scr-q");});
-$("minis").innerHTML=["0000","1000","0010","1111"].map(k=>CHARS[k]).join("");
-if(partnerKey){
-  $("normalHero").hidden=true;
-  $("inviteHero").hidden=false;
-  $("inviterChara").innerHTML=CHARS[partnerKey];
-  $("inviterName").textContent=TYPES[partnerKey].name+"("+NICK[partnerKey]+")さん";
-  $("start").textContent="相性診断をはじめる(無料・約2分)";
-  document.title="相性診断のご招待|ラブグラム";
-}
-$("back").addEventListener("click",goBack);
+});
 $("optA").addEventListener("click",()=>answer(true));
 $("optB").addEventListener("click",()=>answer(false));
-$("share").addEventListener("click",shareResult);
-$("shareImg").addEventListener("click",()=>shareImageResult(window._myKey));
-$("invite").addEventListener("click",inviteShare);
-$("retry").addEventListener("click",reset);
+$("passBtn").addEventListener("click",passToNext);
+$("seeResultBtn").addEventListener("click",showResult);
+$("shareBtn").addEventListener("click",shareResult);
+$("againBtn").addEventListener("click",()=>{members=[];history.replaceState(null,"","/group.html");location.reload();});
+
+/* 初期表示: URLにメンバーがいれば「続きから参加」、なければ表紙 */
+if(members.length>0){
+  renderNameStep();show("scr-name");
+}else{
+  show("scr-top");
+}
 </script>
 </body>
 </html>
