@@ -151,6 +151,7 @@ h1 .accent{color:var(--sakura)}
 .dev-marker{position:absolute;bottom:0;width:3px;height:100%;background:var(--sakura);transition:left 1s ease}
 .dev-marker::before{content:"";position:absolute;top:-5px;left:-4px;width:11px;height:11px;border-radius:50%;background:var(--sakura)}
 .dev-scale{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:4px}
+.type-sub{text-align:center;font-size:12px;color:var(--muted);margin-top:2px;margin-bottom:6px}
 .type-name{
   font-family:'Shippori Mincho',serif;font-weight:700;
   font-size:clamp(26px,7.5vw,34px);text-align:center;color:var(--sakura);
@@ -263,6 +264,7 @@ footer{margin-top:40px;text-align:center;font-size:11px;color:var(--muted)}
       <div class="chara-face" id="rChara"></div>
       <p class="type-code" id="rCode"></p>
       <p class="type-name" id="rName"></p>
+      <p class="type-sub" id="rSubName"></p>
       <p class="catch" id="rCatch"></p>
       <div class="rarity" id="rRarity"></div>
       <div class="dev-wrap">
@@ -298,6 +300,12 @@ footer{margin-top:40px;text-align:center;font-size:11px;color:var(--muted)}
       <div class="result-sec">
         <h3>こころの4軸</h3>
         <div class="axes" id="axes"></div>
+      </div>
+
+      <div class="result-sec">
+        <h3>なないろ村でのあなた</h3>
+        <p id="rVillage"></p>
+        <p style="margin-top:8px"><a id="rVillageLink" href="/village.html" style="color:var(--sakura);font-size:13px">▶ なないろ村の住人図鑑を見る</a></p>
       </div>
 
       <div class="result-sec">
@@ -361,11 +369,37 @@ const AXES=[
 
 /* タイプキー: 各軸でA多数=0/B多数=1 の4桁 (d,e,c,v) */
 const NICK={
-"0000":"タイヨ","0001":"ニワ","0010":"ウタ","0011":"ケンジ",
+"0000":"タイヨ","0001":"ニワ","0010":"ウタ","0011":"リツ",
 "0100":"ナイト","0101":"ダイコク","0110":"マモル","0111":"タクミ",
 "1000":"カケル","1001":"コウカイ","1010":"パレット","1011":"ユウガ",
 "1100":"カル","1101":"サク","1110":"レンズ","1111":"フクロウ"
 };
+/* キャッチラベル(診断結果で前面に出す一言) */
+const LABEL={
+"0000":"かまちょ太陽","0001":"コツコツうさぎ","0010":"下書きポエマー","0011":"計画マニア",
+"0100":"おせっかい騎士","0101":"どっしりグマ","0110":"無言の番犬","0111":"無口な職人",
+"1000":"にげ足バード","1001":"夢見がち船長","1010":"充電切れ画家","1011":"クール外交官",
+"1100":"追いかけギツネ","1101":"コスパ策士","1110":"みてるだけネコ","1111":"こじらせフクロウ"
+};
+const VILLAGE={
+ "0000":{h:"パン屋〈あさひ〉",a:"にじの広場",r:"村の朝をいちばんに起こすパン職人",k:"「ねえ、聞いて聞いて!」"},
+ "0001":{h:"花園〈ひだまり〉",a:"ひだまり丘",r:"丘いちめんの花を手入れする庭師",k:"「まあ、そのうち咲くよ」"},
+ "0010":{h:"川辺の書きもの小屋",a:"うつし湖とせせらぎ川",r:"村のできごとを詩にして残す詩人",k:"「……ううん、なんでもない」"},
+ "0011":{h:"けんちく事務所",a:"よりみち通り",r:"村の家や橋を設計する建築家",k:"「まず、順番に整理しよう」"},
+ "0100":{h:"みまわり詰所",a:"にじの広場",r:"村を毎日見まわる自警団",k:"「それ、持つよ」"},
+ "0101":{h:"よろず屋〈だいこく〉",a:"よりみち通り",r:"何でもそろう店の主人、村の相談役",k:"「まかせとけ」"},
+ "0110":{h:"森の番小屋",a:"ささやきの森",r:"森と村の境を見守る番人",k:"「……ん」"},
+ "0111":{h:"〈たくみ工房〉",a:"よりみち通り",r:"道具から家具まで手がける職人",k:"「……できたぞ」"},
+ "1000":{h:"きまぐれ旅宿",a:"村はずれの道",r:"村の外を歩いて地図を描く旅人",k:"「行ってみないと分かんないでしょ」"},
+ "1001":{h:"湖の渡し場",a:"うつし湖とせせらぎ川",r:"湖をわたす小舟の船頭",k:"「もう少し、先まで行けるはずだ」"},
+ "1010":{h:"〈いろどりアトリエ〉",a:"よりみち通り",r:"村の風景を描く画家",k:"「今日はそういう気分じゃないんだよね」"},
+ "1011":{h:"なないろ郵便局",a:"よりみち通り",r:"外の村とのやりとりを担う郵便局員",k:"「まあ、無理しなくていいんじゃない」"},
+ "1100":{h:"山際の小屋",a:"ささやきの森",r:"森の恵みを村に運ぶ狩人",k:"「なんとなく、こっちだと思う」"},
+ "1101":{h:"盤あそびの店〈さく〉",a:"にじの広場",r:"村の行事や計画を組み立てる策士",k:"「ま、想定内かな」"},
+ "1110":{h:"望遠鏡の番小屋",a:"ほしみ台",r:"星と村を観察して記録する見張り",k:"「……なるほどね」"},
+ "1111":{h:"〈ふくろう文庫〉",a:"ほしみ台",r:"村の記録と本を守る司書",k:"「どうせ、分かってもらえないから」"}
+};
+
 /* 4文字コード: 距離感C/F(密着/自由)・愛情W/A(言葉/行動)・衝突T/P(対話/熟考)・恋愛観N/B(今/設計) */
 const CODEMAP=[["C","F"],["W","A"],["T","P"],["N","B"]];
 function typeCode(key){return key.split("").map((b,i)=>CODEMAP[i][+b]).join("");}
@@ -749,7 +783,8 @@ function showResult(){
   const t=TYPES[key];
   window._myKey=key;
   $("rChara").innerHTML=CHARS[key]||"";
-  $("rName").textContent=t.name+"(愛称:"+NICK[key]+")";
+  $("rName").textContent=LABEL[key];
+  $("rSubName").textContent=t.name+" / なないろ村では「"+NICK[key]+"」";
   $("rCatch").textContent="「"+t.catch+"」";
   $("rStyle").innerHTML=t.style;
   $("rTruth").innerHTML=t.truth;
@@ -775,6 +810,9 @@ function showResult(){
   });
 
   $("rCode").textContent=typeCode(key);
+  const vg=VILLAGE[key];
+  $("rVillage").innerHTML="あなたはなないろ村の<b>"+NICK[key]+"</b>。"+vg.a+"の"+vg.h+"に住み、"+vg.r+"をしています。口ぐせは"+vg.k+"。";
+  $("rVillageLink").href="/village.html#c"+key;
   $("rRarity").textContent="🏅 全体の約"+RARITY[key]+"%の"+(RARITY[key]<=5?"希少":"")+"タイプ";
 
   /* 恋愛偏差値: 各軸の振れ幅(どちらかに強く寄っているほど個性的=高偏差値)を演出値化 */
@@ -792,7 +830,7 @@ function showResult(){
   showCompat(key);
   show("scr-r");
   history.replaceState(null,"","#result");
-  window._resultText="私のラブグラム診断結果は【"+typeCode(key)+"】「"+t.name+"("+NICK[key]+")」🌸\n恋愛偏差値"+window._devScore+"・全体の約"+RARITY[key]+"%のタイプでした\nあなたの恋愛タイプは? #ラブグラム #恋愛タイプ診断\nhttps://lovegram.jp/lovetype.html";
+  window._resultText="私の恋愛タイプは【"+LABEL[key]+"】でした🌸\n"+typeCode(key)+" / "+t.name+"(なないろ村では"+NICK[key]+")\n恋愛偏差値"+window._devScore+"・全体の約"+RARITY[key]+"%のタイプ\nあなたの恋愛タイプは? #ラブグラム #恋愛タイプ診断\nhttps://lovegram.jp/lovetype.html";
 }
 async function shareResult(){
   const text=window._resultText||"ラブグラム|恋愛深層心理タイプ診断 https://lovegram.jp/lovetype.html";
