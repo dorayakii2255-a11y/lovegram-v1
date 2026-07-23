@@ -83,6 +83,10 @@ footer a{color:inherit}
       <label for="birthInput">あなたの生年月日</label>
       <input type="date" id="birthInput" min="1920-01-01" max="2026-12-31">
     </div>
+    <div class="date-row">
+      <label for="partnerInput">気になる人の生年月日(わかれば・任意)</label>
+      <input type="date" id="partnerInput" min="1920-01-01" max="2026-12-31">
+    </div>
     <button class="btn" id="start">占う(無料・約1分)</button>
     <p class="note">生年月日は保存されません。この端末の中だけで計算されます。</p>
   </section>
@@ -110,6 +114,17 @@ footer a{color:inherit}
           <div class="compat-box good"><div class="lbl">相性◎</div><div class="star" id="rGood"></div></div>
           <div class="compat-box bad"><div class="lbl">要・歩み寄り</div><div class="star" id="rBad"></div></div>
         </div>
+      </div>
+      <div class="result-sec" id="partnerSec" hidden>
+        <h3>お相手との相性</h3>
+        <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px">
+          <span id="pChara" style="width:64px;height:64px;display:block"></span>
+          <span style="font-size:20px">💗</span>
+          <span id="myCharaSmall" style="width:64px;height:64px;display:block"></span>
+        </div>
+        <p style="text-align:center;font-size:13px;color:var(--muted)" id="pNames"></p>
+        <p style="text-align:center;font-family:'Shippori Mincho',serif;font-size:26px;color:var(--star);margin:6px 0" id="pScore"></p>
+        <p id="pComment"></p>
       </div>
     </div>
     <button class="btn" id="share">結果をシェアする</button>
@@ -178,6 +193,16 @@ function findGoodBad(elem){
   return {good: goodStars.slice(0,2).join("・")||"—", bad: badStars.slice(0,2).join("・")||"—"};
 }
 
+/* ================= 五行の相性スコア化(2人の相性用) ================= */
+function elemCompatScore(e1,e2){
+  if(e1===e2) return {score:78,rel:"同じ気質どうし。似ているからこそ理解し合いやすい相性です。"};
+  if(GENERATES[e1]===e2) return {score:92,rel:"あなたが相手を育てる、相生の関係。自然と支え合える好相性です。"};
+  if(GENERATES[e2]===e1) return {score:88,rel:"相手があなたを育ててくれる、相生の関係。頼れる相性です。"};
+  if(OVERCOMES[e1]===e2) return {score:48,rel:"あなたが相手をやや抑えてしまう関係。歩み寄りを意識すると◎。"};
+  if(OVERCOMES[e2]===e1) return {score:45,rel:"相手があなたをやや抑える関係。適度な距離感が心地よさの鍵です。"};
+  return {score:60,rel:"直接強い関係はないものの、間に別の縁を挟むと調和しやすい相性です。"};
+}
+
 /* ================= キャラクター(星・元素モチーフ) ================= */
 function bodyBase(cx,cy,color){
  return '<path d="M'+(cx-52)+' '+(cy+70)+' Q'+(cx-52)+' '+(cy+10)+' '+cx+' '+(cy-20)+' Q'+(cx+52)+' '+(cy+10)+' '+(cx+52)+' '+(cy+70)+' Z" fill="'+color+'"/>'
@@ -218,7 +243,26 @@ function doFortune(){
   $("rAdvice").textContent=s.adv;
   $("rGood").textContent=compat.good;
   $("rBad").textContent=compat.bad;
-  window._resultText="生年月日占いで「"+s.name+"("+s.nick+")」でした✨\nあなたの本命星は?→ https://lovegram.jp/birthday.html\n#生年月日占い #九星気学 #ラブグラム";
+
+  const pv=$("partnerInput").value;
+  let shareExtra="";
+  if(pv){
+    const [py,pm,pd]=pv.split("-").map(Number);
+    const pkey=honmeiStar(py,pm,pd);
+    const ps=STARS[pkey];
+    const ec=elemCompatScore(s.elem,ps.elem);
+    $("pChara").innerHTML=charaFor(pkey);
+    $("myCharaSmall").innerHTML=charaFor(key);
+    $("pNames").textContent=s.name+"("+s.nick+") × "+ps.name+"("+ps.nick+")";
+    $("pScore").textContent="相性 "+ec.score+"%";
+    $("pComment").textContent=ec.rel;
+    $("partnerSec").hidden=false;
+    shareExtra="\nお相手との相性は"+ec.score+"%でした";
+  }else{
+    $("partnerSec").hidden=true;
+  }
+
+  window._resultText="生年月日占いで「"+s.name+"("+s.nick+")」でした✨"+shareExtra+"\nあなたの本命星は?→ https://lovegram.jp/birthday.html\n#生年月日占い #九星気学 #ラブグラム";
   show("scr-r");
 }
 async function shareResult(){
@@ -229,7 +273,7 @@ async function shareResult(){
 }
 $("start").addEventListener("click",doFortune);
 $("share").addEventListener("click",shareResult);
-$("retry").addEventListener("click",()=>{$("birthInput").value="";show("scr-top");});
+$("retry").addEventListener("click",()=>{$("birthInput").value="";$("partnerInput").value="";show("scr-top");});
 </script>
 </body>
 </html>
